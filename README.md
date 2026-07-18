@@ -19,7 +19,8 @@ MATLAB Machine Learning Onramp (Free 2-hour interactive course)
 
 MathWorks Machine Learning Documentation
 
-🧠 Why MATLAB for Machine Learning?
+**🧠 Why MATLAB for Machine Learning?**
+
 While languages like Python are highly popular, MATLAB offers distinct, industry-grade advantages especially preferred in engineering, aerospace, automotive, and financial sectors:
 
 Low-Code/No-Code Apps: Apps like Classification Learner and Regression Learner allow developers to train dozens of models simultaneously, compare accuracies, and generate optimal code with a single click without writing boilerplate code.
