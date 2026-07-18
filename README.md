@@ -48,7 +48,7 @@ Matrix Optimization: Since MATLAB natively operates on matrices (Matrix Laborato
 *   **Step 3: Select Version & OS**
     Choose the latest stable release and select your operating system (Windows, macOS, or Linux).
     <br><br>
-    [BURAYA BİLGİSAYARDAN 3. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
+    [<img width="1389" height="795" alt="image" src="https://github.com/user-attachments/assets/c9c7a055-6bd6-4688-9c79-94e0615d7c83" />]
     <br><br>
 
 *   **Step 4: Run the Installer**
