@@ -38,13 +38,11 @@ Matrix Optimization: Since MATLAB natively operates on matrices (Matrix Laborato
 *   **Step 1: Visit the Portal**
     Go to the official [MathWorks Download Center](https://www.mathworks.com/downloads/).
     <br><br>
-    [BURAYA BİLGİSAYARDAN 1. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
-    <br><br>
 
 *   **Step 2: Sign In / Create Account**
     Click **"Sign In"** at the top right. If you are a student, use your **university e-mail** (`.edu`) to automatically claim your student license.
     <br><br>
-    [<img width="670" height="513" alt="sign inden önce" src="https://github.com/user-attachments/assets/a7464d1a-7929-49ec-a0b4-44dde4c709ff" />]
+    [<img width="541" height="453" alt="image" src="https://github.com/user-attachments/assets/41c4ca33-76b4-4468-afb5-a822a33676f0" />]
     <br><br>
 
 *   **Step 3: Select Version & OS**
