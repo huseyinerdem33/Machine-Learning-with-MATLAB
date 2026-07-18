@@ -8,9 +8,9 @@ To run the codes in this repository, you need MATLAB installed along with the sp
 
 *   **Download MATLAB:** [Official MathWorks Download Center](https://www.mathworks.com/downloads/) *(Requires an active license or university e-mail for student access)*
 
-Required Toolbox: Statistics and Machine Learning Toolbox
+*   **Required Toolbox:** Statistics and Machine Learning Toolbox
 
-Optional for Neural Networks: Deep Learning Toolbox
+*   **Optional for Neural Networks:** Deep Learning Toolbox
 
 📚 Official Documentation & Learning Paths
 MATLAB Machine Learning Onramp (Free 2-hour interactive course)
