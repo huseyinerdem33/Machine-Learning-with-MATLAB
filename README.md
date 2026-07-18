@@ -1,8 +1,10 @@
 # Machine-Learning-with-MATLAB
 Machine Learning with MATLAB
+
 This repository is a comprehensive development diary designed to simulate end-to-end machine learning workflows, understand data analytics methodologies, and implement practical code blocks in the MATLAB environment.
 
 🧭 Project Navigation & Resources
+
 ⚙️ Official Prerequisites
 To run the codes in this repository, you need MATLAB installed along with the specific toolboxes dedicated to data science.
 
