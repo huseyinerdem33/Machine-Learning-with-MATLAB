@@ -6,7 +6,7 @@ This repository is a comprehensive development diary designed to simulate end-to
 ⚙️ Official Prerequisites
 To run the codes in this repository, you need MATLAB installed along with the specific toolboxes dedicated to data science.
 
-Download MATLAB: Official MathWorks Download Center (Requires an active license or university e-mail for student access)
+*   **Download MATLAB:** [Official MathWorks Download Center](https://www.mathworks.com/downloads/) *(Requires an active license or university e-mail for student access)*
 
 Required Toolbox: Statistics and Machine Learning Toolbox
 
