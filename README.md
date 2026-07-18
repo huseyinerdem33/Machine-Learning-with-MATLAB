@@ -42,20 +42,19 @@ Matrix Optimization: Since MATLAB natively operates on matrices (Matrix Laborato
 *   **Step 2: Sign In / Create Account**
     Click **"Sign In"** at the top right. If you are a student, use your **university e-mail** (`.edu`) to automatically claim your student license.
     <br><br>
-    [<img width="541" height="453" alt="image" src="https://github.com/user-attachments/assets/41c4ca33-76b4-4468-afb5-a822a33676f0" />]
+    <img width="541" height="453" alt="image" src="https://github.com/user-attachments/assets/41c4ca33-76b4-4468-afb5-a822a33676f0" />
     <br><br>
 
 *   **Step 3: Select Version & OS**
     Choose the latest stable release and select your operating system (Windows, macOS, or Linux).
     <br><br>
-    [<img width="1389" height="795" alt="image" src="https://github.com/user-attachments/assets/c9c7a055-6bd6-4688-9c79-94e0615d7c83" />]
+    <img width="1389" height="795" alt="image" src="https://github.com/user-attachments/assets/c9c7a055-6bd6-4688-9c79-94e0615d7c83" />
     <br><br>
 
 *   **Step 4: Run the Installer**
     Download the lightweight installer executable and launch it on your computer.
     <br><br>
-    [BURAYA BİLGİSAYARDAN 4. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
-    <br><br>
+ 
 
 *   **Step 5: Select Toolboxes (Crucial)**
     During the installation setup, make sure to check these specific boxes:
@@ -63,12 +62,10 @@ Matrix Optimization: Since MATLAB natively operates on matrices (Matrix Laborato
     *   `Statistics and Machine Learning Toolbox` (Required for this repo)
     *   `Deep Learning Toolbox` (Optional)
     *   <br>
-    [BURAYA BİLGİSAYARDAN 5. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
-    <br><br>
+  
 
 *   **Step 6: Activate & Complete**
     Log in with your MathWorks account inside the installer wizard to activate your license and complete the setup.
     <br><br>
-    [BURAYA BİLGİSAYARDAN 6. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
-
+    
 </details>
