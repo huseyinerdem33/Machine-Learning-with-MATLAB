@@ -38,25 +38,25 @@ Matrix Optimization: Since MATLAB natively operates on matrices (Matrix Laborato
 *   **Step 1: Visit the Portal**
     Go to the official [MathWorks Download Center](https://www.mathworks.com/downloads/).
     <br><br>
-    <img src="https://placehold.co/600x350/2b3137/ffffff?text=Step+1:+MathWorks+Download+Center" alt="Step 1 - Download Center" width="600">
+    [BURAYA BİLGİSAYARDAN 1. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
     <br><br>
 
 *   **Step 2: Sign In / Create Account**
     Click **"Sign In"** at the top right. If you are a student, use your **university e-mail** (`.edu`) to automatically claim your student license.
     <br><br>
-    <img src="https://placehold.co/600x350/2b3137/ffffff?text=Step+2:+Sign+In+with+University+Email" alt="Step 2 - Sign In" width="600">
+    [<img width="670" height="513" alt="sign inden önce" src="https://github.com/user-attachments/assets/a7464d1a-7929-49ec-a0b4-44dde4c709ff" />]
     <br><br>
 
 *   **Step 3: Select Version & OS**
     Choose the latest stable release and select your operating system (Windows, macOS, or Linux).
     <br><br>
-    <img src="https://placehold.co/600x350/2b3137/ffffff?text=Step+3:+Select+MATLAB+Version" alt="Step 3 - Select Version" width="600">
+    [BURAYA BİLGİSAYARDAN 3. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
     <br><br>
 
 *   **Step 4: Run the Installer**
     Download the lightweight installer executable and launch it on your computer.
     <br><br>
-    <img src="https://placehold.co/600x350/2b3137/ffffff?text=Step+4:+Run+MATLAB+Installer" alt="Step 4 - Run Installer" width="600">
+    [BURAYA BİLGİSAYARDAN 4. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
     <br><br>
 
 *   **Step 5: Select Toolboxes (Crucial)**
@@ -65,12 +65,12 @@ Matrix Optimization: Since MATLAB natively operates on matrices (Matrix Laborato
     *   `Statistics and Machine Learning Toolbox` (Required for this repo)
     *   `Deep Learning Toolbox` (Optional)
     *   <br>
-    <img src="https://placehold.co/600x350/2b3137/ffffff?text=Step+5:+Select+Required+Toolboxes" alt="Step 5 - Select Toolboxes" width="600">
+    [BURAYA BİLGİSAYARDAN 5. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
     <br><br>
 
 *   **Step 6: Activate & Complete**
     Log in with your MathWorks account inside the installer wizard to activate your license and complete the setup.
     <br><br>
-    <img src="https://placehold.co/600x350/2b3137/ffffff?text=Step+6:+License+Activation" alt="Step 6 - Activation" width="600">
+    [BURAYA BİLGİSAYARDAN 6. FOTOĞRAFI SÜRÜKLE BIRAK VEYA CTRL+V İLE YAPIŞTIR]
 
 </details>
