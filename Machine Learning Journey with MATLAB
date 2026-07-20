@@ -108,6 +108,8 @@ data_linear = data;
 data_linear.Horsepower = fillmissing(data_linear.Horsepower, 'linear');                       % Estimate missing points linearly based on boundary values
 disp("Linear interpolation successfully executed.");
 
+🖥️ Example Output
+Below is the verified command console matrix generated upon executing the academic codebase:
 
 --- Dataset Preview (First 5 Observations) ---
      MPG     Cylinders    Displacement    Horsepower    Weight    Acceleration    Model_Year    Origin 
