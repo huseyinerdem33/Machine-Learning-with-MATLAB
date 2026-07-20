@@ -39,3 +39,71 @@ Reading process completed successfully.
 Our data consists of 100 rows and 5 columns.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 🚀 Advanced Missing Data Management and Imputation Strategies in MATLAB
+
+Following the initial data loading phase, this section addresses the systematic handling of incomplete datasets—a critical prerequisite for robust machine learning pipelines. Missing values can severely bias statistical analyses and degrade model performance if left unmanaged.
+
+This module details quantitative strategies for **detecting**, **deleting**, and **imputing** missing observations using MATLAB's native statistical frameworks.
+
+---
+
+## 📂 Module 4.2 & 4.3: Missing Data Diagnostics and Imputation
+
+Using the standard `carsmall` benchmark dataset, this script isolates incomplete entries, calculates feature-wise missingness patterns, and compares multiple handling strategies including listwise/pairwise deletion, measures of central tendency (mean, median, mode), and mathematical interpolation.
+
+### 🛠️ Academic MATLAB Framework
+
+The script below performs data restructuring, computes diagnostic metrics, and implements five distinct data recovery algorithms. All syntax, variables, and logs are implemented in technical English:
+
+```matlab
+clc;
+clear;
+close all;
+
+load carsmall;                                                                                % Load standard benchmark repository dataset
+data = table(MPG, Cylinders, Displacement, Horsepower, Weight, Acceleration, Model_Year, Origin,...
+    'VariableNames', {'MPG', 'Cylinders', 'Displacement', 'Horsepower', 'Weight', 'Acceleration', 'Model_Year', 'Origin'}); 
+
+disp('--- Dataset Preview (First 5 Observations) ---');
+disp(head(data, 5));                                                                          % Inspect initial data distribution matrices
+
+%% PHASE 1: Missing Data Diagnostics
+missingCount = sum(ismissing(data));                                                          % Compute column-wise vector of missing elements
+missingTable = table(data.Properties.VariableNames', missingCount', 'VariableNames', {...     % Build structural metadata summary table
+    'Variable', 'Missing_Count'});
+disp('--- Missing Data Diagnostic Metrics ---');
+disp(missingTable);
+
+%% PHASE 2: Data Elimination Strategies
+% Method 1.1: Listwise Deletion (Complete-Case Analysis)
+data_listwise = rmmissing(data);                                                              % Strip any row containing at least one missing feature
+fprintf("After Listwise Deletion: %d rows remaining.\n", height(data_listwise));
+
+% Method 1.2: Pairwise Deletion (Feature-Specific Exclusion)
+data_pairwise = data(~ismissing(data.Horsepower), :);                                         % Eliminate rows containing missingness solely in target vector
+fprintf("After Pairwise Deletion (Target: Horsepower): %d rows remaining.\n", height(data_pairwise));
+
+%% PHASE 3: Statistical Imputation Strategies
+% Method 2.1.1: Mean Imputation
+data_mean = data;
+meanValue = mean(data.Horsepower, 'omitnan');                                                 % Compute expected arithmetic mean ignoring NaN tokens
+data_mean.Horsepower(ismissing(data_mean.Horsepower)) = meanValue;                             % Substitute missing elements with calculated mean
+fprintf("Calculated Mean Value: %.2f\n", meanValue);
+
+% Method 2.1.2: Median Imputation
+data_median = data;
+medianValue = median(data.Horsepower, 'omitnan');                                             % Compute central statistical median ignoring NaN tokens
+data_median.Horsepower(ismissing(data_median.Horsepower)) = medianValue;                       % Replace missing values with robust median value
+fprintf("Calculated Median Value: %.2f\n", medianValue);
+
+% Method 2.1.3: Mode Imputation
+data_mode = data;
+modeValue = mode(data.Horsepower(~ismissing(data.Horsepower)));                               % Extract most frequent categorical/discrete element 
+data_mode.Horsepower(ismissing(data_mode.Horsepower)) = modeValue;                             % Input mode value into missing records
+fprintf("Calculated Mode Value: %.2f\n", modeValue);
+
+%% PHASE 4: Mathematical Interpolation
+% Method 2.2: Linear Interpolation Method
+data_linear = data;
+data_linear.Horsepower = fillmissing(data_linear.Horsepower, 'linear');                       % Estimate missing points linearly based on boundary values
+disp("Linear interpolation successfully executed.");
