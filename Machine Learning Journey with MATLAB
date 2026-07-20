@@ -1,0 +1,41 @@
+# 🚀 Machine Learning Journey with MATLAB: Data Analysis and Preprocessing
+
+Welcome! This repository is created to document and share my step-by-step practical journey through **Machine Learning with MATLAB**, starting from fundamental concepts up to advanced modeling.
+
+The success of any AI or machine learning model is directly tied to the quality of the data we feed into it. Guided by the principle of *"Garbage In, Garbage Out (GIGO)"*, this series aims to transform raw data into processable, clean, and meaningful structures.
+
+This work marks the first step of **"Module 4: Data Analysis and Preprocessing"**, which is one of the most critical phases of our project. By integrating a real-world scenario dataset into our system, we are laying the foundation for understanding and cleaning the data.
+
+---
+
+## 📂 Module 4.1: Data Reading from a File
+
+In this stage, an external dataset (`Dataset.xlsx`) was imported into the MATLAB environment. The column names (features) were renamed for better clarity, and the basic structure of the data was inspected.
+
+### 🛠️ MATLAB Code Content & Explanations
+
+The following script clears the workspace, reads the data from the Excel file as a table format, and structures it entirely in English:
+
+```matlab
+clc;
+clear;
+close all;
+
+filename = 'Dataset.xlsx';                                                                    % File name of the dataset
+dataLines = readtable(filename);                                                              % Reading data from the Excel file into a table format
+
+dataLines.Properties.VariableNames = {'Pressure', 'Humidity', 'Temperature', 'Weather', 'Density'}; % Renaming and defining column names (features) for clarity
+
+disp("Reading process completed successfully.");                                              % Displaying an informational message in the console
+head(dataLines, 10);                                                                          % Previewing the first 10 rows of the dataset
+
+[rowCount, columnCount] = size(dataLines);                                                    % Calculating the dimensions (number of rows and columns)
+fprintf("Our data consists of %d rows and %d columns.\n", rowCount, columnCount);
+
+🖥️ Example Output
+Below is the expected console output after executing the MATLAB script:
+
+Reading process completed successfully.
+Our data consists of 100 rows and 5 columns.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
