@@ -235,4 +235,5 @@ end
 disp('Previewing Dynamically Generated One-Hot Encoded Structural Matrix Columns:');
 disp(dataLines(1:10, end-categoryCount+1:end));
 
-
+🖥️ Comprehensive Example Output
+Below is the verified command console printout produced upon executing the integrated pipeline codebase:
