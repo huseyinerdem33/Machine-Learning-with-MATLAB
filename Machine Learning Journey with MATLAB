@@ -673,3 +673,39 @@ R-squared: 0.929,  Adjusted R-Squared: 0.929
 F-statistic vs. constant model: 3.11e+04, p-value = 0
 
 Model R-Squared Value: 0.9287
+
+## 📖 Detailed Guide to Statistical Parameters
+
+### 1. `Estimate` ($\beta$ Coefficients)
+* **What it Does:** Indicates how much the target variable (`EnergyOutput`) increases or decreases (in **MW**) for every **1-unit change** in an independent predictor variable (e.g., temperature, pressure), holding all other variables constant.
+* **Project Context:**
+  * **`(Intercept)` ($454.61$):** The theoretical baseline output power generated if all environmental predictors were equal to zero.
+  * **`Temperature` ($-1.9775$):** For every $1^\circ\text{C}$ increase in ambient temperature, power output drops by $\sim 1.98\text{ MW}$ due to reduced gas turbine efficiency.
+
+---
+
+### 2. `SE` (Standard Error)
+* **What it Does:** Measures the statistical uncertainty and precision of the estimated coefficient (`Estimate`). A lower standard error signifies a highly precise and reliable parameter estimate.
+* **Project Context:** The extremely low standard error for Temperature ($SE = 0.0152$) demonstrates that the calculated coefficient has negligible variance and high stability.
+
+---
+
+### 3. `tStat` ($t$-Statistic)
+* **What it Does:** Calculated via the formula:
+  $$\text{tStat} = \frac{\text{Estimate}}{\text{SE}}$$
+  It indicates how many standard errors the coefficient is away from zero. The further it is from zero (in either positive or negative direction), the stronger and more dominant the variable's signal relative to noise.
+* **Project Context:** The $t$-statistic for Temperature stands at **$-129.34$**. This substantial negative magnitude confirms ambient temperature as the single most critical driver dampening power generation.
+
+---
+
+### 4. `pValue` ($p$-Value)
+* **What it Does:** Evaluates the null hypothesis to answer: *"Does this variable genuinely influence power generation, or was the observed relationship purely coincidental?"*
+* **Project Context:** In statistical hypothesis testing, a threshold of $p < 0.05$ indicates statistical significance. Because all $p$-values in our model approach zero ($p \ll 0.05$), it confirms that every included feature is statistically significant and indispensable to the predictive model.
+
+---
+
+### 5. `R-Squared` ($R^2 = 0.9287$)
+* **What it Does:** Measures the overall goodness-of-fit and explanatory power of the model. It represents the percentage of total variance in the response variable explained by the predictors.
+* **Project Context:** An $R^2$ value of $0.9287$ indicates that approximately **92.87%** of the variance in electrical energy output is accurately captured and explained using only these 4 ambient sensory variables.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
