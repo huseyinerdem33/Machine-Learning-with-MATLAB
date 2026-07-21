@@ -651,3 +651,25 @@ disp(mdl_full);
 
 % Step 4: Output Ordinary R-Squared metric formatted to 4 decimal places
 fprintf("\nModel R-Squared Value: %.4f\n", mdl_full.Rsquared.Ordinary);
+
+Generated Execution Output:
+
+Linear regression model:
+    EnergyOutput ~ 1 + Temperature + ExhaustVacuum + AmbientPressure + RelativeHumidity
+
+Estimated Coefficients:
+                        Estimate        SE         tStat       pValue   
+                       _________    _________    _________    __________
+
+    (Intercept)           454.61       9.7485       46.634             0
+    Temperature          -1.9775     0.015282      -129.34             0
+    ExhaustVacuum       -0.23392     0.0073823      -31.69    4.5753e-210
+    AmbientPressure     0.062083     0.0094586       6.5641   5.5071e-11
+    RelativeHumidity    -0.15805     0.0041655     -37.942    5.1846e-295
+
+Number of observations: 9568, Error degrees of freedom: 9563
+Root Mean Squared Error: 4.56
+R-squared: 0.929,  Adjusted R-Squared: 0.929
+F-statistic vs. constant model: 3.11e+04, p-value = 0
+
+Model R-Squared Value: 0.9287
