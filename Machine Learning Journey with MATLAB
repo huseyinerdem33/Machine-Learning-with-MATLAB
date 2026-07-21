@@ -515,3 +515,58 @@ Regression analysis is widely utilized across various scientific and commercial 
 * **Weather Forecasting:** Predicting meteorological parameters such as temperature and precipitation using historical climate data.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Linear Regression Implementation in MATLAB: GUI vs. Manual Scripting
+
+This project demonstrates two distinct methodologies for implementing Linear Regression models on a power plant dataset (`powerPlant.mat`) using MATLAB:
+1. **Automated Approach:** Model training and code generation via MATLAB's **Regression Learner** app.
+2. **Programmatic Approach:** Manual implementation using MATLAB scripting with `fitlm`.
+
+---
+
+## 1. Automated Approach: MATLAB Regression Learner App
+
+MATLAB provides the **Regression Learner** interactive interface within the **Apps** tab to streamline model configuration, cross-validation setup, and automated MATLAB code generation.
+
+### Workflow & Configuration
+* **Data Import:** The dataset `powerPlant.mat` is imported from the workspace into the Regression Learner app.
+* **Variable Assignment:**
+  * **Response Variable (Target):** `EnergyOutput`
+  * **Predictor Variables (Features):** `Temperature`, `ExhaustVacuum`, `AmbientPressure`, `RelativeHumidity`
+* **Validation Scheme:** A **5-fold Cross-Validation** strategy is configured to evaluate model performance and prevent overfitting.
+* **Model Selection:** A **Linear Regression** model is trained on the predictor subset.
+* **Exporting Code:** Upon model evaluation, the automatically generated function script extracts the full training and validation pipeline into a reusable `.m` function file.
+
+### Auto-Generated Code Structure
+The auto-generated MATLAB function automates dataset preprocessing, cross-validation fold splitting, model training with `fitlm`, prediction calculation, and **Root Mean Squared Error (RMSE)** evaluation:
+
+```matlab
+% Train a regression model automatically via Regression Learner App
+% This function specifies model options and trains the model.
+
+% Concatenate predictors and response
+concatenatedPredictorsAndResponse = trainingPredictors;
+concatenatedPredictorsAndResponse.EnergyOutput = trainingResponse;
+
+% Train Linear Regression Model
+linearModel = fitlm(...
+    concatenatedPredictorsAndResponse, ...
+    'linear', ...
+    'RobustOpts', 'off');
+
+% Create result structure with predict function
+linearModelPredictFcn = @(x) predict(linearModel, x);
+validationPredictFcn = @(x) linearModelPredictFcn(x);
+
+% Compute validation predictions across folds
+validationPredictors = predictors(cvp.test(fold), :);
+foldPredictions = validationPredictFcn(validationPredictors);
+
+% Store predictions in original order
+validationPredictions(cvp.test(fold), :) = foldPredictions;
+
+% Compute validation RMSE
+isNotMissing = ~isnan(validationPredictions) & ~isnan(response);
+validationRMSE = sqrt(nansum((validationPredictions - response).^2) / numel(response(isNotMissing)));
+
+-----------------------------------
