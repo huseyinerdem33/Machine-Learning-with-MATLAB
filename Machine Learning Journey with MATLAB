@@ -344,3 +344,112 @@ $$\text{Normalized Value} = \frac{x - \text{min}(x)}{\text{max}(x) - \text{min}(
 Transforms the data so that the **Mean becomes 0** and the **Standard Deviation becomes 1**.
 $$\text{Standardized Value} = \frac{x - \mu}{\sigma}$$
 
+clc; clear; clearvars; % Clear the command window and workspace memory
+
+%% ========================================================================
+%% PART 1: OUTLIER DETECTION (IQR METHOD)
+%% ========================================================================
+
+filename = 'HousingData.csv';             % Define the dataset file name
+data = readtable(filename);               % Read the CSV file into a table
+disp("--- First 5 Rows of Housing Data ---");
+disp(head(data, 5));                      % Display the first 5 rows of the table
+
+vars = {'RM', 'MEDV'};                    % Specify columns to check for outliers
+
+for i = 1:length(vars)                    % Loop through each specified variable
+    col = data.(vars{i});                 % Extract the current column data
+    Q1 = quantile(col, 0.25);             % Calculate the 1st quartile (25th percentile)
+    Q3 = quantile(col, 0.75);             % Calculate the 3rd quartile (75th percentile)
+    IQR = Q3 - Q1;                        % Calculate the Interquartile Range
+
+    lowerBound = Q1 - 1.5 * IQR;          % Determine the lower limit for normal values
+    upperBound = Q3 + 1.5 * IQR;          % Determine the upper limit for normal values
+
+    % Find logical index where values exceed the limits
+    outliers = (col < lowerBound) | (col > upperBound); 
+    
+    % Print how many outliers were found in the current variable
+    fprintf("%s variable has %d outliers.\n", vars{i}, sum(outliers));
+    
+    % Save a true/false outlier mask column inside the original table
+    data.([vars{i} '_Outlier']) = outliers; 
+end                                       % End of the detection loop
+
+
+%% ========================================================================
+%% PART 2: HANDLING OUTLIERS
+%% ========================================================================
+
+% --- Method 1: Removing Outliers Entirely ---
+% Remove rows where 'RM' or 'MEDV' are marked as true outliers
+data_removed = data(~data.RM_Outlier & ~data.MEDV_Outlier, :); 
+
+% Print the number of remaining rows after removal
+fprintf("\n[Method 1] Outliers removed: %d rows remaining.\n", height(data_removed));
+
+
+% --- Method 2: Capping Outliers (Winsorization) ---
+data_winsor = data;                       % Create a clean copy of the original data
+
+for i = 1:length(vars)                    % Loop through each variable again
+    col = data.(vars{i});                 % Get the column data
+    Q1 = quantile(col, 0.25);             % Get 25th percentile
+    Q3 = quantile(col, 0.75);             % Get 75th percentile
+    IQR = Q3 - Q1;                        % Get Interquartile Range
+    
+    lowerBound = Q1 - 1.5 * IQR;          % Calculate lower bound
+    upperBound = Q3 + 1.5 * IQR;          % Calculate upper bound
+    
+    col(col < lowerBound) = lowerBound;   % Replace values below lower bound with the boundary
+    col(col > upperBound) = upperBound;   % Replace values above upper bound with the boundary
+    
+    data_winsor.(vars{i}) = col;          % Save the capped column back to winsorized table
+end                                       % End of the capping loop
+
+disp("[Method 2] Winsorization applied successfully!");
+
+
+%% ========================================================================
+%% PART 3: FEATURE SCALING
+%% ========================================================================
+
+% --- Step 1: Load Scaling Data (Titanic Train Dataset) ---
+data_scaling = readtable('train.csv');    % Load the training dataset
+disp(" ");
+disp("--- First 5 Rows of Scaling Data (train.csv) ---");
+disp(head(data_scaling, 5));              % Show the first 5 rows
+
+numericVars = {'Age', 'Fare'};            % Choose numeric columns to scale
+
+
+% --- Method 1: Min-Max Normalization (0 to 1) ---
+fprintf("\n--- Min-Max Normalization Results ---\n");
+for i = 1:length(numericVars)             % Loop through columns to scale
+    col = data_scaling.(numericVars{i});  % Select current column
+    colMin = min(col, [], 'omitnan');     % Find minimum value, ignoring missing values (NaN)
+    colMax = max(col, [], 'omitnan');     % Find maximum value, ignoring missing values (NaN)
+    
+    % Apply Min-Max formula: (x - min) / (max - min)
+    data_scaling.([numericVars{i} '_MinMax']) = (col - colMin) ./ (colMax - colMin);
+    
+    % Print the old range and the new scaled transformation message
+    fprintf('%s -> Scaled from range [%.2f, %.2f] to [0, 1].\n', numericVars{i}, colMin, colMax);
+end                                       % End of Min-Max loop
+
+
+% --- Method 2: Z-Score Standardization ---
+fprintf("\n--- Z-Score Standardization Results ---\n");
+for i = 1:length(numericVars)             % Loop through the numeric features
+    col = data_scaling.(numericVars{i});  % Select the column data
+    mu = mean(col, 'omitnan');            % Calculate the average (mean) of the column
+    sigma = std(col, 'omitnan');          % Calculate the standard deviation of the column
+    
+    % Apply Z-Score formula: (x - mean) / std
+    data_scaling.([numericVars{i} '_Zscore']) = (col - mu) ./ sigma;
+    
+    % Print the calculated mean and standard deviation values for verification
+    fprintf('%s -> Mean: %.2f, Std: %.2f\n', numericVars{i}, mu, sigma);
+end                                       % End of Z-Score loop
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
