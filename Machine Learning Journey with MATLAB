@@ -306,3 +306,41 @@ Previewing Dynamically Generated One-Hot Encoded Structural Matrix Columns:
              0                        1                      0
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# 📊 Data Preprocessing Guide: Outliers & Feature Scaling
+
+This repository contains a complete MATLAB workflow for cleaning and preparing datasets before training Machine Learning models. 
+
+## 🔍 1. Outlier Detection & Handling (IQR Method)
+
+### What is an Outlier?
+An outlier is a data point that is significantly different from the remaining data. Outliers can skew statistical models and corrupt predictions.
+
+### The Interquartile Range (IQR) Formula
+To find outliers mathematically, we use percentiles:
+* **Q1 (25th Percentile):** The middle value of the lower half of the data.
+* **Q3 (75th Percentile):** The middle value of the upper half of the data.
+* **IQR:** The distance between Q3 and Q1 ($IQR = Q3 - Q1$).
+
+We build logical bounds (fences). Any value outside these fences is flagged as an outlier:
+* **Lower Bound:** $Q1 - 1.5 \times IQR$
+* **Upper Bound:** $Q3 + 1.5 \times IQR$
+
+### Handling Methods
+1. **Removal:** Deleting the entire row containing the outlier.
+2. **Winsorization (Capping):** Replacing extreme values with the closest legal bound limit.
+
+---
+
+## 📈 2. Feature Scaling
+
+### Why do we scale features?
+When variables have completely different ranges (e.g., Age: 0–80 vs. Salary: 0–150,000), distance-based models can ignore the smaller feature. Scaling solves this problem.
+
+### Min-Max Normalization
+Rescales the data so that every single value fits precisely between **0 and 1**.
+$$\text{Normalized Value} = \frac{x - \text{min}(x)}{\text{max}(x) - \text{min}(x)}$$
+
+### Z-Score Standardization
+Transforms the data so that the **Mean becomes 0** and the **Standard Deviation becomes 1**.
+$$\text{Standardized Value} = \frac{x - \mu}{\sigma}$$
+
