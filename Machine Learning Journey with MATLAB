@@ -570,3 +570,22 @@ isNotMissing = ~isnan(validationPredictions) & ~isnan(response);
 validationRMSE = sqrt(nansum((validationPredictions - response).^2) / numel(response(isNotMissing)));
 
 -----------------------------------
+
+Manual MATLAB Code Script 
+-----------
+% Load dataset
+load('powerPlant.mat');
+
+% Fit linear regression model (Energy Output vs. Temperature)
+mdl_temp = fitlm(powerPlant, 'EnergyOutput ~ Temperature');
+
+% Display model statistics in Command Window
+disp(mdl_temp);
+
+% Plot model fit and raw data points
+figure();
+plot(mdl_temp);
+xlabel('Sıcaklık');
+ylabel('Enerji Üretimi');
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
