@@ -589,3 +589,65 @@ xlabel('Sıcaklık');
 ylabel('Enerji Üretimi');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# ⚡ Predictive Analytics for Power Generation: A Machine Learning & MATLAB Approach
+
+![Power Generation & Predictive Analytics Header](watermarked_img_16581748362672968350.png)
+
+Welcome to the **Predictive Analytics for Power Generation** repository. This project demonstrates an end-to-end machine learning framework designed to model and forecast net hourly electrical power output ($PE$) in energy generation facilities. Utilizing **MATLAB**, **Regression Learner App**, and **Multiple Linear Regression Analysis**, the study evaluates the impact of key ambient thermodynamic variables on plant performance.
+
+---
+
+## 📌 Executive Summary
+
+Accurate power output forecasting is essential for modern grid management, operational cost optimization, and efficient unit commitment. By leveraging historical multi-variable sensory data collected from a Combined Cycle Power Plant (CCPP) operating at full load, this repository establishes predictive models that quantify the mathematical relationships between environmental predictors and gross output.
+
+### Primary Objectives:
+1. **Interactive Prototyping & Cross-Validation:** Utilizing MATLAB's *Regression Learner App* to run non-parametric and parametric algorithms (*Fine Tree* vs. *Linear Regression*) under strict cross-validation constraints.
+2. **Programmatic Inference & Hypothesis Testing:** Implementing MATLAB's statistical modeling functions (`fitlm`) to evaluate parameter significance, standard errors ($SE$), $t$-statistics ($tStat$), and hypothesis testing metrics ($p$-values).
+
+---
+
+## 📊 Dataset Specifications
+
+The baseline dataset (`powerPlant.mat`) comprises **9,568 continuous observations** recorded during steady-state operations.
+
+### Target Variable (Response)
+* **`EnergyOutput` ($PE$):** Total hourly net electrical power output (measured in **MW**).
+
+### Features (Predictors)
+* **`Temperature` ($AT$):** Ambient Temperature ranging from $1.81^\circ\text{C}$ to $37.11^\circ\text{C}$.
+* **`ExhaustVacuum` ($V$):** Exhaust Steam Pressure ranging from $25.36$ to $81.56\text{ cm Hg}$.
+* **`AmbientPressure` ($AP$):** Barometric Pressure ranging from $992.89$ to $1033.30\text{ millibar}$.
+* **`RelativeHumidity` ($RH$):** Relative Humidity ranging from $25.56\%$ to $100.16\%$.
+
+---
+
+## ⚙️ Methodology & Experimental Design
+
+### Phase 1: Interactive Model Prototyping
+Data was imported into the MATLAB environment and evaluated using a **5-Fold Cross-Validation** scheme to prevent model overfitting and assess generalization performance across partitioned folds.
+
+* **Fine Decision Tree:** Achieved a Root Mean Squared Error (**RMSE**) of **4.0085**.
+* **Linear Regression:** Achieved an **RMSE** of **4.5518** and a Coefficient of Determination ($R^2$) of **0.93**.
+
+### Phase 2: Programmatic Model Estimation
+A MATLAB script was authored to execute parametric regression fitting, generate statistical summaries, and inspect model coefficients directly.
+
+---
+
+## 💻 MATLAB Source Implementation & Summary Output
+
+```matlab
+% Step 1: Load the power plant dataset into the MATLAB Workspace
+load("powerPlant.mat"); 
+
+% Step 2: Fit a Multiple Linear Regression model using 'fitlm'
+% Formula: Response ~ Predictor1 + Predictor2 + Predictor3 + Predictor4
+mdl_full = fitlm(powerPlant, 'EnergyOutput ~ Temperature + ExhaustVacuum + AmbientPressure + RelativeHumidity');
+
+% Step 3: Display comprehensive statistical output in the Command Window
+disp(mdl_full);
+
+% Step 4: Output Ordinary R-Squared metric formatted to 4 decimal places
+fprintf("\nModel R-Squared Value: %.4f\n", mdl_full.Rsquared.Ordinary);
