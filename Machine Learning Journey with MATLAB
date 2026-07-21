@@ -453,3 +453,65 @@ for i = 1:length(numericVars)             % Loop through the numeric features
 end                                       % End of Z-Score loop
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Understanding Regression Analysis: Concepts, Models, and Applications
+
+## 1. What is Regression Analysis?
+
+Regression is a fundamental statistical approach used to predict the value of a dependent variable (target) based on one or more independent variables (features). 
+
+### Primary Objective
+The main goal of regression analysis is to understand how variations in independent variables (inputs) affect the dependent variable (output) and to express this relationship using a mathematical equation.
+
+---
+
+## 2. Practical Example: Real Estate Valuation
+
+Imagine we want to estimate the price of a house:
+* **Dependent Variable (Target):** House Price
+* **Independent Variables (Features):** Area ($m^2$), number of rooms, and location.
+
+Regression analysis learns the relationship between these features and the house price. Consequently, it enables us to predict the price of a new house by examining its specific characteristics.
+
+---
+
+## 3. Key Regression Models
+
+### Linear Regression Models
+* **Simple Linear Regression:** Utilizes a single independent variable to predict the outcome.
+* **Multiple Linear Regression:** Incorporates multiple independent variables to refine predictions.
+
+### Polynomial Regression
+* Applied when the relationship between variables is non-linear.
+* It uses a more flexible curve to fit the dataset effectively.
+
+### Advanced Regression Techniques
+* **Support Vector Regression (SVR)**
+* **Decision Tree Regression**
+* **Random Forest Regression**
+
+---
+
+## 4. Evaluation Metrics
+
+To assess the performance and accuracy of a regression model, the following statistical metrics are commonly employed:
+
+1. **Mean Absolute Error (MAE)**
+2. **Mean Squared Error (MSE)**
+3. **Root Mean Squared Error (RMSE)**
+4. **Coefficient of Determination ($R^2$ Score)**
+
+---
+
+## 5. Real-World Applications
+
+Regression analysis is widely utilized across various scientific and commercial domains:
+
+* **Finance:** Forecasting stock prices, interest rates, and evaluating financial risks.
+* **Real Estate:** Modeling house prices according to property attributes.
+* **Marketing:** Measuring the impact of advertisement spending on sales and predicting Customer Lifetime Value (CLV).
+* **Healthcare:** Predicting patient responses to specific treatments or tracking disease progression.
+* **Manufacturing:** Estimating production volume based on raw material availability and labor input.
+* **Weather Forecasting:** Predicting meteorological parameters such as temperature and precipitation using historical climate data.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
