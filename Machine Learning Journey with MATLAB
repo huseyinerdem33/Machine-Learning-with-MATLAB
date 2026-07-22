@@ -726,6 +726,8 @@ This repository contains a MATLAB implementation for predicting energy output ba
 
 ## MATLAB Implementation
 
+# Example Code 1:
+
 ```matlab
 % Define input parameters for the prediction scenario
 T = 25;    % Temperature (25 °C)
@@ -761,7 +763,7 @@ Predicted Energy Output: 452.18
 
 -------------------------------------------------------------------------
 
-# Example Code 2
+# Example Code 2:
 
 ## Vehicle Fuel Efficiency (MPG) Prediction Using Linear Regression
 
