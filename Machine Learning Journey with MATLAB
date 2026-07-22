@@ -808,3 +808,37 @@ Predicted MPG: 19.07
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Decision Tree Regression (Decision Trees Application)
+
+## Abstract
+Decision Tree Regression is a non-parametric supervised learning method used to predict continuous numerical values by partitioning data into smaller, homogeneous subsets based on explicit decision rules. Unlike linear models that assume proportional relationships, decision trees recursively split the feature space using threshold conditions (e.g., $X_j < k$), creating a hierarchical structure of nodes and leaves.
+
+---
+
+## Technical Overview & Methodology
+- **Recursive Partitioning:** The algorithm evaluates candidate features and selects split points that minimize total variance or Mean Squared Error (MSE) within the resulting child nodes.
+- **Node Hierarchy:**
+  - **Root Node:** Represents the entire dataset prior to any structural split.
+  - **Internal/Decision Nodes:** Apply logical decision criteria (e.g., `PetalLength < 2.45`) to direct data paths.
+  - **Leaf Nodes:** Represent terminal regions containing the final numerical predictions (typically the mean response of the samples within that segment).
+- **Hyperparameter Control:** Parameters such as minimum leaf size (`Minimum leaf size`) and maximum tree depth prevent model overfitting and maintain generalization capabilities on unseen test data.
+
+---
+
+## Implementation Reference (MATLAB)
+
+```matlab
+% Load Fisher's Iris dataset into the workspace
+load fisheriris;
+
+% Convert raw measurement array into a structured MATLAB table
+irisData = array2table(meas, 'VariableNames', {'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth'});
+
+% Attach categorical species metadata for potential classification workflows
+irisData.Species = species;
+
+% Display initial observations from the structured dataset
+head(irisData);
+
+% Render the hierarchical decision tree graph of the exported regression model
+view(trainedModel.RegressionTree, 'Mode', 'graph');
