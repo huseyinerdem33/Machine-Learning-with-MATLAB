@@ -748,4 +748,4 @@ predictedEnergy = predict(mdl_full, newConditions);
 fprintf('Predicted Energy Output: %.2f\n', predictedEnergy);
 
 
-Example Output (MATLAB Command Window):
+💻 Example Output (MATLAB Command Window):
