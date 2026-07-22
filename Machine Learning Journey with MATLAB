@@ -749,3 +749,12 @@ fprintf('Predicted Energy Output: %.2f\n', predictedEnergy);
 
 
 💻 Example Output (MATLAB Command Window):
+
+New input parameters for prediction:
+
+    Temperature    ExhaustVacuum    AmbientPressure    RelativeHumidity
+    ___________    _____________    _______________    ________________
+
+        25              60               1015                 80       
+
+Predicted Energy Output: 452.18
