@@ -906,5 +906,15 @@ view(mdl_tree_tuned);
 
 💻 Example Output 2 (MATLAB Command Window):
 
+Default Tree Model:
+1  if Water<188.9 then node 2 elseif Water>=188.9 then node 21 else 33.0756
+...
+18 if BlastFurnaceSlag<47.65 then node 22 elseif BlastFurnaceSlag>=47.65 then node 23 else 47.354
+19 if BlastFurnaceSlag<15 then node 24 elseif BlastFurnaceSlag>=15 then node 25 else 36.4647
+20 fit = 14.0563
+21 fit = 10.0417
+...
 
+Tuned Tree Model:
+(Generates a significantly shorter, more structured set of decision rules due to 'MinLeafSize', 50 constraint)
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
