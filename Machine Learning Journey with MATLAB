@@ -860,3 +860,5 @@ SepalLength    SepalWidth    PetalLength    PetalWidth      Species
 Structure 'trainedModel' exported from Regression Learner.
 To make predictions on a new table, T:
 yfit = trainedModel.predictFcn(T)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
