@@ -746,3 +746,6 @@ predictedEnergy = predict(mdl_full, newConditions);
 
 % Output the final prediction result formatted to two decimal places
 fprintf('Predicted Energy Output: %.2f\n', predictedEnergy);
+
+
+Example Output (MATLAB Command Window):
