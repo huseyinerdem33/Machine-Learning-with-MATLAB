@@ -758,3 +758,37 @@ New input parameters for prediction:
         25              60               1015                 80       
 
 Predicted Energy Output: 452.18
+
+-------------------------------------------------------------------------
+
+# Example Code 2
+
+## Vehicle Fuel Efficiency (MPG) Prediction Using Linear Regression
+
+### Overview
+This script demonstrates the prediction of a vehicle's fuel efficiency in miles per gallon (MPG) using a trained multi-variable linear regression model (`mdl_multi`). The prediction is based on specific vehicle attributes including weight, horsepower, number of cylinders, and model year.
+
+---
+
+### MATLAB Implementation
+
+```matlab
+% Define vehicle specifications for prediction
+W = 3500;   % Weight (3500 lbs)
+H = 150;    % Horsepower (150 hp)
+C = 6;      % Number of cylinders (6)
+MY = 70;    % Model year (1970)
+
+% Create a table with categorical variables matching the model structure
+newVehicle = table(W, H, C, categorical(MY), ...
+    'VariableNames', {'weight', 'horsepower', 'cylinders', 'modelYear'});
+
+% Display input vehicle specifications in the command window
+disp('Specifications of the new vehicle:');
+disp(newVehicle);
+
+% Predict MPG using the trained linear regression model
+predictedMPG = predict(mdl_multi, newVehicle);
+
+% Display the prediction result formatted to two decimal places
+fprintf('Predicted MPG: %.2f\n', predictedMPG);
