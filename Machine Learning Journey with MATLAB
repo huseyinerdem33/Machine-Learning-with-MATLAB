@@ -794,3 +794,5 @@ predictedMPG = predict(mdl_multi, newVehicle);
 
 % Display the prediction result formatted to two decimal places
 fprintf('Predicted MPG: %.2f\n', predictedMPG);
+
+💻 Example Output (MATLAB Command Window):
