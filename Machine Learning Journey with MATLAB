@@ -842,3 +842,21 @@ head(irisData);
 
 % Render the hierarchical decision tree graph of the exported regression model
 view(trainedModel.RegressionTree, 'Mode', 'graph');
+
+💻 Example Output (MATLAB Command Window):
+
+SepalLength    SepalWidth    PetalLength    PetalWidth      Species   
+    ___________    __________    ___________    __________    ____________
+
+        5.1           3.5            1.4           0.2        {'setosa'}
+        4.9             3            1.4           0.2        {'setosa'}
+        4.7           3.2            1.3           0.2        {'setosa'}
+        4.6           3.1            1.5           0.2        {'setosa'}
+          5           3.6            1.4           0.2        {'setosa'}
+        5.4           3.9            1.7           0.4        {'setosa'}
+        4.6           3.4            1.4           0.3        {'setosa'}
+          5           3.4            1.5           0.2        {'setosa'}
+
+Structure 'trainedModel' exported from Regression Learner.
+To make predictions on a new table, T:
+yfit = trainedModel.predictFcn(T)
