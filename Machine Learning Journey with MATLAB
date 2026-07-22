@@ -709,3 +709,40 @@ Model R-Squared Value: 0.9287
 * **Project Context:** An $R^2$ value of $0.9287$ indicates that approximately **92.87%** of the variance in electrical energy output is accurately captured and explained using only these 4 ambient sensory variables.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Energy Output Prediction Using Linear Regression Model
+
+## Overview
+This repository contains a MATLAB implementation for predicting energy output based on key environmental parameters. The script uses a pre-trained multivariate linear regression model (`mdl_full`) to estimate energy generation under specific atmospheric and operation conditions.
+
+---
+
+## Technical Features
+- **Data Structuring:** Input features are safely encapsulated into a MATLAB `table` structure to match model parameter definitions.
+- **Model Inference:** Employs the native `predict` function for scalable regression analysis.
+- **Formatted Output:** Displays environmental inputs and outputs clean, two-decimal formatted predictions in the console.
+
+---
+
+## MATLAB Implementation
+
+```matlab
+% Define input parameters for the prediction scenario
+T = 25;    % Temperature (25 °C)
+V = 60;    % Exhaust Vacuum (60 cm Hg)
+AP = 1015; % Ambient Pressure (1015 mBar)
+RH = 80;   % Relative Humidity (80%)
+
+% Structure input variables into a MATLAB table with clear column headers
+newConditions = table(T, V, AP, RH, ...
+    'VariableNames', {'Temperature', 'ExhaustVacuum', 'AmbientPressure', 'RelativeHumidity'});
+
+% Display input conditions in the command window
+disp('New input parameters for prediction:');
+disp(newConditions);
+
+% Perform prediction using the pre-trained linear model
+predictedEnergy = predict(mdl_full, newConditions);
+
+% Output the final prediction result formatted to two decimal places
+fprintf('Predicted Energy Output: %.2f\n', predictedEnergy);
