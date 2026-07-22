@@ -861,4 +861,46 @@ Structure 'trainedModel' exported from Regression Learner.
 To make predictions on a new table, T:
 yfit = trainedModel.predictFcn(T)
 
+
+Example Code 2 : 
+
+# Hyperparameter Tuning and Overfitting Prevention in Decision Trees
+
+## Abstract
+This section demonstrates how hyperparameter adjustment—specifically controlling minimum leaf size—mitigates overfitting in Decision Tree Regression models using MATLAB's `fitrtree` function. While highly complex trees tend to memorize training data, simpler and properly pruned models generalize significantly better when evaluated on unseen test data.
+
+---
+
+## Technical Overview
+- **Default Tree Model (`mdl_tree_default`):** Fits an unconstrained decision tree. It grows deeply to capture subtle dataset fluctuations, which often leads to **overfitting** (high variance).
+- **Tuned Tree Model (`mdl_tree_tuned`):** Constrains tree depth by setting `'MinLeafSize', 50`. Requiring at least 50 samples per terminal leaf forces the algorithm to create broader generalizations, reducing complexity and improving performance on unseen data.
+
+---
+
+## MATLAB Implementation
+
+```matlab
+% Load concrete compressive strength dataset into workspace
+load("concreteData.mat");
+
+% Define predictor variables (features) as a formula string
+predictors = 'Cement+BlastFurnaceSlag+FlyAsh+Water+Superplasticizer+CoarseAggregate+FineAggregate+Age';
+
+% Train default regression tree (unconstrained depth)
+mdl_tree_default = fitrtree(concreteData, ['CompressiveStrength ~ ', predictors]);
+
+% Display heading for default tree rules
+fprintf("\n\nDefault Tree Model:\n");
+
+% Display decision rules for default tree in command window
+view(mdl_tree_default);
+
+% Train tuned regression tree (constrained using minimum leaf size)
+mdl_tree_tuned = fitrtree(concreteData, ['CompressiveStrength ~ ', predictors], 'MinLeafSize', 50);
+
+% Display heading for tuned tree rules
+fprintf("\n\nTuned Tree Model:\n");
+
+% Display decision rules for tuned tree in command window
+view(mdl_tree_tuned);
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
