@@ -55,6 +55,7 @@ Using the standard `carsmall` benchmark dataset, this script isolates incomplete
 
 The script below performs data restructuring, computes diagnostic metrics, and implements five distinct data recovery algorithms. All syntax, variables, and logs are implemented in technical English:
 
+Example Code : 
 
 clc;
 clear;
