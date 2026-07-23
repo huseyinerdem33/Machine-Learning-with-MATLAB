@@ -152,7 +152,7 @@ In statistical learning theory, a model's predictive generalized capability is s
 
 ---
 
-## 📂 Module 4: Advanced Data Analysis and Preprocessing Pipeline
+## 📂 Module 4.4: Advanced Data Analysis and Preprocessing Pipeline
 
 This section encompasses three foundational pillars of the preprocessing pipeline:
 1. **Module 4.1: Structural File Ingestion and Variable Localization** – Transitioning raw databanks into tabular formats.
@@ -307,7 +307,7 @@ Previewing Dynamically Generated One-Hot Encoded Structural Matrix Columns:
              0                        1                      0
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-📊 Data Preprocessing Guide: Outliers & Feature Scaling
+📂 Module 4.5Data Preprocessing Guide: Outliers & Feature Scaling
 
 This repository contains a complete MATLAB workflow for cleaning and preparing datasets before training Machine Learning models. 
 
