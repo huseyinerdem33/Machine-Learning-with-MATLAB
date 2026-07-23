@@ -16,7 +16,7 @@ In this stage, an external dataset (`Dataset.xlsx`) was imported into the MATLAB
 
 The following script clears the workspace, reads the data from the Excel file as a table format, and structures it entirely in English:
 
-```matlab
+Example Code : 
 clc;
 clear;
 close all;
