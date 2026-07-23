@@ -307,7 +307,7 @@ Previewing Dynamically Generated One-Hot Encoded Structural Matrix Columns:
              0                        1                      0
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# 📊 Data Preprocessing Guide: Outliers & Feature Scaling
+📊 Data Preprocessing Guide: Outliers & Feature Scaling
 
 This repository contains a complete MATLAB workflow for cleaning and preparing datasets before training Machine Learning models. 
 
