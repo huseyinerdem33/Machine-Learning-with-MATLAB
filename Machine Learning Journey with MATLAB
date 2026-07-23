@@ -709,7 +709,7 @@ Model R-Squared Value: 0.9287
 * **What it Does:** Measures the overall goodness-of-fit and explanatory power of the model. It represents the percentage of total variance in the response variable explained by the predictors.
 * **Project Context:** An $R^2$ value of $0.9287$ indicates that approximately **92.87%** of the variance in electrical energy output is accurately captured and explained using only these 4 ambient sensory variables.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Energy Output Prediction Using Linear Regression Model
 
