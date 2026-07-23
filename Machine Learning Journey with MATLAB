@@ -517,7 +517,7 @@ Regression analysis is widely utilized across various scientific and commercial 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Linear Regression Implementation in MATLAB: GUI vs. Manual Scripting
+📂 Module 4.7 Linear Regression Implementation in MATLAB: GUI vs. Manual Scripting
 
 This project demonstrates two distinct methodologies for implementing Linear Regression models on a power plant dataset (`powerPlant.mat`) using MATLAB:
 1. **Automated Approach:** Model training and code generation via MATLAB's **Regression Learner** app.
