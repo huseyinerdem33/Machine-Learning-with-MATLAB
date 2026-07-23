@@ -332,7 +332,7 @@ We build logical bounds (fences). Any value outside these fences is flagged as a
 
 ---
 
-## 📈 2. Feature Scaling
+ 📈 2. Feature Scaling
 
 ### Why do we scale features?
 When variables have completely different ranges (e.g., Age: 0–80 vs. Salary: 0–150,000), distance-based models can ignore the smaller feature. Scaling solves this problem.
