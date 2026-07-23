@@ -12,7 +12,7 @@ This work marks the first step of **"Module 4: Data Analysis and Preprocessing"*
 
 In this stage, an external dataset (`Dataset.xlsx`) was imported into the MATLAB environment. The column names (features) were renamed for better clarity, and the basic structure of the data was inspected.
 
-### 🛠️ MATLAB Code Content & Explanations
+ 🛠️ MATLAB Code Content & Explanations
 
 The following script clears the workspace, reads the data from the Excel file as a table format, and structures it entirely in English:
 
@@ -39,7 +39,7 @@ Reading process completed successfully.
 Our data consists of 100 rows and 5 columns.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# 🚀 Advanced Missing Data Management and Imputation Strategies in MATLAB
+ 🚀 Advanced Missing Data Management and Imputation Strategies in MATLAB
 
 Following the initial data loading phase, this section addresses the systematic handling of incomplete datasets—a critical prerequisite for robust machine learning pipelines. Missing values can severely bias statistical analyses and degrade model performance if left unmanaged.
 
@@ -47,15 +47,15 @@ This module details quantitative strategies for **detecting**, **deleting**, and
 
 ---
 
-## 📂 Module 4.2 & 4.3: Missing Data Diagnostics and Imputation
+ 📂 Module 4.2 & 4.3: Missing Data Diagnostics and Imputation
 
 Using the standard `carsmall` benchmark dataset, this script isolates incomplete entries, calculates feature-wise missingness patterns, and compares multiple handling strategies including listwise/pairwise deletion, measures of central tendency (mean, median, mode), and mathematical interpolation.
 
-### 🛠️ Academic MATLAB Framework
+🛠️ Academic MATLAB Framework
 
 The script below performs data restructuring, computes diagnostic metrics, and implements five distinct data recovery algorithms. All syntax, variables, and logs are implemented in technical English:
 
-```matlab
+
 clc;
 clear;
 close all;
