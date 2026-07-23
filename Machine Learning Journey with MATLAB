@@ -307,7 +307,7 @@ Previewing Dynamically Generated One-Hot Encoded Structural Matrix Columns:
              0                        1                      0
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-📂 Module 4.5Data Preprocessing Guide: Outliers & Feature Scaling
+📂 Module 4.5 Data Preprocessing Guide: Outliers & Feature Scaling
 
 This repository contains a complete MATLAB workflow for cleaning and preparing datasets before training Machine Learning models. 
 
@@ -455,7 +455,7 @@ end                                       % End of Z-Score loop
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Understanding Regression Analysis: Concepts, Models, and Applications
+📂 Module 4.6 Understanding Regression Analysis: Concepts, Models, and Applications
 
 ## 1. What is Regression Analysis?
 
