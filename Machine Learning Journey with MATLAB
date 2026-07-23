@@ -8,7 +8,7 @@ This work marks the first step of **"Module 4: Data Analysis and Preprocessing"*
 
 
 
-## 📂 Module 4.1: Data Reading from a File
+📂 Module 4.1: Data Reading from a File
 
 In this stage, an external dataset (`Dataset.xlsx`) was imported into the MATLAB environment. The column names (features) were renamed for better clarity, and the basic structure of the data was inspected.
 
