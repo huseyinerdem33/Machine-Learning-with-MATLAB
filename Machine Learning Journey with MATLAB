@@ -591,7 +591,7 @@ ylabel('Enerji Üretimi');
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# ⚡ Predictive Analytics for Power Generation: A Machine Learning & MATLAB Approach
+📂 Module 4.8 Predictive Analytics for Power Generation: A Machine Learning & MATLAB Approach
 
 ![Power Generation & Predictive Analytics Header](watermarked_img_16581748362672968350.png)
 
@@ -711,7 +711,7 @@ Model R-Squared Value: 0.9287
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Energy Output Prediction Using Linear Regression Model
+📂 Module 4.9 Energy Output Prediction Using Linear Regression Model
 
 ## Overview
 This repository contains a MATLAB implementation for predicting energy output based on key environmental parameters. The script uses a pre-trained multivariate linear regression model (`mdl_full`) to estimate energy generation under specific atmospheric and operation conditions.
@@ -809,7 +809,7 @@ Predicted MPG: 19.07
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Decision Tree Regression (Decision Trees Application)
+📂 Module 4.10 Decision Tree Regression (Decision Trees Application)
 
 ## Abstract
 Decision Tree Regression is a non-parametric supervised learning method used to predict continuous numerical values by partitioning data into smaller, homogeneous subsets based on explicit decision rules. Unlike linear models that assume proportional relationships, decision trees recursively split the feature space using threshold conditions (e.g., $X_j < k$), creating a hierarchical structure of nodes and leaves.
