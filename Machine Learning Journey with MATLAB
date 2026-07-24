@@ -995,4 +995,54 @@ $$R^2 = 1 - \frac{\sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2}{\sum_{i=1}^{n} (Y_i - \bar
 *Where:*
 * $\bar{Y}_i$ (or $\bar{Y}$) = Mean of actual target values.
 
+Example Code :
+
+```matlab
+% Load built-in MATLAB sample dataset
+load carsmall;
+
+% Define predictor variables (X) and target variable (Y)
+X = [Weight, Horsepower];
+Y = MPG;
+
+% Remove missing values (NaN) from the dataset
+validIdx = ~isnan(sum(X, 2)) & ~isnan(Y);
+X = X(validIdx, :);
+Y = Y(validIdx);
+
+% Fit linear regression model
+mdl = fitlm(X, Y);
+disp(mdl);
+
+% Predict target values using the fitted model
+Y_pred = predict(mdl, X);
+
+% Calculate prediction errors
+errors = Y - Y_pred;
+
+% Calculate error metrics: MAE, MSE, and RMSE
+MAE = mean(abs(errors));
+MSE = mean(errors.^2);
+RMSE = sqrt(MSE);
+
+% Calculate R-squared (R2) score manually
+SS_res = sum(errors.^2);
+SS_tot = sum((Y - mean(Y)).^2);
+R2 = 1 - (SS_res / SS_tot);
+
+% Print the metric evaluation results to the console
+fprintf("\n\nRESULTS:\n\n");
+fprintf("MAE = %.3f\n", MAE);
+fprintf("MSE = %.3f\n", MSE);
+fprintf("RMSE = %.3f\n", RMSE);
+fprintf("R2 = %.3f\n", R2);
+
+% Data Visualization: Plot actual versus predicted values
+figure();
+scatter(Y, Y_pred, 'filled');
+xlabel("Actual Values (Y)");
+ylabel("Predicted Values (Y_{pred})");
+grid on;
+refline(1, 0); % Draw a reference line representing perfect prediction (y = x)
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
