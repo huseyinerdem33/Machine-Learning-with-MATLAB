@@ -1046,4 +1046,29 @@ grid on;
 refline(1, 0); % Draw a reference line representing perfect prediction (y = x)
 
 💻 Example Output (MATLAB Command Window):
+
+Linear regression model:
+    y ~ 1 + x1 + x2
+
+Estimated Coefficients:
+                    Estimate       SE        tStat       pValue   
+                    ________    _________    ______    __________
+
+    (Intercept)   47.769       1.7417    27.427    1.751e-45
+    x1         -0.0065651   0.0010507   -6.2484   1.3519e-08
+    x2          -0.042018    0.018671   -2.2504      0.02686
+
+Number of observations: 93, Error degrees of freedom: 90
+Root Mean Squared Error: 4.07
+R-squared: 0.752,  Adjusted R-Squared: 0.747
+F-statistic vs. constant model: 137, p-value = 1.05e-26
+
+
+RESULTS:
+
+MAE = 3.155
+MSE = 16.009
+RMSE = 4.001
+R2 = 0.752
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
