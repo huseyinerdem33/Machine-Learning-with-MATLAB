@@ -919,4 +919,78 @@ Default Tree Model:
 Tuned Tree Model:
 (Generates a significantly shorter, more structured set of decision rules due to 'MinLeafSize', 50 constraint)
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-📂 Module 4.11
+📂 Module 4.11  Evaluation Metrics for Regression Models: MAE, MSE, RMSE, and $R^2$
+
+## Overview
+
+In machine learning and statistics, regression evaluation metrics are essential tools used to measure the predictive accuracy and overall performance of a model. When a model predicts continuous numerical values, evaluation metrics quantify the error by comparing the predicted values ($\hat{Y}_i$) with the actual ground-truth values ($Y_i$). 
+
+Understanding these metrics allows data scientists and engineers to select the most appropriate model, optimize hyperparameters, and evaluate how well a model generalizes to unseen data.
+
+---
+
+## 1. Mean Absolute Error (MAE)
+
+### Definition
+Mean Absolute Error (MAE) measures the average magnitude of errors in a set of predictions, without considering their direction. It represents the mean absolute difference between actual and predicted values.
+
+### Key Characteristics
+* **Range:** $[0, \infty)$
+* **Optimal Value:** $0$ (lower values indicate better model performance).
+* **Robustness:** Less sensitive to outliers compared to squared-error metrics because errors are not squared.
+
+### Mathematical Formulation
+$$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |Y_i - \hat{Y}_i|$$
+
+*Where:*
+* $n$ = Total number of observations
+* $Y_i$ = Actual target value for observation $i$
+* $\hat{Y}_i$ = Predicted target value for observation $i$
+
+---
+
+## 2. Mean Squared Error (MSE)
+
+### Definition
+Mean Squared Error (MSE) measures the average of the squared differences between the actual and predicted values. By squaring the error term, larger errors are penalized significantly more than smaller ones.
+
+### Key Characteristics
+* **Range:** $[0, \infty)$
+* **Optimal Value:** $0$
+* **Sensitivity:** Highly sensitive to outliers due to the squaring operation.
+
+### Mathematical Formulation
+$$\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2$$
+
+---
+
+## 3. Root Mean Squared Error (RMSE)
+
+### Definition
+Root Mean Squared Error (RMSE) is the square root of the Mean Squared Error. It provides a measure of accuracy that retains the same unit of measurement as the target variable, making interpretation more straightforward.
+
+### Key Characteristics
+* **Range:** $[0, \infty)$
+* **Optimal Value:** $0$ (values closer to $0$ reflect higher predictive accuracy).
+* **Interpretability:** Directly comparable to the scale of the dependent variable.
+
+### Mathematical Formulation
+$$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2}$$
+
+---
+
+## 4. Coefficient of Determination ($R^2$ / R-Squared)
+
+### Definition
+The Coefficient of Determination ($R^2$) represents the proportion of variance in the dependent variable that is predictable from the independent variables. It evaluates the goodness of fit of a regression model.
+
+### Key Characteristics
+* **Range:** $(-\infty, 1]$ (Typically $[0, 1]$ for baseline comparison models).
+* **Optimal Value:** $1$ (represents perfect prediction).
+* **Interpretation:** Values below $0.12$ generally indicate poor explanatory power and suboptimal performance.
+
+### Mathematical Formulation
+$$R^2 = 1 - \frac{\sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2}{\sum_{i=1}^{n} (Y_i - \bar{Y}_i)^2}$$
+
+*Where:*
+* $\bar{Y}_i$ (or $\bar{Y}$) = Mean of actual target values.
