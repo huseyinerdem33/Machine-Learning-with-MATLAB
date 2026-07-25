@@ -1200,3 +1200,4 @@ fishertable = array2table(meas, 'VariableNames', {'SepalLength', 'SepalWidth', '
 % Add class labels as a new column in the created table
 fishertable.Species = species;
 
+Manuel Code : 
