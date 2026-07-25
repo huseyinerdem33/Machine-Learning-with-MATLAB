@@ -1233,3 +1233,6 @@ accuracy = sum(strcmp(predictedSpecies, YTest)) / numel(YTest);
 
 % Output the final percentage accuracy score to Command Window
 disp(['Accuracy Rate: ', numstr(accuracy * 100), '%']);
+
+Example Code :
+
