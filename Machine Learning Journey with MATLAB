@@ -1305,3 +1305,49 @@ K = 5 Accuracy: %90.476
 K = 7 Accuracy: %88.571
 
 Example Code 2 :
+
+% =========================================================================
+% TITLE: k-Nearest Neighbors (kNN) Classification Pipeline
+% DESCRIPTION: Wine dataset classification using Cosine distance,
+%              5-fold cross-validation, and confusion matrix visualization.
+% =========================================================================
+
+%% 1. Load Data
+wine_data = readtable("wine.csv");                   % Load the CSV data into a MATLAB table
+X = table2array(wine_data(:, 2:end));                % Extract feature columns (columns 2 through end)
+Y = categorical(table2array(wine_data(:, 1)));       % Extract class labels (column 1) as categorical
+
+%% 2. Split Data into Training and Testing Sets
+cv = cvpartition(size(X, 1), 'HoldOut', 0.3);        % Create 70/30 HoldOut partition
+idx = test(cv);                                      % Get logical index array for test samples
+XTrain = X(~idx, :);                                 % Assign 70% of features to training set
+YTrain = Y(~idx);                                    % Assign 70% of labels to training set
+XTest = X(idx, :);                                   % Assign 30% of features to testing set
+YTest = Y(idx);                                      % Assign 30% of labels to testing set
+
+%% 3. kNN Model Training
+% Train kNN classifier with K=7 neighbors using Cosine distance metric
+mdl = fitcknn(XTrain, YTrain, 'NumNeighbors', 7, 'Distance', 'cosine');
+
+%% 4. Prediction and Accuracy
+YPred = predict(mdl, XTest);                         % Predict labels for the unseen test set
+accuracy = sum(YPred == YTest) / numel(YTest);       % Calculate overall accuracy ratio
+disp(['Accuracy: ', num2str(accuracy * 100), '%']);   % Display accuracy percentage in console
+
+%% 5. Confusion Matrix Visualization
+C = confusionmat(YTest, YPred);                      % Compute the confusion matrix array
+confusionchart(C, categories(Y));                    % Render graphical confusion chart
+
+%% 6. Cross-Validation Test (5-Fold)
+cp = cvpartition(Y, 'KFold', 5);                     % Partition entire dataset into 5 stratified folds
+% Train cross-validated kNN model
+cv_mdl = fitcknn(X, Y, 'NumNeighbors', 7, 'Distance', 'cosine', ...
+                 'CrossVal', 'on', 'CVPartition', cp);
+cv_error = kfoldLoss(cv_mdl);                        % Calculate mean cross-validation loss
+disp(['Cross-Validation Error: ', num2str(cv_error * 100), '%']);
+
+%% 7. Prediction on New Data
+% Feature vector for a single new sample
+new_data = [13.5, 1.8, 2.3, 20, 100, 2.5, 3.0, 0.3, 1.5, 5.5, 1.0, 3.5, 1000];
+predicted_class = predict(mdl, new_data);            % Predict class label using trained model
+disp(['Predicted class for new wine sample: ', char(predicted_class)]);
