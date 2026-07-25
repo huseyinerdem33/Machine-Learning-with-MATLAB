@@ -1236,3 +1236,63 @@ disp(['Accuracy Rate: ', numstr(accuracy * 100), '%']);
 
 Example Code :
 
+% =========================================================================
+% SECTION: Classification using k-Nearest Neighbors (kNN) Algorithm
+% File Name: KNNAlgoritmasi2.m
+% =========================================================================
+
+%% 1. Loading the Dataset
+% The 'ionosphere' dataset contains X (351x34 feature matrix) and 
+% Y (351x1 'g' or 'b' class label vector).
+load ionosphere;
+
+%% 2. Partitioning Data into Training and Test Sets (Cross-Validation / HoldOut)
+% 30% of the data is reserved for testing and 70% for training.
+cv = cvpartition(size(X, 1), 'HoldOut', 0.3);
+idx = test(cv); % Logical index array for test data (1: Test, 0: Train)
+
+% Splitting data using logical indexing
+X_train = X(~idx, :);  % Training features (~idx: logical NOT of idx, 70%)
+Y_train = Y(~idx);     % Training labels
+X_test  = X(idx, :);   % Testing features (30%)
+Y_test  = Y(idx);      % Testing labels
+
+%% 3. Testing the kNN Model for Different K Values
+K_values = [1, 3, 5, 7];                     % K values (number of neighbors) to evaluate
+accuracies = zeros(length(K_values), 1);      % Column vector to store accuracy scores
+
+for i = 1:length(K_values)
+    % Constructing the kNN Model:
+    % 'NumNeighbors': Number of nearest neighbors (K)
+    % 'Distance', 'minkowski' and 'Exponent', 2: Euclidean Distance metric
+    mdl = fitcknn(X_train, Y_train, ...
+                  'NumNeighbors', K_values(i), ...
+                  'Distance', 'minkowski', ...
+                  'Exponent', 2);
+    
+    % Predicting class labels on the test dataset
+    Y_pred = predict(mdl, X_test);
+    
+    % Calculating Classification Accuracy
+    % strcmp compares string arrays and counts matching correct predictions
+    accuracies(i) = sum(strcmp(Y_pred, Y_test)) / numel(Y_test);
+    
+    % Displaying the accuracy output in the Command Window
+    disp(['K = ', num2str(K_values(i)), ' Accuracy: %', num2str(accuracies(i) * 100)]);
+end
+
+%% 4. Building Final Model with Best K Value (K = 1) and Confusion Matrix
+% Final model using K=1 which yields top performance
+mdl_best = fitcknn(X_train, Y_train, ...
+                   'NumNeighbors', 1, ...
+                   'Distance', 'minkowski', ...
+                   'Exponent', 2);
+
+% Predicting labels using the optimal final model
+Y_pred_best = predict(mdl_best, X_test);
+
+% Computing the Confusion Matrix
+C = confusionmat(Y_test, Y_pred_best);
+
+% Visualizing the Confusion Matrix
+confusionchart(C, unique(Y));
