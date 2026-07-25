@@ -1127,7 +1127,7 @@ Classification techniques are applied across various industries to automate deci
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# K-Nearest Neighbors (KNN) Algorithm
+📂 Module 4.13 K-Nearest Neighbors (KNN) Algorithm
 
 ## Introduction
 The **K-Nearest Neighbors (KNN)** algorithm is one of the most fundamental supervised machine learning algorithms. It is an instance-based learning method used primarily for classification and regression tasks. Predictions are made based on the similarity between data points within a dataset.
