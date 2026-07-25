@@ -1299,3 +1299,7 @@ confusionchart(C, unique(Y));
 
 💻 Example Output (MATLAB Command Window):
 
+K = 1 Accuracy: %92.381
+K = 3 Accuracy: %90.476
+K = 5 Accuracy: %90.476
+K = 7 Accuracy: %88.571
