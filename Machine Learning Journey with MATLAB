@@ -1176,3 +1176,27 @@ In standard KNN, every neighbor contributes equally to the voting process. Howev
 * **High Memory Requirement:** Since all training data must be stored in memory, computational resource usage is high.
 * **Increased Computational Cost:** Processing time grows significantly as the dataset size and feature dimensions expand.
 * **Parameter Sensitivity:** Overall model performance heavily depends on hyperparameter choices, such as the $K$ value, distance metric, and weighting method.
+
+----------------------------
+
+# MATLAB KNN Classification: Step-by-Step Tutorial
+
+A visual and practical step-by-step guide to running K-Nearest Neighbors (KNN) classification in MATLAB, both using the **Classification Learner App** and standard MATLAB code.
+
+---
+
+## Step 1: Load Dataset and Prepare Data Table
+
+We start by loading the built-in dataset and converting it into a structured MATLAB table.
+
+```matlab
+% Load the Fisher Iris dataset into the workspace
+% Includes feature matrix 'meas' and class labels 'species'
+load fisheriris;
+
+% Convert numerical feature matrix into a structured MATLAB table
+fishertable = array2table(meas, 'VariableNames', {'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth'});
+
+% Add class labels as a new column in the created table
+fishertable.Species = species;
+
