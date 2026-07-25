@@ -1126,3 +1126,53 @@ Classification techniques are applied across various industries to automate deci
 | **Image Processing** | Facial recognition systems and handwritten digit classification (e.g., the MNIST dataset).                 |
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# K-Nearest Neighbors (KNN) Algorithm
+
+## Introduction
+The **K-Nearest Neighbors (KNN)** algorithm is one of the most fundamental supervised machine learning algorithms. It is an instance-based learning method used primarily for classification and regression tasks. Predictions are made based on the similarity between data points within a dataset.
+
+---
+
+## Fundamental Working Principle
+The algorithm operates on a simple yet effective mechanism:
+* **Instance-Based Learning:** Unlike traditional algorithms, KNN does not construct an explicit model during a training phase. Instead, it classifies new data points based on their similarity to existing samples in the training set.
+* **Majority Voting:** A new instance is assigned to the class that is most common among its **K** nearest neighbors.
+
+---
+
+## The Role of the $K$ Parameter
+The value of **$K$** represents the number of nearest neighbors considered during classification:
+* **Small $K$ Value ($K = 1$):** The new data point is assigned directly to the class of its single closest neighbor.
+* **Large $K$ Value (Approaching $N$):** As $K$ increases toward the total number of samples ($N$), the model considers a larger portion of the dataset, and the classification decision is made by majority vote across all those points.
+
+---
+
+## Distance Metrics
+To determine which neighbors are closest to a target point, KNN uses mathematical distance metrics:
+* **Euclidean Distance:** Calculates the straight-line distance between two points in Euclidean space.
+* **Manhattan Distance:** Measures the distance along axes at right angles (grid-based distance).
+* **Minkowski Distance:** A generalized metric that unifies Euclidean and Manhattan distances.
+* **Chebyshev Distance:** Measures the maximum coordinate difference along any single axis.
+* **Dilca Distance:** A specialized distance metric used for categorical or structured feature sets.
+
+---
+
+## Weighting Scheme
+In standard KNN, every neighbor contributes equally to the voting process. However, through **weighting**, closer neighbors can be given higher importance (weights). This ensures that nearer samples have a greater influence on the final classification result than more distant ones.
+
+---
+
+## Advantages and Disadvantages
+
+### Advantages
+* **No Training Phase:** The algorithm stores the data and avoids complex model training operations.
+* **Ease of Implementation:** It features a clear logic and is simple to implement.
+* **Analytic Traceability:** The decision process is transparent and easy to interpret.
+* **Adaptability:** It effectively adapts to local patterns in the data.
+* **Robustness:** It demonstrates resistance against noisy training data.
+
+### Disadvantages
+* **High Memory Requirement:** Since all training data must be stored in memory, computational resource usage is high.
+* **Increased Computational Cost:** Processing time grows significantly as the dataset size and feature dimensions expand.
+* **Parameter Sensitivity:** Overall model performance heavily depends on hyperparameter choices, such as the $K$ value, distance metric, and weighting method.
