@@ -1353,3 +1353,7 @@ predicted_class = predict(mdl, new_data);            % Predict class label using
 disp(['Predicted class for new wine sample: ', char(predicted_class)]);
 
 💻 Example Output 2 (MATLAB Command Window):
+
+Accuracy: 94.4444%
+Cross-Validation Error: 6.7416%
+Predicted class for new wine sample: 1
