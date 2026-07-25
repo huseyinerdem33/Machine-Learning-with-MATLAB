@@ -1296,3 +1296,6 @@ C = confusionmat(Y_test, Y_pred_best);
 
 % Visualizing the Confusion Matrix
 confusionchart(C, unique(Y));
+
+💻 Example Output (MATLAB Command Window):
+
