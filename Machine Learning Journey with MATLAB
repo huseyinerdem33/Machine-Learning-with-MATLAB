@@ -1351,3 +1351,5 @@ disp(['Cross-Validation Error: ', num2str(cv_error * 100), '%']);
 new_data = [13.5, 1.8, 2.3, 20, 100, 2.5, 3.0, 0.3, 1.5, 5.5, 1.0, 3.5, 1000];
 predicted_class = predict(mdl, new_data);            % Predict class label using trained model
 disp(['Predicted class for new wine sample: ', char(predicted_class)]);
+
+💻 Example Output 2 (MATLAB Command Window):
