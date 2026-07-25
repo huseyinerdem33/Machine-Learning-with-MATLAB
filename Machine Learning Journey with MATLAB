@@ -1201,3 +1201,35 @@ fishertable = array2table(meas, 'VariableNames', {'SepalLength', 'SepalWidth', '
 fishertable.Species = species;
 
 Manuel Code : 
+------------
+% Load dataset variables directly from workspace
+load fisheriris;
+X = meas;        % Predictor attributes matrix (150 samples x 4 features)
+Y = species;     % Class targets (150 x 1 cell array)
+
+% Set random number seed to guarantee reproducible results across runs
+rng(1);
+
+% Partition dataset into 70% training and 30% testing subsets
+cvp = cvpartition(Y, 'HoldOut', 0.3);
+
+% Extract training predictors and targets using partition indices
+XTrain = X(cvp.training, :);
+YTrain = Y(cvp.training, :);
+
+% Extract test predictors and target labels
+XTest  = X(cvp.test, :);
+YTest  = Y(cvp.test, :);
+
+% Train KNN classification model using k = 5 nearest neighbors
+% Enable standardization to normalize features to zero mean and unit variance
+Mdl = fitcknn(XTrain, YTrain, 'NumNeighbors', 5, 'Standardize', true);
+
+% Predict response labels on the unseen test dataset
+predictedSpecies = predict(Mdl, XTest);
+
+% Calculate accuracy ratio by comparing predicted labels against true test labels
+accuracy = sum(strcmp(predictedSpecies, YTest)) / numel(YTest);
+
+% Output the final percentage accuracy score to Command Window
+disp(['Accuracy Rate: ', numstr(accuracy * 100), '%']);
