@@ -1413,3 +1413,83 @@ Instability: Small changes in the dataset can create a completely different tree
 High Complexity: In some complex scenarios, calculations can become harder compared to other basic algorithms.
 
 Overfitting Risk: Deep trees can memorize data easily. (Solution: Use parameter limits and pruning).
+
+Example Code : 
+
+# 📘 Chapter 1: Decision Trees in Practice with MATLAB
+
+In machine learning, Decision Trees serve as simple yet exceptionally powerful models for classification. Below is the complete, self-contained MATLAB script based on the Fisher Iris dataset. It covers everything from data preparation and train-test splitting to model training, visualization, performance evaluation, and single-sample prediction.
+
+```matlab
+% =========================================================================
+% MACHINE LEARNING CHAPTER: DECISION TREE CLASSIFICATION IN MATLAB
+% =========================================================================
+
+%% 1. Data Loading and Feature Definition
+% Load the built-in Fisher Iris dataset containing flower measurements
+load fisheriris; 
+
+% Assign numeric measurement matrix (150x4) to X and species labels (150x1 cell) to Y
+X = meas; 
+Y = species; 
+
+% Define descriptive English feature names for clear table column headings
+feature_names = {'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth'};
+
+% Convert the raw measurement matrix into a formatted MATLAB table with column headers
+X_table = array2table(X, 'VariableNames', feature_names);
+
+
+%% 2. Data Partitioning (Train / Test Split)
+% Create a cross-validation partition object holding 30% of data for testing (70% for training)
+cv = cvpartition(Y, 'HoldOut', 0.3);
+
+% Extract training features and corresponding ground truth labels using the training mask
+XTrain = X_table(cv.training, :);
+YTrain = Y(cv.training, :);
+
+% Extract testing features and corresponding ground truth labels using the test mask
+XTest = X_table(cv.test, :);
+YTest = Y(cv.test, :);
+
+% Print the dataset split details directly to the MATLAB Command Window
+fprintf('%d flower samples assigned to Training Set, %d flower samples assigned to Test Set.\n', ...
+        height(XTrain), height(XTest));
+
+
+%% 3. Decision Tree Model Training
+% Train a classification decision tree model using the training subset
+tree_model = fitctree(XTrain, YTrain);
+
+
+%% 4. Model Evaluation & Performance Monitoring
+% Generate predictions on unseen test data using the trained decision tree
+predictions = predict(tree_model, XTest);
+
+% Open a figure window to evaluate classification performance via Confusion Matrix
+figure('Name', 'Model Performance Evaluation');
+confusionchart(YTest, predictions);
+
+
+%% 5. Visualizing the Decision Tree Structure
+% Open a new figure window dedicated to displaying the learned decision tree graph
+figure('Name', 'Decision Tree Architecture');
+
+% Render the graphical view of nodes, branches, and decision thresholds of the tree
+view(tree_model, 'Mode', 'graph');
+
+
+%% 6. Predicting Class for Unseen/New Data Samples
+% Define physical dimensions for a newly observed single flower sample
+new_flower_measurements = {5.8, 2.8, 4.9, 1.5};
+
+% Convert the sample cell array into a table formatted identically to the training data
+new_flower = cell2table(new_flower_measurements, 'VariableNames', feature_names);
+
+% Pass the formatted single-sample table into the trained model to predict its species
+prediction = predict(tree_model, new_flower);
+
+% Output the predicted species label for the new observation in the Command Window
+fprintf('Predicted species for the new flower sample: %s\n', prediction{1});
+
+--------------------------------------
