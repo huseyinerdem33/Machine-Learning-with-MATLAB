@@ -1386,3 +1386,30 @@ A Decision Tree is built like an inverted tree (upside down). Here are its main 
 🟢 Root Node,                    The Starting Point,         This is the top question where the first data split happens.
 🟡 Decision Nodes,               The Questions,              Sub-nodes that split into further branches based on criteria.
 🔴 Leaf Nodes (Terminal Nodes),  The Final Decision,         The bottom nodes that hold the final answer or prediction.
+
+✂️ Tree Pruning: Keeping it Simple
+When a Decision Tree grows too deep with too many branches, it becomes over-complicated. This causes a major problem called Overfitting.
+
+What is Overfitting?
+Overfitting means the model memorizes the training data too well (including noisy/unimportant details) and fails to perform well on new, unseen test data.
+
+How does Pruning help?
+Pruning is a technique used to cut down unnecessary branches and reduce the size of the tree.
+
+✂️ Benefit: It prevents the model from memorizing the training data.
+
+📈 Result: It helps the tree generalize much better to real-world data.
+
+✅ Advantages
+Easy to Understand: Highly visual and simple to interpret.
+
+No Data Scaling Needed: Works without requiring feature normalization or scaling.
+
+Handles All Data Types: Can process both numerical values (e.g., age, salary) and categorical values (e.g., color, status).
+
+⚠️ Disadvantages
+Instability: Small changes in the dataset can create a completely different tree structure.
+
+High Complexity: In some complex scenarios, calculations can become harder compared to other basic algorithms.
+
+Overfitting Risk: Deep trees can memorize data easily. (Solution: Use parameter limits and pruning).
