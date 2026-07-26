@@ -1568,3 +1568,11 @@ view(complex_tree, 'Mode', 'graph');
 % Display the simplified pruned decision tree structure
 subplot(1, 2, 2);
 view(simple_tree, 'Mode', 'graph');
+
+
+
+Test Accuracy of Complex Tree: 0.8857
+Leaf Count in Complex Tree: 22
+
+Test Accuracy of Pruned Tree: 0.9143
+Leaf Count in Pruned Tree: 6
