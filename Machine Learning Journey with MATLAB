@@ -1572,12 +1572,7 @@ Leaf Count in Pruned Tree: 6
 
 ------------------------------------------------
 
-# 📊 Body Fat Classification & Feature Importance Analysis in MATLAB
-
-This document provides a comprehensive machine learning pipeline in MATLAB using **Decision Trees** on a body fat measurement dataset. The pipeline demonstrates data preprocessing, continuous-to-categorical conversion, stratified train-test splitting, model training, accuracy evaluation, and **Feature Importance** calculation.
-
----
-
+ Example Code 2 (Body Fat Classification & Feature Importance Analysis in MATLAB)
 
 ```matlab
 % =========================================================================
@@ -1651,3 +1646,9 @@ yticklabels(feature_names);
 xlabel('Importance Score');
 ylabel('Features');
 title('Feature Importance in Body Fat Prediction');
+
+💻 Example Output 2 (MATLAB Command Window):
+
+177 samples allocated for training, 75 samples allocated for testing.
+
+Accuracy Rate: 72.00%
