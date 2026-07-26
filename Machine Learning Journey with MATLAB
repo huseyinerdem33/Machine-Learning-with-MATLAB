@@ -1376,3 +1376,13 @@ In technical terms, a Decision Tree is a popular structure in machine learning. 
     (Yes) /     (No)  \ (Yes)/          \ (No)
          v             v    v            v
      [ Unfit ]       [ Fit ][ Fit ]    [ Unfit ]
+
+!
+
+🏗️ Structure of a Decision Tree
+A Decision Tree is built like an inverted tree (upside down). Here are its main components.
+
+        Term,                       What it Means,                              Description
+🟢 Root Node,                    The Starting Point,         This is the top question where the first data split happens.
+🟡 Decision Nodes,               The Questions,              Sub-nodes that split into further branches based on criteria.
+🔴 Leaf Nodes (Terminal Nodes),  The Final Decision,         The bottom nodes that hold the final answer or prediction.
