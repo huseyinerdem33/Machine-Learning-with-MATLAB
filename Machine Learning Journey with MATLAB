@@ -1416,9 +1416,6 @@ Overfitting Risk: Deep trees can memorize data easily. (Solution: Use parameter 
 
 Example Code : 
 
-# 📘 Chapter 1: Decision Trees in Practice with MATLAB
-
-In machine learning, Decision Trees serve as simple yet exceptionally powerful models for classification. Below is the complete, self-contained MATLAB script based on the Fisher Iris dataset. It covers everything from data preparation and train-test splitting to model training, visualization, performance evaluation, and single-sample prediction.
 
 ```matlab
 % =========================================================================
@@ -1569,7 +1566,7 @@ view(complex_tree, 'Mode', 'graph');
 subplot(1, 2, 2);
 view(simple_tree, 'Mode', 'graph');
 
-
+💻 Example Output (MATLAB Command Window):
 
 Test Accuracy of Complex Tree: 0.8857
 Leaf Count in Complex Tree: 22
