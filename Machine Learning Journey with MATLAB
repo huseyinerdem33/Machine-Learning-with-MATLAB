@@ -1361,3 +1361,18 @@ Predicted class for new wine sample: 1
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 📂 Module 4.14 :  Decision Trees: A Simple Guide to Smart Decisions
+
+📌 Introduction: What is a Decision Tree?
+Imagine you are making a daily decision. You ask yourself a simple question, get an answer, and then ask another question based on that answer. That is exactly how a Decision Tree works!
+
+In technical terms, a Decision Tree is a popular structure in machine learning. It repeatedly splits a set of data into smaller groups based on specific parameters (features).
+
+                    [ Age < 30? ]
+                     /         \
+              (Yes) /           \ (No)
+                   v             v
+          [ Eat Pizza? ]     [ Exercise? ]
+           /         \        /        \
+    (Yes) /     (No)  \ (Yes)/          \ (No)
+         v             v    v            v
+     [ Unfit ]       [ Fit ][ Fit ]    [ Unfit ]
