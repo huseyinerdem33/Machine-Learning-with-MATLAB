@@ -1490,11 +1490,7 @@ prediction = predict(tree_model, new_flower);
 fprintf('Predicted species for the new flower sample: %s\n', prediction{1});
 
 --------------------------------------
-# 🛡️ Example Code (PREVENTING OVERFITTING)
-
-In decision tree models, **overfitting** occurs when a tree grows too deep, learning noise and ultra-specific details from the training data rather than underlying patterns. This leads to high accuracy on training sets but poor performance on new test datasets.
-
-To prevent overfitting, we apply **Pruning** (or parameter constraints) by controlling tree hyper-parameters like `'MinLeafSize'`. Below is a complete MATLAB code example comparing an unconstrained complex decision tree against a pruned, simplified tree using the built-in **Ionosphere** dataset.
+ Example Code (PREVENTING OVERFITTING)
 
 ```matlab
 % =========================================================================
@@ -1573,3 +1569,85 @@ Leaf Count in Complex Tree: 22
 
 Test Accuracy of Pruned Tree: 0.9143
 Leaf Count in Pruned Tree: 6
+
+------------------------------------------------
+
+# 📊 Body Fat Classification & Feature Importance Analysis in MATLAB
+
+This document provides a comprehensive machine learning pipeline in MATLAB using **Decision Trees** on a body fat measurement dataset. The pipeline demonstrates data preprocessing, continuous-to-categorical conversion, stratified train-test splitting, model training, accuracy evaluation, and **Feature Importance** calculation.
+
+---
+
+
+```matlab
+% =========================================================================
+% BODY FAT CLASSIFICATION & FEATURE IMPORTANCE PIPELINE IN MATLAB
+% =========================================================================
+
+%% 1. Data Selection and Continuous Target Binarization
+% WHY: We isolate the continuous target variable 'BodyFat' and select body 
+% measurement attributes to act as predictive features (predictors).
+y = data_table.BodyFat;
+X_table = data_table(:, {'Age', 'Weight', 'Height', 'Neck', 'Chest', ...
+                         'Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', ...
+                         'Biceps', 'Forearm', 'Wrist'});
+
+% WHY: Decision trees can perform binary classification. Here, we convert the 
+% continuous 'BodyFat' variable into a categorical target ('Low' vs. 'High') 
+% using the median value as the threshold split point.
+Y_categorical = categorical(y > median(y), [false, true], {'Low', 'High'});
+
+% WHY: Store feature names to label plots and maintain clear data reference.
+feature_names = X_table.Properties.VariableNames;
+
+
+%% 2. Data Partitioning (Train / Test Split)
+% WHY: Splitting data into 70% training and 30% testing prevents data leakage 
+% and allows us to evaluate model performance on unseen data.
+cv = cvpartition(Y_categorical, 'HoldOut', 0.3);
+
+% WHY: Separate predictors and targets for the training subset.
+XTrain = X_table(cv.training, :);
+YTrain = Y_categorical(cv.training, :);
+
+% WHY: Separate predictors and targets for the evaluation/testing subset.
+XTest = X_table(cv.test, :);
+YTest = Y_categorical(cv.test, :);
+
+% Print dataset split details to the Command Window
+fprintf('%d samples allocated for training, %d samples allocated for testing.\n', ...
+        height(XTrain), height(XTest));
+
+
+%% 3. Model Training & Prediction
+% WHY: Fit a classification decision tree on the training data.
+tree_model = fitctree(XTrain, YTrain);
+
+% WHY: Generate class predictions on unseen test samples to measure real performance.
+predictions = predict(tree_model, XTest);
+
+% WHY: Visualize true vs. false classifications across both classes using a confusion matrix.
+figure('Name', 'Confusion Matrix');
+confusionchart(YTest, predictions);
+
+
+%% 4. Accuracy Calculation
+% WHY: Quantify model performance by calculating the ratio of correct predictions to total predictions.
+accuracy = sum(predictions == YTest) / numel(YTest);
+fprintf('\nAccuracy Rate: %.2f%%\n', accuracy * 100);
+
+
+%% 5. Feature Importance Calculation & Visualization
+% WHY: Compute how much each body measurement contributes to splitting nodes 
+% effectively within the decision tree structure.
+importance_scores = predictorImportance(tree_model);
+
+% WHY: Plot a horizontal bar chart to easily identify which body measurements 
+% are the strongest predictors of high/low body fat.
+figure('Name', 'Feature Importance Levels');
+barh(importance_scores);
+yticks(1:length(feature_names));
+yticklabels(feature_names);
+xlabel('Importance Score');
+ylabel('Features');
+title('Feature Importance in Body Fat Prediction');
