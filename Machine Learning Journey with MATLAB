@@ -1493,3 +1493,78 @@ prediction = predict(tree_model, new_flower);
 fprintf('Predicted species for the new flower sample: %s\n', prediction{1});
 
 --------------------------------------
+# 🛡️ Example Code (PREVENTING OVERFITTING)
+
+In decision tree models, **overfitting** occurs when a tree grows too deep, learning noise and ultra-specific details from the training data rather than underlying patterns. This leads to high accuracy on training sets but poor performance on new test datasets.
+
+To prevent overfitting, we apply **Pruning** (or parameter constraints) by controlling tree hyper-parameters like `'MinLeafSize'`. Below is a complete MATLAB code example comparing an unconstrained complex decision tree against a pruned, simplified tree using the built-in **Ionosphere** dataset.
+
+```matlab
+% =========================================================================
+% PREVENTING OVERFITTING IN DECISION TREES USING MINLEAFSIZE PRUNING
+% =========================================================================
+
+%% 1. Data Preparation
+% Load the built-in Ionosphere dataset containing radar data targets
+load ionosphere;
+
+% Convert target labels array Y into a categorical variable for classification
+Y_categorical = categorical(Y);
+
+
+%% 2. Train-Test Dataset Split
+% Create a 70/30 stratified train-test split partition
+cv = cvpartition(Y_categorical, 'HoldOut', 0.3);
+
+% Extract training features and categorical ground-truth labels
+XTrain = X(cv.training, :);
+YTrain = Y_categorical(cv.training, :);
+
+% Extract testing features and categorical ground-truth labels
+XTest = X(cv.test, :);
+YTest = Y_categorical(cv.test, :);
+
+
+%% 3. Model 1: Full / Unconstrained Complex Tree (Prone to Overfitting)
+% Train a standard unconstrained classification tree
+complex_tree = fitctree(XTrain, YTrain);
+
+% Predict labels on unseen test data using the complex model
+predictions1 = predict(complex_tree, XTest);
+
+% Calculate accuracy of the complex model on the test dataset
+accuracy1 = mean(predictions1 == YTest);
+fprintf('Test Accuracy of Complex Tree: %.4f\n', accuracy1);
+
+% Calculate tree complexity (total leaf nodes count)
+leaf_count1 = sum(complex_tree.IsBranchNode == 0);
+fprintf('Leaf Count in Complex Tree: %d\n', leaf_count1);
+
+
+%% 4. Model 2: Pruned / Simplified Tree (Prevents Overfitting)
+% Train a constrained tree setting 'MinLeafSize' to 15 to prevent overfitting
+simple_tree = fitctree(XTrain, YTrain, 'MinLeafSize', 15);
+
+% Predict labels on unseen test data using the pruned model
+predictions2 = predict(simple_tree, XTest);
+
+% Calculate accuracy of the pruned model on the test dataset
+accuracy2 = mean(predictions2 == YTest);
+fprintf('Test Accuracy of Pruned Tree: %.4f\n', accuracy2);
+
+% Calculate pruned tree complexity (total leaf nodes count)
+leaf_count2 = sum(simple_tree.IsBranchNode == 0);
+fprintf('Leaf Count in Pruned Tree: %d\n', leaf_count2);
+
+
+%% 5. Graphical Comparison of Tree Architectures
+% Open a figure window to visual compare both decision tree structures side-by-side
+figure('Name', 'Comparison of Tree Architectures');
+
+% Display the unconstrained complex decision tree structure
+subplot(1, 2, 1);
+view(complex_tree, 'Mode', 'graph');
+
+% Display the simplified pruned decision tree structure
+subplot(1, 2, 2);
+view(simple_tree, 'Mode', 'graph');
