@@ -1758,3 +1758,5 @@ accuracy = sum(Y_pred == Y_categorical) / length(Y);
 fprintf('Accuracy rate of the model trained with code: %.2f%%\n', accuracy * 100);
 
 💻 Example Output (MATLAB Command Window):
+
+Accuracy rate of the model trained with code: 100.00%
