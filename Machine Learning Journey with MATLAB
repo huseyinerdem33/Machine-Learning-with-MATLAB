@@ -1867,3 +1867,10 @@ for i = 1 : length(class_names)
 end
 
 💻 Example Output 3 (MATLAB Command Window):
+
+Model Prediction: versicolor
+------------------
+Model Confidence Scores (Probabilities):
+- setosa: 0.0000 (%0.00)
+- versicolor: 0.9842 (%98.42)
+- virginica: 0.0158 (%1.58)
