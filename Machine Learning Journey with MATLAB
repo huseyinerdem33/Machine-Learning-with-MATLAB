@@ -1822,3 +1822,9 @@ cm.ColumnSummary = 'column-normalized';
 accuracy = sum(Y_pred == Y_test) / length(Y_test);
 % Print overall model accuracy percentage in console
 fprintf("Accuracy Rate: %.2f%%\n", accuracy * 100);
+
+💻 Example Output 2 (MATLAB Command Window):
+
+Training set size: 820
+Test set size: 205
+Accuracy Rate: 84.88%
