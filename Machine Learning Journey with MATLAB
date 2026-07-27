@@ -1865,3 +1865,5 @@ for i = 1 : length(class_names)
     % Print class name, decimal probability, and formatted percentage
     fprintf('- %s: %.4f (%%%.2f)\n', class_names{i}, probability_scores(i), probability_scores(i)*100);
 end
+
+💻 Example Output 3 (MATLAB Command Window):
