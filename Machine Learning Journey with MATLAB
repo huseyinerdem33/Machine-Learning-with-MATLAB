@@ -1828,3 +1828,40 @@ fprintf("Accuracy Rate: %.2f%%\n", accuracy * 100);
 Training set size: 820
 Test set size: 205
 Accuracy Rate: 84.88%
+
+-----------------------
+
+Example Code 3 :
+
+% Load the built-in Fisher Iris dataset into the workspace
+load fisheriris;
+
+% Assign feature matrix containing measurement values to X
+X = meas;
+% Assign target class labels (species) to Y
+Y = species;
+
+% Fit a multinomial logistic regression model for multiclass classification
+mdl = fitmnr(X, Y);
+
+% Define feature vector for a new sample [Sepal Length, Sepal Width, Petal Length, Petal Width]
+new_flower = [6.5, 2.8, 4.6, 1.5];
+
+% Predict predicted class label and class probability scores for the new observation
+[predicted_label, probability_scores] = predict(mdl, new_flower);
+
+% Section Header: Display Results to Console
+% Print predicted class label for the new observation
+fprintf("Model Prediction: %s\n", predicted_label{1});
+% Print separator line for output formatting
+disp('------------------');
+% Print section title for confidence scores
+fprintf("Model Confidence Scores (Probabilities):\n");
+% Retrieve list of target class names from trained model object
+class_names = mdl.ClassNames;
+
+% Iterate through each class name to display predicted probability and percentage
+for i = 1 : length(class_names)
+    % Print class name, decimal probability, and formatted percentage
+    fprintf('- %s: %.4f (%%%.2f)\n', class_names{i}, probability_scores(i), probability_scores(i)*100);
+end
