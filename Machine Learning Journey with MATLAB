@@ -1654,4 +1654,23 @@ title('Feature Importance in Body Fat Prediction');
 Accuracy Rate: 72.00%
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-📂 Module 4.15 : 
+📂 Module 4.15 :  Logistic Regression: A Comprehensive Overview
+
+ 📌 Introduction
+Despite having **"regression"** in its name, **Logistic Regression** is fundamental classification algorithm in machine learning. It is primarily used to solve binary classification problems. 
+
+Typical tasks include:
+* **Binary Classification:** Determining whether an image depicts a cat or a dog.
+* **Demographic Prediction:** Estimating whether given data belongs to a male or a female individual.
+
+---
+
+## 🔄 Difference Between Linear and Logistic Regression
+
+The fundamental distinction between **Linear Regression** and **Logistic Regression** lies in the **type of target variable** they aim to predict, as well as the decision boundary they apply:
+
+| Feature | Linear Regression | Logistic Regression |
+| :--- | :--- | :--- |
+| **Target Variable Type** | Continuous numerical value (e.g., house price, student exam score) | Discrete or binary value (e.g., healthy/sick, spam/not spam) |
+| **Output Range** | Unbounded ($\mathbb{R}$, below 0 or above 1) | Bounded probability between $0$ and $1$ |
+| **Model Function** | Linear line equation | Sigmoid (Logistic) Function |
