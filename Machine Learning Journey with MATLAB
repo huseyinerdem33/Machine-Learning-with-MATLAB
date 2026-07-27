@@ -1669,8 +1669,52 @@ Typical tasks include:
 
 The fundamental distinction between **Linear Regression** and **Logistic Regression** lies in the **type of target variable** they aim to predict, as well as the decision boundary they apply:
 
-| Feature | Linear Regression | Logistic Regression |
-| :--- | :--- | :--- |
-| **Target Variable Type** | Continuous numerical value (e.g., house price, student exam score) | Discrete or binary value (e.g., healthy/sick, spam/not spam) |
-| **Output Range** | Unbounded ($\mathbb{R}$, below 0 or above 1) | Bounded probability between $0$ and $1$ |
-| **Model Function** | Linear line equation | Sigmoid (Logistic) Function |
+| Feature                  | Linear Regression                                                  | Logistic Regression                                            |
+| :----------------------- | :----------------------------------------------------------------- | :------------------------------------------------------------- |
+| **Target Variable Type** | Continuous numerical value<br>*(e.g., house price, exam score)*    | Discrete or binary value<br>*(e.g., healthy/sick, spam/not)*   |
+| **Output Range**         | Unbounded<br>*($\mathbb{R}$, below 0 or above 1)*                  | Bounded probability<br>*(between 0 and 1)*                     |
+| **Model Function**       | Linear line equation                                               | Sigmoid (Logistic) Function                                    |
+
+### The Sigmoid Function
+Logistic Regression employs the **Sigmoid (Logistic) Function** to map real-valued numbers into probabilities:
+
+$$\text{sig}(t) = \frac{1}{1 + e^{-t}}$$
+
+This mathematical transformation yields a characteristic **"S-shaped" curve**.
+
+---
+
+## 🌐 Application Areas
+
+Logistic Regression is widely implemented across various domains:
+
+* 🩺 **Medicine & Biology:**
+  * Estimating disease risk for patients.
+  * Evaluating drug dosage efficacy.
+  * Classifying tumors as benign or malignant.
+
+* 💼 **Marketing & Business Analytics:**
+  * Predicting e-commerce visitor purchase intent.
+  * Forecasting customer churn rate (subscription cancellations).
+
+* ⚙️ **Engineering & Manufacturing:**
+  * Estimating machine failure probability using sensor data.
+  * Detecting defective components on production lines.
+
+* 🎓 **Social Sciences & Other Domains:**
+  * Predicting voter turnout and party choices.
+  * Assessing job candidate hiring probabilities.
+  * Filtering spam emails.
+
+---
+
+## ⚡ Advantages and Disadvantages
+
+### ✅ Advantages
+* **Simplicity:** Easy to implement, interpret, and computationally efficient.
+* **Performance:** Performs exceptionally well on linearly separable datasets.
+* **Overfitting Resistance:** Less prone to overfitting compared to complex models, though overfit can still occur on very large feature sets.
+
+### ⚠️ Disadvantages
+* **Sample Size Requirement:** Should not be applied if the number of observations is fewer than the number of features, as this leads to severe overfitting.
+* **Linearity Assumption:** Requires the dataset to be linearly separable to establish an effective decision boundary.
