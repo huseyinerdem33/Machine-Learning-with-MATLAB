@@ -1760,3 +1760,65 @@ fprintf('Accuracy rate of the model trained with code: %.2f%%\n', accuracy * 100
 💻 Example Output (MATLAB Command Window):
 
 Accuracy rate of the model trained with code: 100.00%
+
+Example Code 2 : 
+
+% Read input data from CSV file into a MATLAB table
+data = readtable("heart.csv");
+
+% Extract feature matrix X (all columns except the last one)
+X = data(:, 1:end-1);
+% Extract target variable Y (the 'target' column)
+Y = data.target;
+
+% Section Header: Train and Test Data Splitting
+% Set random seed for reproducibility of data split
+rng(1);
+% Create a 80/20 holdout cross-validation partition based on target labels Y
+cv = cvpartition(Y, 'HoldOut', 0.2);
+% Get logical indices for training set
+trainIdx = training(cv);
+% Get logical indices for test set
+testIdx = test(cv);
+
+% Extract training features using training indices
+X_train = X(trainIdx, :);
+% Extract training target values using training indices
+Y_train = Y(trainIdx);
+% Extract test features using test indices
+X_test = X(testIdx, :);
+% Extract test target values using test indices
+Y_test = Y(testIdx);
+
+% Print the number of training samples to command window
+fprintf("Training set size: %d\n", length(Y_train));
+% Print the number of test samples to command window
+fprintf("Test set size: %d\n", length(Y_test));
+
+% Section Header: Build Logistic Regression Model
+% fitglm = Generalized Linear Model function
+% Fit logistic regression model using binomial distribution for binary classification (0 or 1 outcome)
+model = fitglm(X_train, Y_train, 'Distribution', 'binomial'); 
+
+% Predict target probabilities on the unseen test set features
+probabilities = predict(model, X_test);
+% Convert predicted probabilities into binary outcomes using a threshold of 0.5
+Y_pred = double(probabilities > 0.5);
+
+% Section Header: Confusion Matrix Visualization
+% Initialize a new figure window for plotting
+figure();
+% Display confusion matrix comparing actual test labels with predicted labels
+cm = confusionchart(Y_test, Y_pred);
+% Set title for the confusion matrix chart
+cm.Title = "Heart Disease Prediction Performance";
+% Display row-normalized percentage summary
+cm.RowSummary = "row-normalized";
+% Display column-normalized percentage summary
+cm.ColumnSummary = 'column-normalized';
+
+% Section Header: Accuracy Calculation
+% Calculate classification accuracy by measuring correctly predicted test instances
+accuracy = sum(Y_pred == Y_test) / length(Y_test);
+% Print overall model accuracy percentage in console
+fprintf("Accuracy Rate: %.2f%%\n", accuracy * 100);
