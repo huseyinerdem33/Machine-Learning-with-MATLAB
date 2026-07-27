@@ -1718,3 +1718,43 @@ Logistic Regression is widely implemented across various domains:
 ### ⚠️ Disadvantages
 * **Sample Size Requirement:** Should not be applied if the number of observations is fewer than the number of features, as this leads to severe overfitting.
 * **Linearity Assumption:** Requires the dataset to be linearly separable to establish an effective decision boundary.
+
+Example Code :
+
+% Load the built-in Fisher Iris dataset into the workspace
+load fisheriris;
+
+% Extract the 3rd and 4th features (Petal Length and Petal Width) for the first 100 samples
+X = meas(1:100, 3:4);
+% Extract the corresponding target species labels for the first 100 samples
+Y = species(1:100);
+
+% Section Header: Data Visualization
+% Initialize a new figure window for plotting
+figure();
+% Create a grouped scatter plot to visualize feature distribution across classes
+gscatter(X(:,1), X(:,2), Y);
+% Label the horizontal axis as Petal Length
+xlabel('Petal Length');
+% Label the vertical axis as Petal Width
+ylabel('Petal Width');
+% Assign a title to the generated plot
+title('Fisher Iris Dataset');
+% Turn on the background grid lines for visual clarity
+grid on;
+
+% Section Header: Model Training
+% Train a linear binary classification model using logistic learner
+mdl = fitclinear(X, Y, 'Learner', 'logistic');
+% Generate class predictions on the training feature matrix X
+Y_pred = predict(mdl, X);
+% Convert the cell array of target labels into categorical format
+Y_categorical = categorical(Y);
+
+% Section Header: Evaluation Results
+% Calculate classification accuracy by comparing predicted vs actual categorical labels
+accuracy = sum(Y_pred == Y_categorical) / length(Y);
+% Display the formatted overall accuracy percentage in the console
+fprintf('Accuracy rate of the model trained with code: %.2f%%\n', accuracy * 100);
+
+💻 Example Output (MATLAB Command Window):
