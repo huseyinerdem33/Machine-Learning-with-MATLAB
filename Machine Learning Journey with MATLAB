@@ -1939,3 +1939,86 @@ Commonly utilized kernel types include:
 * **Noise Sensitivity:** Performance may degrade when applied to highly noisy datasets or overlapping data points.
 
 ---
+
+# Example Code:
+
+```matlab
+% Set the random number generator seed to ensure reproducible results
+rng(7); 
+
+% Define the number of samples per class
+n = 200; 
+
+% Generate Body Mass Index (BMI) values for the low-risk class using a normal distribution
+BMI_low = randn(n,1)*2 + 22; 
+
+% Generate Cholesterol values for the low-risk class using a normal distribution
+Chol_low = randn(n,1)*15 + 170; 
+
+% Generate Body Mass Index (BMI) values for the high-risk class using a normal distribution
+BMI_high = randn(n,1)*2.5 + 30; 
+
+% Generate Cholesterol values for the high-risk class using a normal distribution
+Chol_high = randn(n,1)*20 + 240; 
+
+% Combine feature matrices for both classes into a single matrix X
+X = [BMI_low, Chol_low; BMI_high, Chol_high]; 
+
+% Create numerical label vectors (0 for low risk, 1 for high risk)
+Y = [zeros(n,1); ones(n,1)]; 
+
+% Convert numerical labels into categorical format with descriptive names
+Yc = categorical(Y, [0, 1], {'LowRisk', 'HighRisk'}); 
+
+% Partition data into training (70%) and testing (30%) sets while preserving class distribution
+cvp = cvpartition(Yc, 'HoldOut', 0.3, 'Stratify', true); 
+
+% Extract training feature dataset based on the partition mask
+Xtrain = X(training(cvp), :); 
+
+% Extract training categorical labels based on the partition mask
+Ytrain = Yc(training(cvp), :); 
+
+% Extract test feature dataset based on the partition mask
+Xtest = X(test(cvp), :); 
+
+% Extract test categorical labels based on the partition mask
+Ytest = Yc(test(cvp), :); 
+
+% Train a Linear Support Vector Machine (SVM) model with standardized predictor variables
+mdl = fitcsvm(Xtrain, Ytrain, ...
+    'KernelFunction', 'linear', ...
+    'Standardize', true, ...
+    'ClassNames', categories(Ytrain)); 
+
+% Predict target labels for the test feature dataset
+Yhat = predict(mdl, Xtest); 
+
+% Calculate test accuracy by comparing predicted labels against actual test labels
+acc = mean(Yhat == Ytest); 
+
+% Print the overall test accuracy percentage to the console window
+fprintf('Test Accuracy: %.3f\n', acc); 
+
+% Initialize a new figure window for data visualization
+figure; 
+
+% Display scatter plot of training samples grouped by categorical risk class
+gscatter(Xtrain(:,1), Xtrain(:,2), Ytrain, 'rb', 'ox'); 
+
+% Retain the current plot graphics to overlay additional vector markers
+hold on; 
+
+% Retrieve calculated support vector coordinates from the trained SVM model structure
+sv = mdl.SupportVectors; 
+
+% Highlight support vectors on the scatter plot with distinct black circles
+plot(sv(:,1), sv(:,2), 'ko', 'MarkerSize', 8, 'LineWidth', 1.2); 
+
+% Add informative labels and titles to finalize figure graphics
+title('Support Vector Machine Classification Results'); 
+xlabel('Body Mass Index (BMI)'); 
+ylabel('Cholesterol Level (mg/dL)'); 
+legend('Low Risk', 'High Risk', 'Support Vectors', 'Location', 'best'); 
+grid on; 
+hold off;
