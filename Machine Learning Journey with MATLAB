@@ -2161,3 +2161,5 @@ function plotKernelSimple(mdl, x1g, x2g, gridX, Xtest, Ytest, fname, titleText)
     % Release plot retention lock on axes
     hold off; 
 end
+
+💻 Example Output 2 (MATLAB Command Window):
