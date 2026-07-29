@@ -2022,3 +2022,6 @@ ylabel('Cholesterol Level (mg/dL)');
 legend('Low Risk', 'High Risk', 'Support Vectors', 'Location', 'best'); 
 grid on; 
 hold off;
+
+
+💻 Example Output  (MATLAB Command Window):
