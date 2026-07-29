@@ -1881,4 +1881,15 @@ Model Confidence Scores (Probabilities):
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-📂 Module 4.16 :
+📂 Module 4.16 :# Comprehensive Theoretical Overview of Support Vector Machines (SVM)
+
+## Abstract
+Support Vector Machine (SVM) is recognized as one of the most robust supervised learning algorithms utilized for classification tasks in machine learning. The primary objective of the algorithm is to identify an optimal boundary, known as a **hyperplane**, which separates different classes within a dataset with the maximum distance.
+
+---
+
+## 1. Fundamental Principles and Mechanics
+
+### 1.1 Hyperplane and Support Vectors
+* **Optimal Boundary Selection:** The core mechanism of SVM involves constructing an optimal decision boundary to separate binary or multi-class data points.
+* **Support Vectors:** The critical data points situated closest to the decision boundary are defined as **support vectors**. These elements directly influence the position and orientation of the hyperplane.
