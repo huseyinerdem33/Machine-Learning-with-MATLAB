@@ -1903,3 +1903,39 @@ x₂ ▲
       │  ─────────/───────► x₁
       │          /  ▲
       │         /
+
+### 1.2 Margin Optimization
+* **Definition:** The distance between the separating hyperplane and the closest support vectors is termed the **margin**.
+* **Objective:** The mathematical goal of the SVM algorithm is to maximize this margin. A wider margin ensures higher stability and stronger generalization capability during test-phase classification.
+
+---
+
+## 2. High-Dimensional Data and Non-Linear Separation
+
+### 2.1 Adaptability
+* SVM functions effectively on both linearly separable and non-linearly separable datasets.
+* The ability to maintain high classification accuracy in high-dimensional spaces makes SVM a prominent methodology in statistical learning.
+
+### 2.2 Kernel Functions (Kernel Trick)
+When datasets are non-linearly separable in their original feature space, **kernel functions** are applied. These functions map the input vectors into a higher-dimensional feature space where linear separation becomes feasible.
+
+Commonly utilized kernel types include:
+1. **Linear Kernel**
+2. **Polynomial Kernel**
+3. **Radial Basis Function (RBF) Kernel**
+
+---
+
+## 3. Performance Evaluation
+
+### 3.1 Key Advantages
+* **High Accuracy:** Delivers superior performance and precision on small to medium-sized datasets.
+* **Dimensional Resilience:** Maintains operational efficiency in high-dimensional feature spaces.
+* **Generalization:** Demonstrates strong resistance against **overfitting** when hyperparameters are properly optimized.
+
+### 3.2 Main Limitations
+* **Computational Cost:** Training duration increases substantially on large-scale datasets.
+* **Parameter Sensitivity:** Requires careful tuning of parameters and selection of the appropriate kernel function.
+* **Noise Sensitivity:** Performance may degrade when applied to highly noisy datasets or overlapping data points.
+
+---
