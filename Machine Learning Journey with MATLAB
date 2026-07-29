@@ -1893,3 +1893,13 @@ Support Vector Machine (SVM) is recognized as one of the most robust supervised 
 ### 1.1 Hyperplane and Support Vectors
 * **Optimal Boundary Selection:** The core mechanism of SVM involves constructing an optimal decision boundary to separate binary or multi-class data points.
 * **Support Vectors:** The critical data points situated closest to the decision boundary are defined as **support vectors**. These elements directly influence the position and orientation of the hyperplane.
+
+x₂ ▲
+      │          Support Vectors (Critical Data Points)
+      │            / 
+      │          ◯   / 
+      │  ◯          /   ▲
+      │    ◯       /   ▲ ▲
+      │  ─────────/───────► x₁
+      │          /  ▲
+      │         /
