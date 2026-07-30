@@ -2232,3 +2232,42 @@ Despite its advantages, the algorithm has critical limitations to consider:
 * **Sensitivity to Missing Data:** Missing values in dataset features can directly distort the calculated probability outcomes.
 
 Example Code : 
+
+% Load the built-in Fisher's Iris dataset
+load fisheriris;
+
+% Convert raw measurement matrix into a table with custom column names
+data = array2table(meas, 'VariableNames', {'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth'});
+data.Species = species; % Assign species labels to the dataset table
+
+% Split the dataset into training (70%) and testing (30%) subsets
+cv = cvpartition(data.Species, 'HoldOut', 0.3); % Define partitioned split ratio
+trainIdx = training(cv);                        % Extract indices for training samples
+testIdx = test(cv);                             % Extract indices for testing samples
+trainData = data(trainIdx, :);                  % Subset training data table
+testData = data(testIdx, :);                    % Subset testing data table
+
+% Train a Gaussian Naive Bayes classification model
+mdl = fitcnb(trainData(:, 1:4), trainData.Species, 'DistributionNames', 'normal'); % Model training using normal distribution
+
+% Evaluate model robustly using 5-Fold Cross-Validation
+crossValMdl = crossval(mdl, 'KFold', 5);                      % Apply 5-fold cross-validation
+loss = kfoldLoss(crossValMdl);                                % Compute cross-validation classification loss
+accuracy = 1 - loss;                                          % Calculate cross-validation accuracy score
+disp(['Cross-Validation Accuracy: ', num2str(accuracy)]);     % Display the accuracy result in Command Window
+
+% Make predictions on unseen test dataset
+predictedLabels = predict(mdl, testData(:, 1:4));             % Generate predicted class labels for test set
+
+% Compute and display confusion matrix
+confMat = confusionmat(testData.Species, predictedLabels);    % Compare actual vs predicted target values
+disp('Confusion Matrix:');
+disp(confMat);                                                % Print confusion matrix in Command Window
+
+% Visualize prediction results using a 2D grouped scatter plot
+figure();                                                     % Create new graphics figure window
+gscatter(testData.SepalLength, testData.SepalWidth, predictedLabels, 'rgb', 'osd', [], 10); % Plot test samples grouped by predicted class
+xlabel('Sepal Length');                                       % Label X-axis
+ylabel('Sepal Width');                                        % Label Y-axis
+legend('Setosa', 'Versicolor', 'Virginica');
+
