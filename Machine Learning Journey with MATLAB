@@ -2172,4 +2172,61 @@ Confusion Matrix:
     18     2
      3    17
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-📂 Module 4.17 : 
+📂 Module 4.17 : Understanding the Naive Bayes Algorithm
+
+## Introduction
+
+The **Naive Bayes Algorithm** is a supervised machine learning algorithm based on **Bayes' Theorem**. It is widely used for classification tasks. The main concept behind this algorithm is to calculate the probability of a target class given a set of input features.
+
+The fundamental mathematical equation for Bayes' Theorem is expressed as follows:
+
+$$P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}$$
+
+### Mathematical Components Explained
+
+* **$P(A \mid B)$ (Posterior Probability):** The probability of event $A$ occurring given that event $B$ has already occurred.
+* **$P(B \mid A)$ (Likelihood):** The probability of event $B$ occurring given that event $A$ is true.
+* **$P(A)$ (Prior Probability):** The independent probability of event $A$ occurring before observing $B$.
+* **$P(B)$ (Marginal Likelihood / Evidence):** The total probability of event $B$ occurring.
+
+---
+
+## Areas of Application
+
+Naive Bayes is highly effective across various practical domains:
+
+1. **Text-Based Classification:**
+   * Spam detection in email systems.
+   * Sentiment analysis in customer reviews.
+   * News article categorization.
+2. **Healthcare:**
+   * Disease diagnosis based on patient symptoms.
+   * Health risk stratification and classification.
+3. **Finance:**
+   * Customer credit risk assessment and evaluation.
+4. **Other Practical Applications:**
+   * E-commerce recommendation systems.
+   * Automated metadata tagging and labeling.
+
+---
+
+## Advantages
+
+The Naive Bayes algorithm offers several distinct advantages in machine learning workflows:
+
+* **Computational Efficiency:** It is simple, fast, and requires minimal training and prediction time.
+* **Performance on Small Datasets:** It performs surprisingly well even when limited training data is available.
+* **Multi-Class Support:** It naturally scales to multi-class prediction problems without complex modifications.
+* **Feature Independence:** It operates exceptionally well when the conditional independence assumption holds true.
+* **Text Processing Strengths:** It remains one of the benchmark algorithms for text classification tasks.
+
+---
+
+## Disadvantages
+
+Despite its advantages, the algorithm has critical limitations to consider:
+
+* **Strong Independence Assumption:** If strong dependencies or correlations exist among input features, prediction accuracy decreases significantly.
+* **Continuous Feature Assumptions:** Special care is needed when handling continuous variables (e.g., using Gaussian distributions), unless applying specific variants like Gaussian Naive Bayes.
+* **Zero Frequency / Low Probability Issues:** Predictions can become unreliable or zero for rare, low-probability classes without smoothing techniques (e.g., Laplace smoothing).
+* **Sensitivity to Missing Data:** Missing values in dataset features can directly distort the calculated probability outcomes.
