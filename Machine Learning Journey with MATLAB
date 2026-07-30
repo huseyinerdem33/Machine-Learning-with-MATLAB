@@ -2271,6 +2271,7 @@ xlabel('Sepal Length');                                       % Label X-axis
 ylabel('Sepal Width');                                        % Label Y-axis
 legend('Setosa', 'Versicolor', 'Virginica');
 
+💻 Example Output  (MATLAB Command Window):
 
 Cross-Validation Accuracy: 0.95238
 
