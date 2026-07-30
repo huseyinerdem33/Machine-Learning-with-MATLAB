@@ -2230,3 +2230,5 @@ Despite its advantages, the algorithm has critical limitations to consider:
 * **Continuous Feature Assumptions:** Special care is needed when handling continuous variables (e.g., using Gaussian distributions), unless applying specific variants like Gaussian Naive Bayes.
 * **Zero Frequency / Low Probability Issues:** Predictions can become unreliable or zero for rare, low-probability classes without smoothing techniques (e.g., Laplace smoothing).
 * **Sensitivity to Missing Data:** Missing values in dataset features can directly distort the calculated probability outcomes.
+
+Example Code : 
