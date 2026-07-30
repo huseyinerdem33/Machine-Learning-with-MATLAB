@@ -2282,4 +2282,101 @@ Confusion Matrix:
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-📂 Module 4.18 :
+📂 Module 4.18 :  Comparison of Classification Algorithms
+
+This document provides a comparative analysis of primary machine learning classification algorithms. It outlines the core working principles, strengths, weaknesses, and ideal usage scenarios for each algorithm.
+
+---
+
+## 1. K-Nearest Neighbors (KNN)
+
+### Working Principle
+The K-Nearest Neighbors algorithm assigns an unknown data point to the majority class among its **$K$ nearest neighbors** in the feature space.
+
+### Strengths
+* **Non-linear Decision Boundaries:** Capable of modeling complex decision boundaries for non-linear classification tasks.
+* **Lazy Learning:** Requires no explicit training phase prior to the prediction stage.
+
+### Weaknesses
+* **Computational Cost:** Slow inference time on large datasets, as distance to every data point must be computed.
+* **Sensitivity to Feature Scale:** Highly sensitive to feature scales (e.g., features ranging from 1–10 vs. 1000–50000). Data normalization or standardization is mandatory.
+* **Curse of Dimensionality:** Performance degrades significantly in high-dimensional feature spaces.
+
+### When to Use
+* Small to medium-sized datasets.
+* Scenarios where no prior assumptions can be made regarding data distribution.
+* Quick initial baselines in machine learning pipelines.
+
+---
+
+## 2. Decision Trees
+
+### Working Principle
+Decision Trees recursively split the dataset based on feature attributes using sequential "yes/no" condition rules, constructing a flowchart-like tree structure.
+
+### Strengths
+* **High Interpretability:** Model decision logic is transparent and easily understandable.
+* **Versatility:** Naturally handles both numerical and categorical data types.
+* **Minimal Data Preparation:** Requires negligible feature scaling or normalization.
+
+### Weaknesses
+* **Overfitting Risk:** Prone to overfitting training data by memorizing patterns, leading to poor test generalization (mitigated via tree pruning).
+* **High Variance:** Minor variations in training data can lead to completely different tree structures.
+
+### When to Use
+* Applications requiring highly interpretable decision mechanisms (e.g., loan application approval/rejection logic).
+* Exploratory data analysis to evaluate feature importance.
+* Building rule-based expert systems.
+
+---
+
+## 3. Support Vector Machines (SVM)
+
+### Working Principle
+Support Vector Machines aim to find an optimal decision boundary (hyperplane) that maximizes the distance (margin) between distinct classes.
+
+### Strengths
+* **Effective in High Dimensions:** Performs reliably in high-dimensional feature spaces.
+* **Kernel Trick:** Capable of mapping non-linear data into higher dimensions to construct complex decision boundaries.
+* **Robustness:** Stronger resistance to overfitting compared to non-regularized models.
+
+### Weaknesses
+* **Training Time:** Computationally expensive and slow to train on large-scale datasets.
+* **Low Interpretability:** Harder to interpret compared to Decision Trees or Logistic Regression.
+* **Hyperparameter Sensitivity:** Performance is heavily dependent on selecting optimal hyperparameters ($C$ parameter and kernel settings).
+
+### When to Use
+* High-dimensional data domains such as image processing and text categorization.
+* Complex datasets with non-linear relationships.
+* Medium-sized datasets where high accuracy is required.
+
+---
+
+## 4. Naive Bayes
+
+### Working Principle
+Naive Bayes relies on **Bayes' Theorem** with a fundamental assumption that all features are conditionally independent of each other given the class label.
+
+### Strengths
+* **Computational Efficiency:** Highly efficient with very fast training and prediction times.
+* **Small Sample Size:** Yields strong predictive results even with limited training data.
+* **Scalability:** Exceptional performance in high-dimensional feature spaces (e.g., thousands of text features).
+
+### Weaknesses
+* **Independence Assumption:** The assumption of feature independence rarely holds in real-world scenarios, which can constrain overall model performance.
+
+### When to Use
+* Text classification tasks including spam detection, sentiment analysis, and news categorization.
+* Real-time classification tasks requiring high-speed inference.
+* Applications where feature interactions are weak or non-existent.
+
+---
+
+## Summary Comparison Matrix
+
+| Algorithm | Primary Advantage | Main Limitation | Best Use Case |
+| :--- | :--- | :--- | :--- |
+| **KNN** | No training phase required | Slow on large datasets | Small, non-parametric datasets |
+| **Decision Trees** | High model interpretability | Susceptible to overfitting | Rule-based decision systems |
+| **SVM** | High accuracy in high dimensions | Long training time | Complex, non-linear classification |
+| **Naive Bayes** | Extremely fast and efficient | Strong feature independence assumption | Real-time text classification |
