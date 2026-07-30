@@ -2380,3 +2380,6 @@ Naive Bayes relies on **Bayes' Theorem** with a fundamental assumption that all 
 | **Decision Trees** | High model interpretability          | Susceptible to overfitting              | Rule-based decision systems           |
 | **SVM**            | High accuracy in high dimensions     | Long training time                      | Complex, non-linear classification    |
 | **Naive Bayes**    | Extremely fast and efficient         | Strong feature independence assumption  | Real-time text classification         |
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
