@@ -2271,3 +2271,10 @@ xlabel('Sepal Length');                                       % Label X-axis
 ylabel('Sepal Width');                                        % Label Y-axis
 legend('Setosa', 'Versicolor', 'Virginica');
 
+
+Cross-Validation Accuracy: 0.95238
+
+Confusion Matrix:
+    15     0     0
+     0    14     1
+     0     1    14
