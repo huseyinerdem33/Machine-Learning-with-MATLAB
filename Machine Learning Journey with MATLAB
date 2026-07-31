@@ -2436,3 +2436,14 @@ Precision: 94.20%
 Recall: 92.86%
 F1 Score: 0.94
 ----------------------------------------
+ : Confusion Matrix & KNN Classification in MATLAB
+
+This repository contains an implementation of the **k-Nearest Neighbors (k-NN)** classification algorithm using MATLAB, along with a detailed explanation of the **Confusion Matrix**—a core performance evaluation metric in machine learning.
+
+---
+
+## 💡 What is a Confusion Matrix?
+
+A Confusion Matrix is a tabular layout that allows visualization of the performance of a supervised learning algorithm. Each row represents the instances in an actual class, while each column represents the instances in a predicted class.
+
+To intuitively understand how it works, we can use the classic fable of **"The Boy Who Cried Wolf"**:
