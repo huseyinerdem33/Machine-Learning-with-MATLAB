@@ -2429,5 +2429,9 @@ fprintf('Recall: %.2f%%\n', Recall * 100);
 fprintf('F1 Score: %.2f\n', F1Score);
 
 --------------------
-
+Plaintext
+Accuracy: 95.61%
+Precision: 94.20%
+Recall: 92.86%
+F1 Score: 0.94
 
