@@ -2429,7 +2429,8 @@ fprintf('Recall: %.2f%%\n', Recall * 100);
 fprintf('F1 Score: %.2f\n', F1Score);
 
 --------------------
-Plaintext
+💻 Example Output  (MATLAB Command Window):
+
 Accuracy: 95.61%
 Precision: 94.20%
 Recall: 92.86%
