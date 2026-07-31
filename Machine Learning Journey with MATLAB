@@ -2436,7 +2436,7 @@ Precision: 94.20%
 Recall: 92.86%
 F1 Score: 0.94
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- : Confusion Matrix & KNN Classification in MATLAB
+📂 Module 4.19 : Confusion Matrix & KNN Classification in MATLAB
 
 This repository contains an implementation of the **k-Nearest Neighbors (k-NN)** classification algorithm using MATLAB, along with a detailed explanation of the **Confusion Matrix**—a core performance evaluation metric in machine learning.
 
