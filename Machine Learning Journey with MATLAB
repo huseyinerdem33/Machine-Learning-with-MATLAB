@@ -2700,3 +2700,146 @@ Random Forest is widely adopted across various industries due to its reliability
 * **Finance:** Credit scoring, fraud detection, and default risk evaluation.
 * **Medicine:** Disease diagnosis systems and medical imaging assessment.
 * **E-Commerce:** Customer segmentation, lifetime value prediction, and churn prediction.
+
+-----------------------------
+
+Example Code:
+
+```matlab
+% Set random seed to get the exact same random numbers every time we run the code
+rng(42);
+
+% Load the standard Fisher Iris dataset built into MATLAB
+load fisheriris;
+
+% Store measurement features (length and width values) in variable X
+X = meas;
+
+% Store target species names (flower classes) in variable Y
+Y = species;
+
+% Split the dataset into 70% training data and 30% test data while keeping class ratios equal
+cv = cvpartition(Y, 'HoldOut', 0.3, 'Stratify', true);
+
+% Extract training feature rows based on the split index
+XTrain = X(training(cv), :);
+
+% Extract training target label rows based on the split index
+YTrain = Y(training(cv), :);
+
+% Extract test feature rows used to evaluate the trained model
+XTest = X(test(cv), :);
+
+% Extract true test target labels to compare against predictions
+YTest = Y(test(cv), :);
+
+% Build a Random Forest classification model with 100 decision trees
+rf_model = TreeBagger(100, XTrain, YTrain, 'Method', 'classification', ...
+    'OOBPrediction', 'On', ...             % Enable Out-Of-Bag error estimation
+    'OOBPredictorImportance', 'On', ...   % Calculate feature importance scores
+    'MinLeafSize', 1);                    % Set minimum number of samples per leaf node
+
+% Predict labels for the unseen test dataset using the trained Random Forest model
+Yhat = predict(rf_model, XTest);
+
+% Convert predicted cell array outputs into categorical format matching test data structure
+Yhat_cat = categorical(Yhat, categories(YTest));
+
+% Convert true test target labels into categorical format for direct comparison
+Ytest_cat = categorical(YTest);
+
+% Calculate accuracy by finding the proportion of correct predictions
+acc = mean(Yhat_cat == Ytest_cat);
+
+% Print the overall test accuracy percentage to the MATLAB Command Window
+fprintf('Test Accuracy: %.2f%%\n', acc * 100);
+
+% Create a new figure window with a specific width and height
+figure('Position', [100, 100, 1200, 400]);
+
+% Create the first grid area (subplot 1 of 4) for Sepal measurements
+subplot(1, 4, 1);
+
+% Draw a grouped scatter plot comparing Sepal Length (Column 1) against Sepal Width (Column 2)
+gscatter(XTrain(:, 1), XTrain(:, 2), YTrain, 'rgb', 'osd', 8);
+
+% Label the X-axis for Sepal Length
+xlabel('Sepal Length');
+
+% Label the Y-axis for Sepal Width
+ylabel('Sepal Width');
+
+% Add a title to the Sepal plot
+title('Sepal Features');
+
+% Position the legend in the optimal location automatically
+legend('Location', 'best');
+
+% Display background grid lines for better readability
+grid on;
+
+% Create the second grid area (subplot 2 of 4) for Petal measurements
+subplot(1, 4, 2);
+
+% Draw a grouped scatter plot comparing Petal Length (Column 3) against Petal Width (Column 4)
+gscatter(XTrain(:, 3), XTrain(:, 4), YTrain, 'rgb', 'osd', 8);
+
+% Label the X-axis for Petal Length
+xlabel('Petal Length');
+
+% Label the Y-axis for Petal Width
+ylabel('Petal Width');
+
+% Add a title to the Petal plot
+title('Petal Features');
+
+% Position the legend in the optimal location automatically
+legend('Location', 'best');
+
+% Display background grid lines for better readability
+grid on;
+
+% Create the third grid area (subplot 3 of 4) for the Confusion Matrix
+subplot(1, 4, 3);
+
+% Plot a confusion chart comparing actual labels against predicted labels
+confusionchart(Ytest_cat, Yhat_cat);
+
+% Add a title showing overall accuracy on the confusion chart
+title(sprintf('Test Results\nAccuracy: %.3f', acc));
+
+% Create the fourth grid area (subplot 4 of 4) for Feature Importance scores
+subplot(1, 4, 4);
+
+% Extract out-of-bag feature importance values from the model
+importance = rf_model.OOBPermutedPredictorDeltaError;
+
+% Define human-readable feature labels for the bar chart
+feature_names = {'Sepal Length', 'Sepal Width', 'Petal Length', 'Petal Width'};
+
+% Draw a blue bar chart representing each feature's importance score
+bar(importance, 'FaceColor', [0.2 0.6 0.8]);
+
+% Set the X-axis tick labels to feature names
+set(gca, 'XTickLabel', feature_names);
+
+% Set title for the feature importance chart
+title('Feature Importance');
+
+% Label the Y-axis for Importance Score
+ylabel('Importance Score');
+
+% Rotate X-axis text labels by 45 degrees to prevent overlapping
+xtickangle(45);
+
+% Define a new unknown flower sample with 4 measurement features
+new_iris = [5.8, 3.0, 4.3, 1.3];
+
+% Predict the flower species for the new sample using the trained model
+prediction = predict(rf_model, new_iris);
+
+% Print the prediction result to the Command Window
+fprintf('New Iris Prediction: %s\n', prediction{1});
+
+% Add a super title over all subplots displaying the model accuracy
+sgtitle(sprintf('Iris Classification - Test Accuracy: %.
