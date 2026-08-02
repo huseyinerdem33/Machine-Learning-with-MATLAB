@@ -2603,3 +2603,5 @@ Ensemble methods are generally divided into three major categories based on how 
 * **Bagging:** Best for most practical, everyday applications requiring quick and stable models.
 * **Boosting:** Best when high predictive performance and accuracy are required.
 * **Stacking:** Best suited for complex research environments and machine learning competitions.
+
+----------------------------------------
