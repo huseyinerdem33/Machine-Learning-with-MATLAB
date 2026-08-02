@@ -2845,6 +2845,7 @@ fprintf('New Iris Prediction: %s\n', prediction{1});
 sgtitle(sprintf('Iris Classification - Test Accuracy: %.
 
 
+💻 Example Output  (MATLAB Command Window):
 
 Test Accuracy: 97.78%
 New Iris Prediction: versicolor
