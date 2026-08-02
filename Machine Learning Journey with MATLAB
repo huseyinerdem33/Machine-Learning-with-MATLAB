@@ -2590,14 +2590,14 @@ Ensemble methods are generally divided into three major categories based on how 
 
 ## 7. Comprehensive Comparison and Selection Criteria
 
-| Selection Criteria | Bagging | Boosting | Stacking |
-| :--- | :--- | :--- | :--- |
-| **Ease of Implementation** | Very Easy | Moderate | Difficult |
-| **Training Speed** | Fast (Parallel) | Slow (Sequential) | Multi-stage |
-| **Overfitting Resistance** | High | Moderate | Low |
-| **Accuracy Potential** | Moderate | High | Very High |
-| **Interpretability** | Difficult | Difficult | Very Difficult |
-| **Hyperparameter Sensitivity**| Low | Moderate | High |
+| Selection Criteria             | Bagging                | Boosting               | Stacking                   |
+| :----------------------------- | :--------------------- | :--------------------- | :-------------------------- |
+| **Ease of Implementation**     | Very Easy    ✅        | Moderate     ⚠️        | Difficult    ❌           |
+| **Training Speed**            | Fast (Parallel) ✅     | Sequential   ❌        | Multi-Stage  🏗️            |
+| **Overfitting Resistance**    | High         ✅        | Moderate     ⚠️        | Low          ❌            |
+| **Accuracy Potential**        | Moderate     ⚠️        | High         ✅        | Very High    ✅            |
+| **Interpretability**           | Difficult    ❌        | Difficult    ❌        | Most Difficult ❌         |
+| **Hyperparameter Sensitivity** | Low          ✅        | Moderate     ⚠️        | High         ❌           |
 
 ### General Recommendation Order
 * **Bagging:** Best for most practical, everyday applications requiring quick and stable models.
