@@ -3101,3 +3101,6 @@ plot(loss, 'g-', 'LineWidth', 2); % Plot training loss line using green solid li
 xlabel('Boosting Iteration'); % Set horizontal X-axis label for tree count
 ylabel('Training Loss'); % Set vertical Y-axis label for model training loss
 grid on; % Enable visual background grid lines
+
+💻 Example Output 2 (MATLAB Command Window):
+
