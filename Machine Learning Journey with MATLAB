@@ -2944,4 +2944,5 @@ Boosting methods should be selected when high accuracy is required, datasets are
 
 > **Practical Recommendation:** In real-world machine learning workflows, start with a robust **Random Forest** model as a benchmark, then optimize performance using **Gradient Boosting (XGBoost/LightGBM)** on clean datasets.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Example Code:
+
