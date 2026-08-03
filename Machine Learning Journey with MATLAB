@@ -2946,3 +2946,84 @@ Boosting methods should be selected when high accuracy is required, datasets are
 
 Example Code:
 
+%% Gradient Boosting Classification: Radar Signal Anomaly Detection
+clc; clear; close all; % Clear the command window, workspace variables, and close figure windows
+
+rng(42); % Set the random seed to make the random results repeatable
+load ionosphere; % Load the built-in MATLAB ionosphere radar dataset
+X = X; % Store feature matrix (radar signals) into variable X
+Y = categorical(Y); % Convert response target labels into categorical data type
+
+feature_names = {'Frequency-1', 'Frequency-2', 'Frequency-3', 'Frequency-4'}; % Define descriptive names for features
+X_selected = X(:,1:4); % Select the first 4 frequency features for visual analysis
+
+%% Split Data into Training and Testing Sets
+cvp = cvpartition(Y, 'HoldOut', 0.3, 'Stratify', true); % Split dataset into 70% training and 30% testing with stratification
+X_train = X(training(cvp), :); % Extract training feature matrix
+Y_train = Y(training(cvp), :); % Extract training target class labels
+X_test = X(test(cvp), :); % Extract testing feature matrix
+Y_test = Y(test(cvp), :); % Extract testing target class labels
+
+Xtrain_vis = X_selected(training(cvp), :); % Extract visualization features for the training set
+Xtest_vis = X_selected(test(cvp), :); % Extract visualization features for the test set
+
+%% Train Gradient Boosting Model (AdaBoost)
+gb_model = fitcensemble(X_train, Y_train, ... % Train ensemble classifier using training dataset
+    "Method", "AdaBoostM1", ... % Set boosting algorithm method to AdaBoostM1
+    "NumLearningCycles", 100, ... % Set total number of decision trees to 100
+    "Learners", "tree", ... % Set weak learner model to decision tree
+    'LearnRate', 0.1); % Set learning rate step size to 0.1
+
+%% Model Prediction and Accuracy Calculation
+Yhat_train = predict(gb_model, X_train); % Predict target labels on training data
+Yhat_test = predict(gb_model, X_test); % Predict target labels on test data
+
+%% Calculate Accuracy Rates
+train_accuracy = sum(Yhat_train == Y_train) / length(Y_train); % Calculate proportion of correct training predictions
+test_accuracy = sum(Yhat_test == Y_test) / length(Y_test); % Calculate proportion of correct testing predictions
+
+fprintf('Training Accuracy: %.3f | Test Accuracy: %.3f\n', train_accuracy, test_accuracy); % Print calculated accuracy values to Command Window
+
+%% Visualization and Analysis
+figure('Position', [100, 100, 1200, 400]); % Create figure window with specific position and size
+
+% 1. Data Distribution for First 2 Frequency Bands
+subplot(1,4,1); % Select first plot position in a 1x4 subplot grid
+gscatter(Xtrain_vis(:,1), Xtrain_vis(:,2), Y_train, 'rb', 'ox', 8); % Create scatter plot grouped by class labels
+xlabel("Frequency Band 1"); % Set label for X-axis
+ylabel("Frequency Band 2"); % Set label for Y-axis
+title("Radar Signal Features"); % Set main title for scatter plot
+legend('Location', 'best'); % Automatically place legend in optimal location
+grid on; % Turn on display grid lines
+
+% 2. Confusion Matrix
+subplot(1,4,2); % Select second plot position in a 1x4 subplot grid
+confusionchart(Y_test, Yhat_test); % Display visual confusion matrix comparing test labels and predictions
+title(sprintf('Test Results\nAccuracy: %.3f', test_accuracy)); % Set chart title with dynamic test accuracy value
+
+% 3. Feature Importance
+subplot(1,4,3); % Select third plot position in a 1x4 subplot grid
+importance = predictorImportance(gb_model); % Calculate relative importance scores for all predictors
+[sorted_imp, idx] = sort(importance, 'descend'); % Sort feature importances in descending order
+top_num = min(8, length(importance)); % Determine top 8 features or maximum available features
+bar(sorted_imp(1:top_num), 'FaceColor', [0.8, 0.4, 0.2]); % Plot vertical bar chart for top features with custom color
+feature_labels = arrayfun(@(x) sprintf('F-%d', x), idx(1:top_num), 'UniformOutput', false); % Create string labels for top features
+set(gca, 'XTick', 1:top_num, 'XTickLabel', feature_labels); % Assign custom feature names to X-axis tick marks
+title('Top 8 Important Features'); % Set title for feature importance plot
+ylabel('Importance Score'); % Set label for Y-axis
+xtickangle(45); % Rotate X-axis text labels by 45 degrees
+
+% 4. Learning Curve (Error Reduction)
+subplot(1,4,4); % Select fourth plot position in a 1x4 subplot grid
+train_loss = resubLoss(gb_model, 'Mode', 'Cumulative'); % Compute cumulative resubstitution classification error
+plot(1:length(train_loss), train_loss, 'r-', 'LineWidth', 2); % Plot training error over boosting iterations
+xlabel('Boosting Iteration'); % Set label for X-axis
+ylabel('Training Error'); % Set label for Y-axis
+title('Model Learning Curve'); % Set main title for learning curve
+grid on; % Turn on display grid lines
+
+%% Predict New Radar Signal
+yeni_signal = X(1, :); % Copy baseline feature structure from first sample row
+yeni_signal(1:4) = [0.5, -0.2, 0.8, -0.3]; % Replace first 4 values with new test radar values
+[prediction, score] = predict(gb_model, yeni_signal); % Predict class category and confidence scores for new sample
+fprintf('New radar signal: %s (%.2f confidence)\n', string(prediction), max(score)); % Display predicted signal class and classification confidence score
