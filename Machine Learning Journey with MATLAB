@@ -3104,3 +3104,5 @@ grid on; % Enable visual background grid lines
 
 💻 Example Output 2 (MATLAB Command Window):
 
+Data: 395 students, 23 features
+Test R2: 0.998 | RMSE: 0.06 points
