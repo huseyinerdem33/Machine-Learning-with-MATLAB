@@ -3129,12 +3129,12 @@ Unsupervised learning is a fundamental paradigm in machine learning designed to 
 
 The operational and functional differences between supervised and unsupervised learning approaches are detailed in the table below:
 
-| Feature | Supervised Learning | Unsupervised Learning |
-| :--- | :--- | :--- |
-| **Data Requirement** | Requires labeled data ($X \rightarrow Y$) | Works with unlabeled input data ($X$) only |
-| **Primary Goal** | Target prediction and classification | Pattern discovery and structure analysis |
-| **Performance Evaluation** | Direct metric calculation (e.g., Accuracy, $R^2$) | Evaluation can be subjective and exploratory |
-| **Common Algorithms** | Linear/Logistic Regression, SVM | K-Means, Hierarchical Clustering, PCA |
+| Feature                | Supervised Learning                      | Unsupervised Learning                     |
+| :--------------------- | :--------------------------------------- | :---------------------------------------- |
+| **Data Requirement**   | Requires labeled data ($X \rightarrow Y$) | Works with unlabeled input data ($X$) only |
+| **Primary Goal**       | Target prediction and classification     | Pattern discovery and structure analysis  |
+| **Performance Eval.**  | Direct metric calculation (Accuracy, $R^2$) | Evaluation can be subjective/exploratory  |
+| **Common Algorithms**  | Linear/Logistic Regression, SVM          | K-Means, Hierarchical Clustering, PCA     |
 
 > **Key Advantages:** Unsupervised learning eliminates manual data labeling costs, discovers previously unknown data patterns, and plays a crucial role in data preprocessing—especially when labeling large-scale datasets is impractical.
 
