@@ -3027,3 +3027,6 @@ yeni_signal = X(1, :); % Copy baseline feature structure from first sample row
 yeni_signal(1:4) = [0.5, -0.2, 0.8, -0.3]; % Replace first 4 values with new test radar values
 [prediction, score] = predict(gb_model, yeni_signal); % Predict class category and confidence scores for new sample
 fprintf('New radar signal: %s (%.2f confidence)\n', string(prediction), max(score)); % Display predicted signal class and classification confidence score
+
+💻 Example Output  (MATLAB Command Window):
+
