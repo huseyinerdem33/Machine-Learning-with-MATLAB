@@ -3030,3 +3030,5 @@ fprintf('New radar signal: %s (%.2f confidence)\n', string(prediction), max(scor
 
 💻 Example Output  (MATLAB Command Window):
 
+Training Accuracy: 1.000 | Test Accuracy: 0.943
+New radar signal: g (10.07 confidence)
