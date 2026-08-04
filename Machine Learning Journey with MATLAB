@@ -3353,3 +3353,89 @@ title(sprintf('K-Means Results (k=%d, Silhouette=%.3f)', opt_k, avg_sil));
 
 % Display key performance metrics (Optimal K, Silhouette Score, WCSS) in console
 fprintf('Optimal K=%d \nSilhouette=%.3f\nWCSS=%.2f\n', opt_k, avg_sil, sum(sumd));
+
+Example Code 2 : 
+```matlab
+% Load the Wholesale Customers dataset from a CSV file
+data = readtable("Wholesale customers data.csv"); 
+
+% Select numerical feature columns starting from the 3rd column to the end
+X = data(:, 3:end); 
+
+% Standardize features using Z-score normalization (zero mean, unit variance)
+x_normalized = zscore(X); 
+
+% Pre-allocate an array to store average silhouette scores for k values from 2 to 15
+ortalama_siluet_skorlari = zeros(1,14); 
+
+% Define the range of cluster counts (k) to test
+k_degerleri = 2:15; 
+
+% Loop over each k value to evaluate cluster quality
+for i = 1:length(k_degerleri)
+    % Get the current k value
+    k = k_degerleri(i); 
+    
+    % Perform K-Means clustering with a maximum of 1000 iterations and 5 random restarts
+    idx = kmeans(x_normalized, k, 'MaxIter',1000, 'Replicates',5); 
+    
+    % Compute individual silhouette values for all data points
+    siluet_degerleri = silhouette(x_normalized, idx); 
+    
+    % Calculate the mean silhouette score for current k and store it
+    ortalama_siluet_skorlari(i) = mean(siluet_degerleri); 
+    
+    % Print the average silhouette score for the current k value
+    fprintf('For k=%d Average Silhouette Score = %f\n', k, ortalama_siluet_skorlari(i)); 
+end 
+
+% Close the automatically generated silhouette plot window
+close(gcf); 
+
+% --- Visualize Silhouette Scores --- %
+
+% Create a new figure window for plotting
+figure; 
+
+% Plot average silhouette scores against cluster counts with line and marker styling
+plot(k_degerleri, ortalama_siluet_skorlari, 'b-o', 'LineWidth',2, 'MarkerSize',8); 
+
+% Set X-axis label
+xlabel('Number of Clusters (k)'); 
+
+% Set Y-axis label
+ylabel('Average Silhouette Score'); 
+
+% Set figure title
+title('Silhouette Scores for K-Means'); 
+
+% Enable grid lines on the plot
+grid on; 
+
+% --- Determine Best Number of Clusters --- %
+
+% Find the maximum silhouette score and its corresponding index
+[en_yuksek_skor, en_iyi_index] = max(ortalama_siluet_skorlari); 
+
+% Retrieve the optimal k value corresponding to the maximum score
+en_iyi_k = k_degerleri(en_iyi_index); 
+
+% Print the optimal k value and its corresponding highest score
+fprintf('Best k value: %d\nHighest Silhouette Score: %f\n', en_iyi_k, en_yuksek_skor); 
+
+% --- Final Clustering and Feature Analysis --- %
+
+% Run final K-Means clustering using the optimal k value
+[idx, C] = kmeans(x_normalized, en_iyi_k, 'MaxIter',100, 'Replicates',5); 
+
+% Reverse the Z-score normalization to transform cluster centroids back to original scale
+C_original = C .* std(X) + mean(X); 
+
+% Print header for cluster centroids output
+fprintf('\nFinal Cluster Centroids (Average Spending in Each Category):\n'); 
+
+% Extract feature column names from table properties
+feature_names = data.Properties.VariableNames(3:end); 
+
+% Display original-scale cluster centers in a structured table format with row and column names
+disp(array2table(C_original, 'VariableNames', feature_names, 'RowNames', strcat('Cluster ', string(1:en_iyi_k))));
