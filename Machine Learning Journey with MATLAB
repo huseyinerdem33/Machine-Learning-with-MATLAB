@@ -3284,3 +3284,72 @@ If K-Means doesn't fit your dataset, try these alternative models:
 | **Hierarchical Clustering**       | You don't need to choose $k$ in advance! Visualizes cluster relationships using a tree diagram called a **dendrogram**. |
 
 Example Code  :
+
+% Load the dataset from a CSV file using semicolon as delimiter
+data = readtable('bank.csv', 'Delimiter', ';'); 
+
+% Extract numerical feature columns for clustering
+features = [data.age, data.balance, data.duration, data.campaign]; 
+
+% Define English feature names for clear visualization labels
+names = {'Age', 'Balance', 'Duration', 'Campaign'}; 
+
+% Remove any missing values (NaNs) from the feature matrix
+features = rmmissing(features); 
+
+% Normalize feature values to a range of [0, 1] for equal weighting
+X = normalize(features, 'range'); 
+
+% --- Determine Optimal Number of Clusters --- %
+
+% Set the maximum number of clusters to test
+max_k = 6; 
+
+% Pre-allocate an array to store average silhouette scores
+sils = zeros(1, max_k); 
+
+% Loop through possible cluster counts from 2 to max_k
+for k = 2:max_k 
+    % Run K-Means with 10 random restarts to avoid local minima
+    idx = kmeans(X, k, 'Replicates', 10, 'Display', 'off'); 
+    
+    % Calculate and store the mean silhouette evaluation score for current k
+    sils(k) = mean(silhouette(X, idx)); 
+end 
+
+% Find the cluster count (k) that yields the highest silhouette score
+[~, opt_k] = max(sils); 
+
+% Run final K-Means clustering using the optimal k value
+[idx, C, sumd] = kmeans(X, opt_k, 'Replicates', 10, 'Display', 'final'); 
+
+% Assign the predicted cluster labels back to the original table
+data.Cluster = idx; 
+
+% Calculate the final average silhouette score for optimal clusters
+avg_sil = mean(silhouette(X, idx)); 
+
+% --- Visualization --- %
+
+% Create a new figure window for plotting
+figure; 
+
+% Create a grouped scatter plot using the first two features
+gscatter(X(:,1), X(:,2), idx); hold on; 
+
+% Mark cluster centroids on the plot with black 'X' symbols
+plot(C(:,1), C(:,2), 'kx', 'MarkerSize', 12, 'LineWidth', 2); 
+
+% Label the X-axis with the first feature name ('Age')
+xlabel(names{1}); 
+
+% Label the Y-axis with the second feature name ('Balance')
+ylabel(names{2}); 
+
+% Add an informative title displaying optimal K and silhouette score
+title(sprintf('K-Means Results (k=%d, Silhouette=%.3f)', opt_k, avg_sil)); 
+
+% --- Cluster Statistics Output --- %
+
+% Display key performance metrics (Optimal K, Silhouette Score, WCSS) in console
+fprintf('Optimal K=%d \nSilhouette=%.3f\nWCSS=%.2f\n', opt_k, avg_sil, sum(sumd));
