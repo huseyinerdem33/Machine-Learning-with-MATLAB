@@ -3277,10 +3277,9 @@ To solve the limitations of standard K-Means, you can use these improved variati
 
 If K-Means doesn't fit your dataset, try these alternative models:
 
-| Algorithm | Why Use It? |
-| :--- | :--- |
-| **DBSCAN** | Density-based algorithm. Finds clusters of **arbitrary shapes** and automatically detects **outliers/noise**. |
+| Algorithm                         | Why Use It?                                                                                              |
+| :-------------------------------- | :------------------------------------------------------------------------------------------------------- |
+| **DBSCAN**                        | Density-based algorithm. Finds clusters of **arbitrary shapes** and automatically detects **outliers/noise**. |
 | **Gaussian Mixture Models (GMM)** | Great for **elliptical clusters**. Allows each cluster to have its own covariance structure (probabilistic approach). |
-| **Hierarchical Clustering** | You don't need to choose $k$ in advance! Visualizes cluster relationships using a tree diagram called a **dendrogram**. |
-
+| **Hierarchical Clustering**       | You don't need to choose $k$ in advance! Visualizes cluster relationships using a tree diagram called a **dendrogram**. |
 
