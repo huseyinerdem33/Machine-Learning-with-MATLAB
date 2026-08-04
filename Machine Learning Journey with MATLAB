@@ -3283,3 +3283,4 @@ If K-Means doesn't fit your dataset, try these alternative models:
 | **Gaussian Mixture Models (GMM)** | Great for **elliptical clusters**. Allows each cluster to have its own covariance structure (probabilistic approach). |
 | **Hierarchical Clustering**       | You don't need to choose $k$ in advance! Visualizes cluster relationships using a tree diagram called a **dendrogram**. |
 
+Example Code  :
