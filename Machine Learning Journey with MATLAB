@@ -3439,3 +3439,31 @@ feature_names = data.Properties.VariableNames(3:end);
 
 % Display original-scale cluster centers in a structured table format with row and column names
 disp(array2table(C_original, 'VariableNames', feature_names, 'RowNames', strcat('Cluster ', string(1:en_iyi_k))));
+
+💻 Example Output 2 (MATLAB Command Window):
+
+Data preparation completed.
+
+Step 2: Testing cluster numbers from 2 to 15 to find the optimal k value...
+For k = 2 Average Silhouette Score: 0.732186
+For k = 3 Average Silhouette Score: 0.749894
+For k = 4 Average Silhouette Score: 0.538957
+For k = 5 Average Silhouette Score: 0.507565
+For k = 6 Average Silhouette Score: 0.520471
+For k = 7 Average Silhouette Score: 0.409042
+For k = 8 Average Silhouette Score: 0.527906
+For k = 9 Average Silhouette Score: 0.463890
+For k = 10 Average Silhouette Score: 0.419905
+For k = 11 Average Silhouette Score: 0.331813
+
+Best k value: 3
+Highest Silhouette Score: 0.749894
+
+Final Cluster Centroids (Average Spending in Each Category):
+
+               Fresh       Milk       Grocery     Frozen     Detergents_Paper    Delicassen
+             _________    ______    ___________    ______    ________________    __________
+
+    Cluster 1    35941.4    2382.9     2572.1      5870.4         363.4            1508.3  
+    Cluster 2     8341.2    8814.6    13920.0      1435.8        5810.2            1584.1  
+    Cluster 3    52005.2   33271.9    26760.0     39764.0       11192.0           24921.0
