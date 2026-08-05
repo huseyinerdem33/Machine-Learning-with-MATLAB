@@ -3723,3 +3723,6 @@ ylabel('Principal Component 2');
 grid on;
 
 💻 Example Output  (MATLAB Command Window):
+
+Variance explained by PCA: 72.46%
+Optimal number of clusters: 3 | Silhouette Score: 0.8102
