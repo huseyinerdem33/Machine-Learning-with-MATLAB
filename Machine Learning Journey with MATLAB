@@ -3650,3 +3650,5 @@ Choosing the right dimensionality reduction technique depends on your dataset ch
 * **Use PCA** for efficient, linear, unsupervised variance retention, noise reduction, and handling multicollinearity in standardized continuous data.
 * **Use LDA** when target labels are available, maximum class discrimination is required, and class covariance/normality assumptions hold.
 * **Use t-SNE** for non-linear exploratory data analysis and visualizing high-dimensional clusters in 2D or 3D space, keeping in mind its stochastic nature and computational complexity.
+
+Example Code  :
