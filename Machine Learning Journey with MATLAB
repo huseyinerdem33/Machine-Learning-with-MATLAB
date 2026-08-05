@@ -3652,3 +3652,72 @@ Choosing the right dimensionality reduction technique depends on your dataset ch
 * **Use t-SNE** for non-linear exploratory data analysis and visualizing high-dimensional clusters in 2D or 3D space, keeping in mind its stochastic nature and computational complexity.
 
 Example Code  :
+
+% Set random seed for reproducibility
+rng(42); 
+
+% Read the wholesale customers dataset into a table
+data = readtable("Wholesale customers data.csv"); 
+
+% Extract numerical features starting from column 3 into an array
+X = table2array(data(:, 3:end)); 
+
+% Normalize features to have zero mean and unit variance
+X_norm = normalize(X); 
+
+% Perform Principal Component Analysis (PCA) on normalized data
+[coeff, score, ~, ~, explained] = pca(X_norm); 
+
+% Select the first two principal components for visualization and clustering
+X_pca = score(:, 1:2); 
+
+% Display the cumulative percentage of variance explained by the first 2 components
+fprintf('Variance explained by PCA: %.2f%%\n', sum(explained(1:2))); 
+
+% Define the maximum number of clusters to test
+maxK = 5; 
+
+% Pre-allocate vector to store mean silhouette values
+sil = zeros(maxK, 1); 
+
+% Iterate over cluster counts from 2 to maxK
+for k = 2:maxK 
+    % Run K-Means clustering with 10 replicates to avoid local minima
+    idx = kmeans(X_pca, k, 'Replicates', 10); 
+    
+    % Calculate the mean silhouette score for current cluster size
+    sil(k) = mean(silhouette(X_pca, idx)); 
+end 
+
+% Identify the optimal number of clusters and the highest silhouette score
+[bestSil, bestK] = max(sil); 
+
+% Display the optimal number of clusters along with its silhouette score
+fprintf('Optimal number of clusters: %d | Silhouette Score: %.4f\n', bestK, bestSil); 
+
+% Perform final K-Means clustering using the optimal number of clusters
+[idx, C] = kmeans(X_pca, bestK, 'Replicates', 10); 
+
+% Create a new figure window for visualization
+figure; 
+
+% Plot two-dimensional scatter plot grouped by cluster labels
+gscatter(X_pca(:,1), X_pca(:,2), idx); 
+
+% Retain current plot contents when adding new elements
+hold on; 
+
+% Mark cluster centroids with black cross markers
+plot(C(:,1), C(:,2), 'kx', 'MarkerSize', 15, 'LineWidth', 3); 
+
+% Add title to the plot
+title('K-Means Clustering Results'); 
+
+% Add label to the horizontal axis
+xlabel('Principal Component 1'); 
+
+% Add label to the vertical axis
+ylabel('Principal Component 2'); 
+
+% Display grid lines on the plot
+grid on;
