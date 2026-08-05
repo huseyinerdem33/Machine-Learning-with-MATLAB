@@ -3807,5 +3807,123 @@ Generated 2 visualization figures:
 2. "K-Means (After PCA)"   - Scatter plot displaying 3 clusters over 1st Principal Component vs 2nd Principal Component.
 
 ---------------------------
-Example Code 2 (Linear Discriminant Analysis (LDA) Implementation) :
+Example Code (Linear Discriminant Analysis (LDA) Implementation) :
 
+% Set the random number generator seed for reproducible results
+rng(42); 
+
+% Configure import options to correctly detect the structure of the dataset
+opts = detectImportOptions("wine.csv"); 
+
+% Specify that the CSV file does not contain a dedicated header line for variable names
+opts.VariableNamesLine = 0; 
+
+% Assign custom column names to match the attributes in the Wine dataset
+opts.VariableNames = ["Class", "Alcohol", "MalicAcid", "Ash", "Alcalinity", ... 
+    "Magnesium", "TotalPhenols", "Flavanoids", "NonflavanoidPhenols", ... 
+    "Proanthocyanins", "ColorIntensity", "Hue", "OD280_OD315", "Proline"]; 
+
+% Load the dataset from CSV using the specified options table
+data = readtable("wine.csv", opts); 
+
+% Extract feature variables starting from column 2 to the end into an array
+X = table2array(data(:, 2:end)); 
+
+% Extract target class labels from the Class column
+Y = data.Class; 
+
+% Partition data into training (70%) and testing (30%) sets using holdout cross-validation
+cv = cvpartition(Y, 'HoldOut', 0.3); 
+
+% Extract training feature matrix based on partition indices
+XTrain = X(training(cv), :); 
+
+% Extract training class labels based on partition indices
+YTrain = Y(training(cv)); 
+
+% Extract testing feature matrix based on partition indices
+XTest = X(test(cv), :); 
+
+% Extract testing class labels based on partition indices
+YTest = Y(test(cv)); 
+
+% Train a Linear Discriminant Analysis (LDA) classification model on training data
+ldaModel = fitcdiscr(XTrain, YTrain); 
+
+% Predict target labels for the test dataset using the trained LDA model
+y_pred = predict(ldaModel, XTest); 
+
+% Calculate the test set accuracy percentage by comparing predictions to true labels
+accuracy = sum(y_pred == YTest) / length(YTest) * 100; 
+
+% Print the formatted classification test accuracy to the command window
+fprintf("Test Accuracy: %.2f%%\n", accuracy); 
+
+% Compute 2D transformation matrix W using the custom helper function lda2D
+[W, ~] = lda2D(XTrain, YTrain); 
+
+% Project training data onto the top 2 linear discriminant dimensions
+x_lda2 = XTrain * W; 
+
+% Open a new figure window for LDA visualization
+figure; 
+
+% Create a grouped 2D scatter plot of the projected discriminant components
+gscatter(x_lda2(:, 1), x_lda2(:, 2), YTrain, 'rgb', 'o^s'); 
+
+% Label the horizontal axis as Linear Discriminant 1
+xlabel('LD1'); 
+
+% Label the vertical axis as Linear Discriminant 2
+ylabel('LD2'); 
+
+% Set title for the visualization plot
+title('LDA Visualization'); 
+
+% Display legend mapping colors/markers to respective class labels
+legend('Class 1', 'Class 2', 'Class 3', 'Location', 'best'); 
+
+% Define helper function to compute top 2 projection vectors for 2D LDA projection
+function [W, classMeans] = lda2D(X, y) 
+    % Find unique class labels in the dataset
+    classes = unique(y); 
+    
+    % Determine the total number of distinct classes
+    nClasses = length(classes); 
+    
+    % Compute global mean vector across all features
+    overallMean = mean(X); 
+    
+    % Initialize within-class scatter matrix with zeros
+    Sw = zeros(size(X, 2)); 
+    
+    % Initialize between-class scatter matrix with zeros
+    Sb = zeros(size(X, 2)); 
+    
+    % Initialize matrix to store mean vectors for each class
+    classMeans = zeros(nClasses, size(X, 2)); 
+    
+    % Iterate over each class to compute class statistics and scatter matrices
+    for i = 1:nClasses 
+        % Extract samples belonging to current class
+        Xi = X(y == classes(i), :); 
+        
+        % Calculate feature mean vector for current class
+        classMean = mean(Xi); 
+        
+        % Store current class mean vector
+        classMeans(i, :) = classMean; 
+        
+        % Accumulate within-class covariance scaled by sample size minus 1
+        Sw = Sw + cov(Xi) * (size(Xi, 1) - 1); 
+        
+        % Accumulate between-class scatter based on class mean deviation from global mean
+        Sb = Sb + (classMean - overallMean)' * (classMean - overallMean) * size(Xi, 1); 
+    end 
+    
+    % Solve generalized eigenvalue problem to get eigenvectors for top 2 eigenvalues
+    [V, ~] = eigs(Sb, Sw, 2); 
+    
+    % Return eigenvector matrix as projection weights
+    W = V; 
+end 
