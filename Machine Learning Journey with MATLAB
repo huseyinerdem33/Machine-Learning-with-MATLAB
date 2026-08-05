@@ -3800,3 +3800,8 @@ xlabel('1st Principal Component');
 ylabel('2nd Principal Component');
 
 💻 Example Output 2  (MATLAB Command Window):
+
+K-Means clustering completed successfully on both raw normalized features and PCA-transformed features.
+Generated 2 visualization figures:
+1. "K-Means (Without PCA)" - Scatter plot displaying 3 clusters over Sepal Length vs Sepal Width.
+2. "K-Means (After PCA)"   - Scatter plot displaying 3 clusters over 1st Principal Component vs 2nd Principal Component.
