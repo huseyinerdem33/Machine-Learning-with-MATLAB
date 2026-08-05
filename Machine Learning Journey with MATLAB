@@ -3805,3 +3805,7 @@ K-Means clustering completed successfully on both raw normalized features and PC
 Generated 2 visualization figures:
 1. "K-Means (Without PCA)" - Scatter plot displaying 3 clusters over Sepal Length vs Sepal Width.
 2. "K-Means (After PCA)"   - Scatter plot displaying 3 clusters over 1st Principal Component vs 2nd Principal Component.
+
+---------------------------
+Example Code 2 (Linear Discriminant Analysis (LDA) Implementation) :
+
