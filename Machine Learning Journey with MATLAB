@@ -3730,4 +3730,71 @@ Optimal number of clusters: 3 | Silhouette Score: 0.8102
 ------------------------------------
 Example Code  :
 
+% Set the random number generator seed for reproducibility
+rng(1); 
 
+% Load the Fisher Iris dataset into the workspace
+load fisheriris; 
+
+% Assign the measurements matrix to variable X
+X = meas; 
+
+% Assign the species labels array to variable Y
+Y = species; 
+
+% Normalize features to have zero mean and unit variance
+X_norm = normalize(X); 
+
+% Perform K-Means clustering directly on normalized raw data (without PCA)
+[idx_raw, C_raw] = kmeans(X_norm, 3, 'Replicates', 10); 
+
+% Create a new figure window for raw data visualization
+figure; 
+
+% Plot scatter plot using the first two features (Sepal Length & Width) grouped by cluster
+gscatter(X_norm(:,1), X_norm(:,2), idx_raw); 
+
+% Retain current plot contents when adding new elements
+hold on; 
+
+% Plot cluster centroids on raw feature space with black crosses
+plot(C_raw(:,1), C_raw(:,2), 'kx', 'LineWidth', 2); 
+
+% Add title to the raw data plot
+title('K-Means (Without PCA)'); 
+
+% Label the horizontal axis as Sepal Length
+xlabel('Sepal Length'); 
+
+% Label the vertical axis as Sepal Width
+ylabel('Sepal Width'); 
+
+% Perform Principal Component Analysis (PCA) on normalized data
+[coeff, score, ~, ~, explained] = pca(X_norm); 
+
+% Extract the first two principal components
+X_pca = score(:, 1:2); 
+
+% Perform K-Means clustering on the PCA-reduced feature space
+[idx_pca, C_pca] = kmeans(X_pca, 3, 'Replicates', 10); 
+
+% Create a new figure window for PCA visualization
+figure; 
+
+% Plot scatter plot using the first two principal components grouped by cluster
+gscatter(X_pca(:,1), X_pca(:,2), idx_pca); 
+
+% Retain current plot contents when adding new elements
+hold on; 
+
+% Plot cluster centroids on PCA feature space with black crosses
+plot(C_pca(:,1), C_pca(:,2), 'kx', 'LineWidth', 2); 
+
+% Add title to the PCA plot
+title('K-Means (After PCA)'); 
+
+% Label the horizontal axis as 1st Principal Component
+xlabel('1st Principal Component'); 
+
+% Label the vertical axis as 2nd Principal Component
+ylabel('2nd Principal Component');
