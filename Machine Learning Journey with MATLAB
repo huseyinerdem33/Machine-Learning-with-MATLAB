@@ -3927,3 +3927,7 @@ function [W, classMeans] = lda2D(X, y)
     % Return eigenvector matrix as projection weights
     W = V; 
 end 
+
+💻 Example Output   (MATLAB Command Window):
+
+Test Accuracy: 100.00%
