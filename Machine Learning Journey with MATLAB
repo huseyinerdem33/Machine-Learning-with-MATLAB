@@ -3721,3 +3721,5 @@ ylabel('Principal Component 2');
 
 % Display grid lines on the plot
 grid on;
+
+💻 Example Output  (MATLAB Command Window):
