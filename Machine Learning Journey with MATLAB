@@ -3551,3 +3551,5 @@ Where $\mu_i$ and $\mu_j$ represent the centroids of clusters $C_i$ and $C_j$, r
 2. **Scalability Constraints:** High computational memory ($\mathcal{O}(n^2)$) and runtime ($\mathcal{O}(n^3)$) requirements bound practical application sizes to $n \le 5000$ without dimensionality reduction or sub-sampling preprocessing.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+📂 Module 4.22 : 
