@@ -3728,7 +3728,7 @@ Variance explained by PCA: 72.46%
 Optimal number of clusters: 3 | Silhouette Score: 0.8102
 
 ------------------------------------
-Example Code  :
+Example Code 2 :
 
 % Set the random number generator seed for reproducibility
 rng(1); 
@@ -3798,3 +3798,5 @@ xlabel('1st Principal Component');
 
 % Label the vertical axis as 2nd Principal Component
 ylabel('2nd Principal Component');
+
+💻 Example Output 2  (MATLAB Command Window):
