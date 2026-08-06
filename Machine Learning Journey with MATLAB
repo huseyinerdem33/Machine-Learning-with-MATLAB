@@ -3983,3 +3983,86 @@ The primary objective of the agent is to interact with the environment and **max
 * By updating these values, the algorithm discovers which action yields the best reward in a given state.
 ------------------
 Example Code :
+
+% --- Grid Environment and Q-Learning Parameters Initialization ---
+nStates = 16;                                 % Total number of states in the 4x4 grid environment
+nActions = 4;                                % Total number of possible actions (Up, Down, Left, Right)
+actions = [-4, 4, -1, 1];                    % State index offsets corresponding to each action (Up=-4, Down=+4, Left=-1, Right=+1)
+goalState = 16;                              % Target state to reach in the environment
+
+% Initialize Q-table with zeros (dimension: 16 states x 4 actions)
+Q = zeros(nStates, nActions);                 % Matrix storing estimated expected rewards for state-action pairs
+
+% Hyperparameters setup
+alpha = 0.1;                                 % Learning rate (controls how quickly Q-values are updated)
+gamma = 0.9;                                 % Discount factor (determines the importance of future rewards)
+epsilon = 0.2;                               % Exploration rate for epsilon-greedy policy (prob of random action)
+episodes = 300;                              % Total training iterations (episodes)
+
+% Track cumulative reward obtained in each episode
+rewards_history = zeros(episodes, 1);        % Array storing the total reward accumulated per episode
+
+% --- Main Training Loop (Q-Learning) ---
+for ep = 1:episodes                          % Loop through each training episode
+    state = 1;                               % Reset agent position to starting state (state 1)
+    totalReward = 0;                         % Reset cumulative reward accumulator for the current episode
+    
+    while state ~= goalState                 % Run episode loop until the agent reaches the target goal state
+        % Epsilon-Greedy Action Selection strategy
+        if rand < epsilon                    
+            action = randi(nActions);         % Explore: select a random action uniformly
+        else
+            [~, action] = max(Q(state, :));  % Exploit: select the action with maximum estimated Q-value
+        end
+        
+        % Calculate proposed next state candidate
+        newState = state + actions(action);  % Compute target state index based on action movement offset
+        
+        % Boundary condition check: check if next state falls outside array bounds (1 to 16)
+        if newState < 1 || newState > nStates
+            newState = state;                % Hit upper/lower grid boundary, stay in current state
+        elseif mod(state, 4) == 1 && action == 3
+            newState = state;                % Left boundary check: prevent wrapping around left edge (Action 3: Left)
+        elseif mod(state, 4) == 0 && action == 4
+            newState = state;                % Right boundary check: prevent wrapping around right edge (Action 4: Right)
+        end
+        
+        % Calculate step reward signal
+        reward = (newState == goalState) * 10 - 1; % Award +10 for reaching goal, punish with -1 step penalty otherwise
+        totalReward = totalReward + reward;        % Update accumulated episode reward
+        
+        % Update Q-value based on the temporal difference error (Bellman equation)
+        Q(state, action) = Q(state, action) + alpha * (reward + gamma * max(Q(newState, :)) - Q(state, action));
+        
+        % Transition to next state
+        state = newState;                    % Move agent into next state for following step
+    end
+    
+    rewards_history(ep) = totalReward;      % Record total episode reward into history tracking array
+end
+
+% --- Results and Optimal Policy Extraction ---
+disp('Q Table:');
+disp(round(Q, 2));                           % Display rounded learned Q-table values in console
+
+% Path reconstruction using greedy policy (learned optimal trajectory)
+state = 1;                                   % Initialize starting state
+path = state;                                % Initialize trajectory array with start position
+while state ~= goalState                     % Follow greedy steps until goal state is reached
+    [~, action] = max(Q(state, :));         % Select optimal action with highest Q-value
+    state = state + actions(action);        % Update current state index based on optimal action
+    path(end+1) = state;                     % Append the current state to the path vector
+    if numel(path) > 20, break; end         % Safety loop-breaker to prevent potential infinite cycles
+end
+
+fprintf('Learned path: ');
+disp(path);                                  % Print final extracted optimal path sequence
+
+% --- Visualization Section ---
+% Plot the rewards history over training episodes
+figure;                                      % Create new visualization window
+plot(rewards_history, 'b-', 'LineWidth', 1.5); % Plot reward curve using blue solid line with width 1.5
+xlabel('Episode');                           % Label for x-axis representing episode numbers
+ylabel('Total Reward');                      % Label for y-axis representing accumulated episode rewards
+title('Q-Learning Learning Curve');         % Title of the plot
+grid on;                                     % Turn grid overlay on for readability
