@@ -4172,3 +4172,5 @@ xlabel('Episodes'); % Label x-axis
 ylabel('Total Reward'); % Label y-axis
 title('Learning Curve'); % Graph title
 grid on; % Enable plot grid lines
+
+💻 Example Output  2 (MATLAB Command Window):
