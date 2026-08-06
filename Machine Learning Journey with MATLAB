@@ -4174,3 +4174,20 @@ title('Learning Curve'); % Graph title
 grid on; % Enable plot grid lines
 
 💻 Example Output  2 (MATLAB Command Window):
+
+>> clear
+>> close all
+>> QLearning
+Q Table:
+   -3.11   -1.82
+   -3.29   -0.91
+   -2.63    0.10
+   -1.42    1.22
+   -0.03    2.47
+    0.59    3.85
+    1.62    5.39
+    3.25    7.10
+    4.67    9.00
+       0       0
+
+Learned path:      1     2     3     4     5     6     7     8     9    10
