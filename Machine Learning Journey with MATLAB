@@ -3933,4 +3933,51 @@ end
 Test Accuracy: 100.00%
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-📂 Module 4.23 : 
+📂 Module 4.23 :  Reinforcement Learning and Q-Learning Overview
+
+## 📌 What is Reinforcement Learning (RL)?
+
+**Reinforcement Learning (RL)** is a machine learning method where a system learns to make decisions through experience.
+
+### 🔑 Key Concepts
+
+* 🤖 **Agent:** The learner and decision-maker system.
+* 🌍 **Environment:** The world or space where the agent operates and interacts.
+* ⚡ **Action:** All possible moves or decisions the agent can make.
+* 🎁 **Reward:** Feedback received from the environment after taking an action (can be positive or negative).
+* 📍 **State:** The current situation or position of the agent in the environment.
+
+---
+
+### 🎯 Main Goal
+The primary objective of the agent is to interact with the environment and **maximize the total reward** over time.
+
+---
+
+### 📊 Reinforcement Learning vs. Other Learning Types
+
+| Feature | Supervised Learning | Unsupervised Learning | Reinforcement Learning |
+| :--- | :--- | :--- | :--- |
+| **Data** | Labeled | Unlabeled | Interactive |
+| **Feedback** | Correct Answers | None | Reward / Penalty |
+| **Learning Mode** | Passive | Passive | Active |
+| **Time Factor** | Static | Static | Dynamic |
+
+---
+
+### ⭐ Advantages of Reinforcement Learning
+
+* 🔄 **Trial-and-Error Learning:** Finds optimal solutions by constantly interacting with changing environments.
+* 🧠 **Minimum Human Interaction:** Solves complex tasks autonomously without needing constant manual guidance.
+* 🚀 **Fast Adaptation:** Quickly adapts to dynamic and unpredictable conditions.
+
+---
+
+## 🧠 What is Q-Learning?
+
+### 📑 Concept
+**Q-Learning** is a **model-free** reinforcement learning algorithm. 
+
+* It learns the optimal strategy (policy) without needing a full mathematical model of the environment's dynamics.
+* It assigns a numerical score called a **Q-value** to every **(state, action)** pair.
+* By updating these values, the algorithm discovers which action yields the best reward in a given state.
