@@ -4085,3 +4085,90 @@ Q Table:
 Learned path:     1     5     6     7     8    12    16
 -----------------------------
 Example Code 2 :
+
+% Set random seed for reproducibility
+rng(42); 
+
+% Define environment parameters
+nStates = 10; % Total number of states (1 to 10 line environment)
+nActions = 2; % Number of available actions (1: move left, 2: move right)
+goalState = 10; % Target goal state to reach
+
+% Initialize Q-table with zeros (states x actions matrix)
+Q = zeros(nStates, nActions); 
+
+% Define Q-learning hyperparameters
+alpha = 0.1; % Learning rate parameter
+gamma = 0.9; % Discount factor parameter
+epsilon = 0.2; % Exploration rate parameter
+episodes = 200; % Total number of training episodes
+
+% Preallocate array to record rewards per episode
+rewards_history = zeros(episodes, 1); 
+
+% Main Q-learning loop across episodes
+for ep = 1:episodes
+    state = 1; % Reset agent to the starting state (state 1)
+    totalReward = 0; % Initialize total accumulated reward for the episode
+    
+    % Loop until the agent reaches the goal state
+    while state ~= goalState
+        % Epsilon-greedy action selection strategy
+        if rand < epsilon
+            action = randi(nActions); % Explore: pick a random action
+        else
+            [~, action] = max(Q(state, :)); % Exploit: pick the action with highest Q-value
+        end
+        
+        % Environment transition dynamics based on selected action
+        if action == 1
+            newState = max(1, state - 1); % Move left (bound at minimum state 1)
+        else
+            newState = min(nStates, state + 1); % Move right (bound at maximum state 10)
+        end
+        
+        % Calculate immediate reward (+10 for reaching goal, -1 for step penalty)
+        reward = (newState == goalState) * 10 - 1; 
+        totalReward = totalReward + reward; % Accumulate total reward
+        
+        % Update Q-table using the Bellman equation
+        Q(state, action) = Q(state, action) + alpha * (reward + gamma * max(Q(newState, :)) - Q(state, action)); 
+        
+        % Transition agent to the next state
+        state = newState; 
+    end
+    
+    % Store total reward achieved in the current episode
+    rewards_history(ep) = totalReward; 
+end
+
+% Display the final learned Q-table
+disp('Q Table:'); 
+disp(round(Q, 2)); 
+
+% Extract the optimal learned path using greedy decisions
+state = 1; % Start at state 1
+path = state; % Initialize path tracker
+while state ~= goalState
+    [~, action] = max(Q(state, :)); % Select optimal greedy action
+    if action == 1
+        state = max(1, state - 1); % Apply left action
+    else
+        state = min(nStates, state + 1); % Apply right action
+    end
+    
+    path(end+1) = state; % Append updated state to path vector
+    if numel(path) > 50, break; end % Safety guard to avoid infinite loops
+end
+
+% Display the learned state trajectory
+fprintf('Learned path: '); 
+disp(path); 
+
+% Plot the learning curve (Total Reward vs Episodes)
+figure; 
+plot(rewards_history); % Plot history of total accumulated rewards
+xlabel('Episodes'); % Label x-axis
+ylabel('Total Reward'); % Label y-axis
+title('Learning Curve'); % Graph title
+grid on; % Enable plot grid lines
