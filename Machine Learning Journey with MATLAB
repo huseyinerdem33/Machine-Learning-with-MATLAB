@@ -4066,3 +4066,7 @@ xlabel('Episode');                           % Label for x-axis representing epi
 ylabel('Total Reward');                      % Label for y-axis representing accumulated episode rewards
 title('Q-Learning Learning Curve');         % Title of the plot
 grid on;                                     % Turn grid overlay on for readability
+
+💻 Example Output   (MATLAB Command Window):
+
+
