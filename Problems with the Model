@@ -55,7 +55,9 @@ fprintf('Test Accuracy: %.2f%%\n', testAcc);
 💻 Example Output   (MATLAB Command Window):
 Training Accuracy: 80.72%
 Test Accuracy: 82.91%
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 📂 Module 4.24.2 : Overfitting
 
   In machine learning, overfitting occurs when a algorithm learns the training dataset too well, capturing noise, random fluctuations, and specific details rather than the general underlying pattern. This typically happens when a model is overly complex relative to the amount and variety of training data available.
@@ -113,3 +115,6 @@ ensTestAcc = mean(predict(ensModel, XTest) == YTest) * 100;
 % Display ensemble model performance on training and test sets
 fprintf('Ensemble Training Accuracy: %.2f%%\n', ensTrainAcc);
 fprintf('Ensemble Testing Accuracy: %.2f%%\n', ensTestAcc);
+
+💻 Example Output   (MATLAB Command Window):
+
