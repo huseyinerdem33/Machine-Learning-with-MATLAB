@@ -118,3 +118,7 @@ fprintf('Ensemble Testing Accuracy: %.2f%%\n', ensTestAcc);
 
 💻 Example Output   (MATLAB Command Window):
 
+Training Accuracy: 93.62%
+Testing Accuracy: 78.91%
+Ensemble Training Accuracy: 100.00%
+Ensemble Testing Accuracy: 83.64%
