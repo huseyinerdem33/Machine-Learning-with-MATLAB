@@ -123,3 +123,99 @@ Testing Accuracy: 78.91%
 Ensemble Training Accuracy: 100.00%
 Ensemble Testing Accuracy: 83.64%
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+📂 Module 4.24.3 :  Model Reliability: Bias and Variance 
+In machine learning, model performance and reliability are deeply linked to two fundamental sources of error: **bias** and **variance**. Finding the right balance between these two components is essential for building a model that generalizes well to unseen real-world data.
+**Bias** measures how far off the model's predictions are from the actual values on average. High bias indicates that the model is overly simplified or restrictive, making strong assumptions about the data structure that do not hold true. Consequently, a high-bias model struggles to capture underlying trends, leading to underfitting on both training and test datasets.
+**Variance** measures how much the model's predictions fluctuate when trained on different subsets of the data. High variance occurs when a model is overly complex and highly sensitive to small variations or noise in the training set. While a high-variance model might achieve near-perfect performance on its training data, it fails to generalize, leading to overfitting on new test instances.
+The goal in predictive modeling is to minimize the **Bias-Variance Tradeoff**. By adjusting model complexity—such as testing different polynomial degrees—you can identify an optimal balance where both systematic error (bias) and sensitivity to noise (variance) are kept low, resulting in the lowest overall test error.
+
+ Example Code
+
+% Load the built-in car dataset
+load carsmall;
+
+% Define Horsepower as the independent predictor variable (X)
+X = Horsepower;
+
+% Define MPG (Miles Per Gallon) as the target dependent variable (Y)
+Y = MPG;
+
+% Identify and remove missing (NaN) values from both variables
+validData = ~isnan(X) & ~isnan(Y);
+X = X(validData);
+Y = Y(validData);
+
+% Set a fixed random seed for reproducible data splitting
+rng(42);
+
+% Partition the dataset into 70% training and 30% testing subsets
+cv = cvpartition(length(X), 'HoldOut', 0.3);
+
+% Extract independent feature values for training
+XTrain = X(training(cv));
+
+% Extract dependent target values for training
+YTrain = Y(training(cv));
+
+% Extract independent feature values for testing
+XTest = X(test(cv));
+
+% Extract dependent target values for testing
+YTest = Y(test(cv));
+
+% Define polynomial degrees representing low, balanced, and high complexity models
+degrees = [1, 4, 10];
+
+% Generate 200 evenly spaced points across the feature range for smooth curve visualization
+xline = linspace(min(X), max(X), 200)';
+
+% Open a new figure window for plotting
+figure;
+
+% Iterate through each specified polynomial degree to analyze bias and variance
+for i = 1:length(degrees)
+    % Select current polynomial degree
+    d = degrees(i);
+    
+    % Train the polynomial regression model on training data
+    p = polyfit(XTrain, YTrain, d);
+    
+    % Compute model predictions on the training set
+    yhat_train = polyval(p, XTrain);
+    
+    % Compute model predictions on the test set
+    yhat_test = polyval(p, XTest);
+    
+    % Compute model predictions along the smooth continuous x-line
+    yhat_line = polyval(p, xline);
+    
+    % Calculate Mean Squared Error (MSE) on the test set
+    mse_test = mean((YTest - yhat_test).^2);
+    
+    % Create a subplot for the current model complexity
+    subplot(1, length(degrees), i);
+    
+    % Plot training data points as blue circles
+    scatter(XTrain, YTrain, 'bo'); hold on;
+    
+    % Plot test data points as red circles
+    scatter(XTest, YTest, 'ro');
+    
+    % Plot the polynomial regression curve as a solid black line
+    plot(xline, yhat_line, 'k-', 'LineWidth', 2);
+    
+    % Set subplot title displaying polynomial degree and calculated test MSE
+    title(sprintf('Polynomial degree: %d\nTest MSE: %.2f', d, mse_test));
+    
+    % Label X-axis as Horsepower
+    xlabel('Horsepower');
+    
+    % Label Y-axis as MPG
+    ylabel('MPG');
+    
+    % Display legend positioned automatically at the best location
+    legend('Training Data', 'Test Data', 'Location', 'best');
+    
+    % Enable grid lines on the plot
+    grid on;
+end
