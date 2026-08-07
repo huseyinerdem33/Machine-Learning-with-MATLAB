@@ -57,3 +57,9 @@ Training Accuracy: 80.72%
 Test Accuracy: 82.91%
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 📂 Module 4.24.2 : Overfitting
+
+  In machine learning, overfitting occurs when a algorithm learns the training dataset too well, capturing noise, random fluctuations, and specific details rather than the general underlying pattern. This typically happens when a model is overly complex relative to the amount and variety of training data available.
+When a model overfits, it achieves very high accuracy or exceptionally low error on the training set. However, because it has essentially "memorized" the training examples, it struggles to generalize to new, unseen data. Consequently, its performance drops significantly when evaluated on test datasets. A common example of overfitting is setting an excessively high limit for tree depth or splits (such as MaxNumSplits = 200 in a Decision Tree). The model creates overly specific branch rules that fit every detail of the training data, including background noise.
+To prevent or mitigate overfitting, several techniques can be applied: cross-validation, simplifying the model (pruning or constraining hyperparameters), collecting more data, or using ensemble methods like Bagging (e.g., Random Forests) which average multiple decision trees to stabilize predictions and improve generalization performance on unseen test data.
+
+Example Code : 
