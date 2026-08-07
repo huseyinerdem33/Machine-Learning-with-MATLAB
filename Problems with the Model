@@ -124,7 +124,7 @@ Ensemble Training Accuracy: 100.00%
 Ensemble Testing Accuracy: 83.64%
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 📂 Module 4.24.3 :  Model Reliability: Bias and Variance 
-In machine learning, model performance and reliability are deeply linked to two fundamental sources of error: **bias** and **variance**. Finding the right balance between these two components is essential for building a model that generalizes well to unseen real-world data.
+  In machine learning, model performance and reliability are deeply linked to two fundamental sources of error: **bias** and **variance**. Finding the right balance between these two components is essential for building a model that generalizes well to unseen real-world data.
 **Bias** measures how far off the model's predictions are from the actual values on average. High bias indicates that the model is overly simplified or restrictive, making strong assumptions about the data structure that do not hold true. Consequently, a high-bias model struggles to capture underlying trends, leading to underfitting on both training and test datasets.
 **Variance** measures how much the model's predictions fluctuate when trained on different subsets of the data. High variance occurs when a model is overly complex and highly sensitive to small variations or noise in the training set. While a high-variance model might achieve near-perfect performance on its training data, it fails to generalize, leading to overfitting on new test instances.
 The goal in predictive modeling is to minimize the **Bias-Variance Tradeoff**. By adjusting model complexity—such as testing different polynomial degrees—you can identify an optimal balance where both systematic error (bias) and sensitivity to noise (variance) are kept low, resulting in the lowest overall test error.
@@ -220,3 +220,83 @@ for i = 1:length(degrees)
     grid on;
 end
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+📂 Module 4.24.4 :  k-Fold Cross-Validation
+
+  In machine learning, **k-Fold Cross-Validation** is a robust resampling technique used to evaluate the generalization ability of a predictive model. A simple train/test split (such as a single HoldOut validation) can sometimes result in optimistic or pessimistic performance estimates depending purely on how the data was randomly split.
+In k-Fold Cross-Validation, the entire dataset is randomly partitioned into $k$ equal-sized subsets (folds). The model is then trained and tested $k$ times: in each iteration, a different fold is held out as the validation set while the remaining $k-1$ folds are used for training. By averaging the evaluation metrics across all $k$ iterations, you obtain a far more reliable, stable, and unbiased assessment of model performance.
+Using k-Fold Cross-Validation ensures that every data point is used for both training and testing exactly once, minimizing variance caused by dataset splitting and offering a truer picture of how models like Decision Trees or Ensemble Bagging classifiers will perform on unseen real-world data.
+
+Example Code :
+
+% Load the tabular data from a CSV file
+data = readtable('heart.csv');
+
+% Extract all feature columns (from the first column up to the second-to-last column)
+X = data(:, 1:end-1);
+
+% Extract the target label column (last column) and convert it to an array
+Y = table2array(data(:, end));
+
+% Partition the dataset into a single 70% training and 30% testing HoldOut split
+cv = cvpartition(Y, 'HoldOut', 0.3);
+XTrain = X(training(cv), :);
+YTrain = Y(training(cv));
+XTest = X(test(cv), :);
+YTest = Y(test(cv));
+
+% Train a single Decision Tree on the HoldOut training set
+modelTree = fitctree(XTrain, YTrain, 'MinLeafSize', 50, 'MaxNumSplits', 5);
+predTree = predict(modelTree, XTest);
+accTree_simple = mean(predTree == YTest);
+
+% Train an Ensemble Bagging model on the HoldOut training set
+modelEns = fitensemble(XTrain, YTrain, 'Method', 'Bag', 'NumLearningCycles', 10);
+predEns = predict(modelEns, XTest);
+accEns_simple = mean(predEns == YTest);
+
+% Display performance metrics obtained from the single HoldOut split
+fprintf('== HoldOut Results Without k-Fold ==\n\n');
+fprintf('Decision Tree Accuracy: %.2f%%\n', accTree_simple * 100);
+fprintf('Ensemble Learning Accuracy: %.2f%%\n', accEns_simple * 100);
+
+% Define k = 10 for 10-fold cross-validation
+k = 10;
+cvp = cvpartition(Y, 'KFold', k);
+
+% Preallocate arrays to store accuracy scores for each fold
+accTree = zeros(k, 1);
+accEns = zeros(k, 1);
+
+% Perform 10-fold cross-validation loop
+for i = 1:k
+    % Train Decision Tree on k-1 folds and evaluate on the ith test fold
+    mTree = fitctree(X(training(cvp, i), :), Y(training(cvp, i)), 'MinLeafSize', 50, 'MaxNumSplits', 5);
+    pTree = predict(mTree, X(test(cvp, i), :));
+    accTree(i) = mean(pTree == Y(test(cvp, i)));
+
+    % Train Ensemble Bagging model on k-1 folds and evaluate on the ith test fold
+    mEns = fitensemble(X(training(cvp, i), :), Y(training(cvp, i)), 'Method', 'Bag', 'NumLearningCycles', 10);
+    pEns = predict(mEns, X(test(cvp, i), :));
+    accEns(i) = mean(pEns == Y(test(cvp, i)));
+end
+
+% Calculate average accuracy across all 10 folds
+meanAccTree = mean(accTree);
+meanAccEns = mean(accEns);
+
+% Display aggregated k-Fold cross-validation results
+fprintf('\n== Results With 10-Fold Cross-Validation ==\n\n');
+fprintf('Decision Tree Mean Accuracy: %.2f%%\n', meanAccTree * 100);
+fprintf('Ensemble Learning Mean Accuracy: %.2f%%\n', meanAccEns * 100);
+
+💻 Example Output   (MATLAB Command Window):
+== HoldOut Results Without k-Fold ==
+
+Decision Tree Accuracy: 79.64%
+Ensemble Learning Accuracy: 83.64%
+
+== Results With 10-Fold Cross-Validation ==
+
+Decision Tree Mean Accuracy: 81.15%
+Ensemble Learning Mean Accuracy: 84.72%
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
