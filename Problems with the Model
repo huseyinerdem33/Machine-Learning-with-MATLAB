@@ -63,3 +63,53 @@ When a model overfits, it achieves very high accuracy or exceptionally low error
 To prevent or mitigate overfitting, several techniques can be applied: cross-validation, simplifying the model (pruning or constraining hyperparameters), collecting more data, or using ensemble methods like Bagging (e.g., Random Forests) which average multiple decision trees to stabilize predictions and improve generalization performance on unseen test data.
 
 Example Code : 
+
+% Load the tabular data from a CSV file
+data = readtable('heart.csv');
+
+% Extract all feature columns (from the first column up to the second-to-last column)
+X = data(:, 1:end-1);
+
+% Extract the target label column (last column) and convert it to an array
+Y = table2array(data(:, end));
+
+% Partition the dataset into 70% training and 30% testing subsets
+cv = cvpartition(Y, 'HoldOut', 0.3);
+
+% Filter the input features to create the training set
+XTrain = X(training(cv), :);
+
+% Filter the target labels to create the training set
+YTrain = Y(training(cv));
+
+% Filter the input features to create the test set
+XTest = X(test(cv), :);
+
+% Filter the target labels to create the test set
+YTest = Y(test(cv));
+
+% Train a decision tree with high complexity (demonstrating overfitting)
+treeModel = fitctree(XTrain, YTrain, 'MaxNumSplits', 200);
+
+% Calculate accuracy percentage for the single decision tree on training data
+trainAcc = mean(predict(treeModel, XTrain) == YTrain) * 100;
+
+% Calculate accuracy percentage for the single decision tree on testing data
+testAcc = mean(predict(treeModel, XTest) == YTest) * 100;
+
+% Display single decision tree performance on training and test sets
+fprintf('Training Accuracy: %.2f%%\n', trainAcc);
+fprintf('Testing Accuracy: %.2f%%\n', testAcc);
+
+% Train an ensemble model using Bagging with 30 learning cycles to combat overfitting
+ensModel = fitensemble(XTrain, YTrain, 'Method', 'Bag', 'NumLearningCycles', 30);
+
+% Calculate accuracy percentage for the ensemble model on training data
+ensTrainAcc = mean(predict(ensModel, XTrain) == YTrain) * 100;
+
+% Calculate accuracy percentage for the ensemble model on testing data
+ensTestAcc = mean(predict(ensModel, XTest) == YTest) * 100;
+
+% Display ensemble model performance on training and test sets
+fprintf('Ensemble Training Accuracy: %.2f%%\n', ensTrainAcc);
+fprintf('Ensemble Testing Accuracy: %.2f%%\n', ensTestAcc);
