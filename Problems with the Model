@@ -3,9 +3,51 @@
 📂 Module 4.24.1 : Underfitting
 
   In machine learning, underfitting occurs when a model is too simple to learn the underlying structure of the training dataset. This usually happens when the chosen algorithm lacks sufficient complexity or when strict constraints are placed on the model parameters.
-
 When a model underfits, it fails to capture important patterns, rules, and relationships within the data. As a result, it performs poorly not only on the training set but also on new, unseen test data. A classic example of underfitting is building a Decision Tree model restricted to a single split (MaxNumSplits = 1). Because the tree is limited to only one decision rule, it cannot process complex feature interactions, leading to low overall prediction capability.
-
 To fix underfitting, you can increase model complexity, add more relevant features, or reduce hyperparameter restrictions (such as increasing the maximum number of splits in a tree algorithm).
 
 Example Code : 
+% Load the tabular data from a CSV file
+data = readtable('heart.csv');
+
+% Extract all feature columns (from the first column up to the second-to-last column)
+X = data(:, 1:end-1);
+
+% Extract the target label column (last column) and convert it to an array
+Y = table2array(data(:, end));
+
+% Partition the dataset into 70% training and 30% testing subsets
+cv = cvpartition(Y, 'HoldOut', 0.3);
+
+% Filter the input features to create the training set
+XTrain = X(training(cv), :);
+
+% Filter the target labels to create the training set
+YTrain = Y(training(cv));
+
+% Filter the input features to create the test set
+XTest = X(test(cv), :);
+
+% Filter the target labels to create the test set
+YTest = Y(test(cv));
+
+% Train a simple Decision Tree restricted to 1 split (demonstrating underfitting)
+model_simple = fitctree(XTrain, YTrain, 'MaxNumSplits', 1);
+
+% Predict classes on the training set using the trained simple model
+Ypred_train = predict(model_simple, XTrain);
+
+% Predict classes on the test set using the trained simple model
+Ypred_test = predict(model_simple, XTest);
+
+% Calculate the accuracy percentage for the training set predictions
+trainAcc = mean(Ypred_train == YTrain) * 100;
+
+% Calculate the accuracy percentage for the test set predictions
+testAcc = mean(Ypred_test == YTest) * 100;
+
+% Display the training accuracy result in the command window
+fprintf('Training Accuracy: %.2f%%\n', trainAcc);
+
+% Display the test accuracy result in the command window
+fprintf('Test Accuracy: %.2f%%\n', testAcc);
