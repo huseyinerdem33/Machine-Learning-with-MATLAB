@@ -7,3 +7,5 @@
 When a model underfits, it fails to capture important patterns, rules, and relationships within the data. As a result, it performs poorly not only on the training set but also on new, unseen test data. A classic example of underfitting is building a Decision Tree model restricted to a single split (MaxNumSplits = 1). Because the tree is limited to only one decision rule, it cannot process complex feature interactions, leading to low overall prediction capability.
 
 To fix underfitting, you can increase model complexity, add more relevant features, or reduce hyperparameter restrictions (such as increasing the maximum number of splits in a tree algorithm).
+
+Example Code : 
