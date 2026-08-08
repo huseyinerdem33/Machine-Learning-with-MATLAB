@@ -401,4 +401,23 @@ end
 fprintf("\nGrid Search Best Result: Acc=%.2f%% | Leaf=%d, Splits=%d\n", ...
     bestAcc * 100, bestParams.MinLeafSize, bestParams.MaxNumSplits);
 
+💻 Example Output   (MATLAB Command Window):
+
+Leaf=1, Splits=5 => Acc=82.17%
+Leaf=1, Splits=10 => Acc=81.52%
+Leaf=1, Splits=20 => Acc=80.86%
+Leaf=1, Splits=50 => Acc=79.21%
+Leaf=1, Splits=100 => Acc=79.21%
+...
+Leaf=10, Splits=5 => Acc=83.00%
+Leaf=10, Splits=10 => Acc=83.66%
+Leaf=10, Splits=20 => Acc=83.55%
+Leaf=10, Splits=50 => Acc=83.22%
+Leaf=10, Splits=100 => Acc=83.22%
+Leaf=20, Splits=5 => Acc=83.00%
+Leaf=20, Splits=10 => Acc=83.34%
+...
+Leaf=50, Splits=100 => Acc=81.15%
+
+Grid Search Best Result: Acc=83.66% | Leaf=10, Splits=10
 
