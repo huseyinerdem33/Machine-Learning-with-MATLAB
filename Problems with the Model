@@ -331,3 +331,74 @@ Why is it useful?
   your model's accuracy and stability on unseen real-world data.
 
 Example Code : 
+
+% Load dataset from CSV file
+data = readtable('heart.csv');
+
+% Separate features (X) and target label (Y)
+X = data(:, 1:end-1);
+Y = table2array(data(:, end));
+
+% Define number of folds for cross-validation
+k = 5;
+
+% Create a stratified k-fold cross-validation partition
+cvp = cvpartition(Y, 'KFold', k);
+
+% Define candidate values for MinLeafSize hyperparameter
+minLeafOptions = [1, 5, 10, 20, 50];
+
+% Define candidate values for MaxNumSplits hyperparameter
+maxSplitOptions = [5, 10, 20, 50, 100];
+
+% Initialize variable to track the highest accuracy found
+bestAcc = 0;
+
+% Initialize structure to store the best parameter combination
+bestParams = struct();
+
+% Loop through each option in minLeafOptions
+for leaf = minLeafOptions
+    % Loop through each option in maxSplitOptions
+    for split = maxSplitOptions
+        % Preallocate array to store accuracy for each fold
+        acc = zeros(k, 1);
+        
+        % Perform k-fold cross-validation loop
+        for i = 1:k
+            % Train a decision tree model using training set and current parameters
+            model = fitctree(X(training(cvp, i), :), Y(training(cvp, i)), ...
+                'MinLeafSize', leaf, 'MaxNumSplits', split);
+            
+            % Predict labels for the validation test set
+            predictions = predict(model, X(test(cvp, i), :));
+            
+            % Calculate accuracy for current fold
+            acc(i) = mean(predictions == Y(test(cvp, i)));
+        end
+        
+        % Calculate average accuracy across all k folds
+        meanAcc = mean(acc);
+        
+        % Display current parameter combination and its cross-validation accuracy
+        fprintf("Leaf=%d, Splits=%d => Acc=%.2f%%\n", leaf, split, meanAcc * 100);
+        
+        % Check if current accuracy is better than best accuracy found so far
+        if meanAcc > bestAcc
+            % Update best accuracy
+            bestAcc = meanAcc;
+            
+            % Save current MinLeafSize parameter as best
+            bestParams.MinLeafSize = leaf;
+            
+            % Save current MaxNumSplits parameter as best
+            bestParams.MaxNumSplits = split;
+        end
+    end
+end
+
+% Display final result showing best accuracy and optimal parameters
+fprintf("\nGrid Search Best Result: Acc=%.2f%% | Leaf=%d, Splits=%d\n", ...
+    bestAcc * 100, bestParams.MinLeafSize, bestParams.MaxNumSplits);
+
+
