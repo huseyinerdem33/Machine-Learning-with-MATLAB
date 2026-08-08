@@ -420,4 +420,36 @@ Leaf=20, Splits=10 => Acc=83.34%
 Leaf=50, Splits=100 => Acc=81.15%
 
 Grid Search Best Result: Acc=83.66% | Leaf=10, Splits=10
+-----------------------------------
+Example Code 2 : 
 
+% Load dataset from CSV file into a table
+data = readtable('heart.csv');
+
+% Separate feature matrix (X) by selecting all columns except the last
+X = data(:, 1:end-1);
+
+% Extract target vector (Y) from the last column as an array
+Y = table2array(data(:, end));
+
+% Define number of folds for cross-validation evaluation
+k = 5;
+
+% Configure optimization options including method, k-fold count, plot settings, and verbosity
+opts = struct('Optimizer', 'gridsearch', ...
+              'KFold', k, ...
+              'ShowPlots', false, ...
+              'Verbose', 1);
+
+% Train decision tree model while automatically optimizing MinLeafSize and MaxNumSplits
+mdl = fitctree(X, Y, 'OptimizeHyperparameters', {'MinLeafSize', 'MaxNumSplits'}, ...
+    'HyperparameterOptimizationOptions', opts);
+
+% Extract the optimal MinLeafSize discovered by the automatic optimizer
+bestLeaf = mdl.ModelParameters.MinLeaf;
+
+% Extract the optimal MaxNumSplits discovered by the automatic optimizer
+bestSplit = mdl.ModelParameters.MaxNumSplits;
+
+% Display the final best accuracy score along with the optimal hyperparameters found
+fprintf('Automated Grid Search Best Result: Acc=%.2f%% | Leaf=%d | Splits=%d\n', 100 * (1 - resubLoss(mdl)), bestLeaf, bestSplit);
