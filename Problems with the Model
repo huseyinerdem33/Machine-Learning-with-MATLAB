@@ -329,3 +329,5 @@ Why is it useful?
   Grid Search automates the process completely.
 - Better Performance: Finding optimal hyperparameters significantly increases 
   your model's accuracy and stability on unseen real-world data.
+
+Example Code : 
