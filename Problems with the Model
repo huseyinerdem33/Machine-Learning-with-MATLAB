@@ -453,3 +453,5 @@ bestSplit = mdl.ModelParameters.MaxNumSplits;
 
 % Display the final best accuracy score along with the optimal hyperparameters found
 fprintf('Automated Grid Search Best Result: Acc=%.2f%% | Leaf=%d | Splits=%d\n', 100 * (1 - resubLoss(mdl)), bestLeaf, bestSplit);
+
+💻 Example Output   (MATLAB Command Window):
