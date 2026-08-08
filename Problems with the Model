@@ -455,3 +455,18 @@ bestSplit = mdl.ModelParameters.MaxNumSplits;
 fprintf('Automated Grid Search Best Result: Acc=%.2f%% | Leaf=%d | Splits=%d\n', 100 * (1 - resubLoss(mdl)), bestLeaf, bestSplit);
 
 💻 Example Output   (MATLAB Command Window):
+
+| Iter | Eval result | Objective   | Objective runtime |  MinLeafSize | MaxNumSplits |
+|------|-------------|-------------|-------------------|--------------|--------------|
+|    1 | Best        |     0.18627 |            0.62086|           232|            10|
+|    2 | Accept      |     0.44662 |            0.14871|           459|             2|
+|    3 | Best        |     0.17647 |            0.073768|             4|             5|
+|    4 | Accept      |     0.19172 |            0.063842|            60|           430|
+|    5 | Accept      |     0.19281 |            0.12219|             2|            44|
+|    6 | Accept      |     0.18627 |            0.041619|           118|            94|
+|    7 | Best        |     0.16013 |            0.0527 |            30|            10|
+|    8 | Accept      |     0.16085 |            0.050737|            15|            44|
+|    9 | Accept      |     0.20915 |            0.066646|             1|           430|
+|   10 | Accept      |     0.17647 |            0.053491|             2|             5|
+
+Automated Grid Search Best Result: Acc=83.99% | Leaf=30 | Splits=10
