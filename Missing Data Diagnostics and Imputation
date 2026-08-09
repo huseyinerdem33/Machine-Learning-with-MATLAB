@@ -9,7 +9,7 @@ This section encompasses three foundational pillars of the preprocessing pipelin
 
 The following comprehensive script reads a raw dataset, runs programmatic diagnostic routines to manage missing observations (`NaN`), and executes advanced categorical encoding mechanisms suitable for standard machine learning pipelines:
 
-```matlab
+Example Code : 
 clc;
 clear;
 close all;
