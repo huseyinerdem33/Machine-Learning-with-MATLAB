@@ -1,0 +1,152 @@
+📂 Module 4.11  Evaluation Metrics for Regression Models: MAE, MSE, RMSE, and $R^2$
+
+## Overview
+
+In machine learning and statistics, regression evaluation metrics are essential tools used to measure the predictive accuracy and overall performance of a model. When a model predicts continuous numerical values, evaluation metrics quantify the error by comparing the predicted values ($\hat{Y}_i$) with the actual ground-truth values ($Y_i$). 
+
+Understanding these metrics allows data scientists and engineers to select the most appropriate model, optimize hyperparameters, and evaluate how well a model generalizes to unseen data.
+
+---
+
+## 1. Mean Absolute Error (MAE)
+
+### Definition
+Mean Absolute Error (MAE) measures the average magnitude of errors in a set of predictions, without considering their direction. It represents the mean absolute difference between actual and predicted values.
+
+### Key Characteristics
+* **Range:** $[0, \infty)$
+* **Optimal Value:** $0$ (lower values indicate better model performance).
+* **Robustness:** Less sensitive to outliers compared to squared-error metrics because errors are not squared.
+
+### Mathematical Formulation
+$$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |Y_i - \hat{Y}_i|$$
+
+*Where:*
+* $n$ = Total number of observations
+* $Y_i$ = Actual target value for observation $i$
+* $\hat{Y}_i$ = Predicted target value for observation $i$
+
+---
+
+## 2. Mean Squared Error (MSE)
+
+### Definition
+Mean Squared Error (MSE) measures the average of the squared differences between the actual and predicted values. By squaring the error term, larger errors are penalized significantly more than smaller ones.
+
+### Key Characteristics
+* **Range:** $[0, \infty)$
+* **Optimal Value:** $0$
+* **Sensitivity:** Highly sensitive to outliers due to the squaring operation.
+
+### Mathematical Formulation
+$$\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2$$
+
+---
+
+## 3. Root Mean Squared Error (RMSE)
+
+### Definition
+Root Mean Squared Error (RMSE) is the square root of the Mean Squared Error. It provides a measure of accuracy that retains the same unit of measurement as the target variable, making interpretation more straightforward.
+
+### Key Characteristics
+* **Range:** $[0, \infty)$
+* **Optimal Value:** $0$ (values closer to $0$ reflect higher predictive accuracy).
+* **Interpretability:** Directly comparable to the scale of the dependent variable.
+
+### Mathematical Formulation
+$$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2}$$
+
+---
+
+## 4. Coefficient of Determination ($R^2$ / R-Squared)
+
+### Definition
+The Coefficient of Determination ($R^2$) represents the proportion of variance in the dependent variable that is predictable from the independent variables. It evaluates the goodness of fit of a regression model.
+
+### Key Characteristics
+* **Range:** $(-\infty, 1]$ (Typically $[0, 1]$ for baseline comparison models).
+* **Optimal Value:** $1$ (represents perfect prediction).
+* **Interpretation:** Values below $0.12$ generally indicate poor explanatory power and suboptimal performance.
+
+### Mathematical Formulation
+$$R^2 = 1 - \frac{\sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2}{\sum_{i=1}^{n} (Y_i - \bar{Y}_i)^2}$$
+
+*Where:*
+* $\bar{Y}_i$ (or $\bar{Y}$) = Mean of actual target values.
+
+Example Code :
+
+```matlab
+% Load built-in MATLAB sample dataset
+load carsmall;
+
+% Define predictor variables (X) and target variable (Y)
+X = [Weight, Horsepower];
+Y = MPG;
+
+% Remove missing values (NaN) from the dataset
+validIdx = ~isnan(sum(X, 2)) & ~isnan(Y);
+X = X(validIdx, :);
+Y = Y(validIdx);
+
+% Fit linear regression model
+mdl = fitlm(X, Y);
+disp(mdl);
+
+% Predict target values using the fitted model
+Y_pred = predict(mdl, X);
+
+% Calculate prediction errors
+errors = Y - Y_pred;
+
+% Calculate error metrics: MAE, MSE, and RMSE
+MAE = mean(abs(errors));
+MSE = mean(errors.^2);
+RMSE = sqrt(MSE);
+
+% Calculate R-squared (R2) score manually
+SS_res = sum(errors.^2);
+SS_tot = sum((Y - mean(Y)).^2);
+R2 = 1 - (SS_res / SS_tot);
+
+% Print the metric evaluation results to the console
+fprintf("\n\nRESULTS:\n\n");
+fprintf("MAE = %.3f\n", MAE);
+fprintf("MSE = %.3f\n", MSE);
+fprintf("RMSE = %.3f\n", RMSE);
+fprintf("R2 = %.3f\n", R2);
+
+% Data Visualization: Plot actual versus predicted values
+figure();
+scatter(Y, Y_pred, 'filled');
+xlabel("Actual Values (Y)");
+ylabel("Predicted Values (Y_{pred})");
+grid on;
+refline(1, 0); % Draw a reference line representing perfect prediction (y = x)
+
+💻 Example Output (MATLAB Command Window):
+
+Linear regression model:
+    y ~ 1 + x1 + x2
+
+Estimated Coefficients:
+                    Estimate       SE        tStat       pValue   
+                    ________    _________    ______    __________
+
+    (Intercept)   47.769       1.7417    27.427    1.751e-45
+    x1         -0.0065651   0.0010507   -6.2484   1.3519e-08
+    x2          -0.042018    0.018671   -2.2504      0.02686
+
+Number of observations: 93, Error degrees of freedom: 90
+Root Mean Squared Error: 4.07
+R-squared: 0.752,  Adjusted R-Squared: 0.747
+F-statistic vs. constant model: 137, p-value = 1.05e-26
+
+
+RESULTS:
+
+MAE = 3.155
+MSE = 16.009
+RMSE = 4.001
+R2 = 0.752
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
