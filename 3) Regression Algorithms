@@ -1,0 +1,465 @@
+📂 Module 4.6 Understanding Regression Analysis: Concepts, Models, and Applications
+
+## 1. What is Regression Analysis?
+
+Regression is a fundamental statistical approach used to predict the value of a dependent variable (target) based on one or more independent variables (features). 
+
+### Primary Objective
+The main goal of regression analysis is to understand how variations in independent variables (inputs) affect the dependent variable (output) and to express this relationship using a mathematical equation.
+
+---
+
+## 2. Practical Example: Real Estate Valuation
+
+Imagine we want to estimate the price of a house:
+* **Dependent Variable (Target):** House Price
+* **Independent Variables (Features):** Area ($m^2$), number of rooms, and location.
+
+Regression analysis learns the relationship between these features and the house price. Consequently, it enables us to predict the price of a new house by examining its specific characteristics.
+
+---
+
+## 3. Key Regression Models
+
+### Linear Regression Models
+* **Simple Linear Regression:** Utilizes a single independent variable to predict the outcome.
+* **Multiple Linear Regression:** Incorporates multiple independent variables to refine predictions.
+
+### Polynomial Regression
+* Applied when the relationship between variables is non-linear.
+* It uses a more flexible curve to fit the dataset effectively.
+
+### Advanced Regression Techniques
+* **Support Vector Regression (SVR)**
+* **Decision Tree Regression**
+* **Random Forest Regression**
+
+---
+
+## 4. Evaluation Metrics
+
+To assess the performance and accuracy of a regression model, the following statistical metrics are commonly employed:
+
+1. **Mean Absolute Error (MAE)**
+2. **Mean Squared Error (MSE)**
+3. **Root Mean Squared Error (RMSE)**
+4. **Coefficient of Determination ($R^2$ Score)**
+
+---
+
+## 5. Real-World Applications
+
+Regression analysis is widely utilized across various scientific and commercial domains:
+
+* **Finance:** Forecasting stock prices, interest rates, and evaluating financial risks.
+* **Real Estate:** Modeling house prices according to property attributes.
+* **Marketing:** Measuring the impact of advertisement spending on sales and predicting Customer Lifetime Value (CLV).
+* **Healthcare:** Predicting patient responses to specific treatments or tracking disease progression.
+* **Manufacturing:** Estimating production volume based on raw material availability and labor input.
+* **Weather Forecasting:** Predicting meteorological parameters such as temperature and precipitation using historical climate data.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+📂 Module 4.7 Linear Regression Implementation in MATLAB: GUI vs. Manual Scripting
+
+This project demonstrates two distinct methodologies for implementing Linear Regression models on a power plant dataset (`powerPlant.mat`) using MATLAB:
+1. **Automated Approach:** Model training and code generation via MATLAB's **Regression Learner** app.
+2. **Programmatic Approach:** Manual implementation using MATLAB scripting with `fitlm`.
+
+---
+
+## 1. Automated Approach: MATLAB Regression Learner App
+
+MATLAB provides the **Regression Learner** interactive interface within the **Apps** tab to streamline model configuration, cross-validation setup, and automated MATLAB code generation.
+
+### Workflow & Configuration
+* **Data Import:** The dataset `powerPlant.mat` is imported from the workspace into the Regression Learner app.
+* **Variable Assignment:**
+  * **Response Variable (Target):** `EnergyOutput`
+  * **Predictor Variables (Features):** `Temperature`, `ExhaustVacuum`, `AmbientPressure`, `RelativeHumidity`
+* **Validation Scheme:** A **5-fold Cross-Validation** strategy is configured to evaluate model performance and prevent overfitting.
+* **Model Selection:** A **Linear Regression** model is trained on the predictor subset.
+* **Exporting Code:** Upon model evaluation, the automatically generated function script extracts the full training and validation pipeline into a reusable `.m` function file.
+
+### Auto-Generated Code Structure
+The auto-generated MATLAB function automates dataset preprocessing, cross-validation fold splitting, model training with `fitlm`, prediction calculation, and **Root Mean Squared Error (RMSE)** evaluation:
+
+```matlab
+% Train a regression model automatically via Regression Learner App
+% This function specifies model options and trains the model.
+
+% Concatenate predictors and response
+concatenatedPredictorsAndResponse = trainingPredictors;
+concatenatedPredictorsAndResponse.EnergyOutput = trainingResponse;
+
+% Train Linear Regression Model
+linearModel = fitlm(...
+    concatenatedPredictorsAndResponse, ...
+    'linear', ...
+    'RobustOpts', 'off');
+
+% Create result structure with predict function
+linearModelPredictFcn = @(x) predict(linearModel, x);
+validationPredictFcn = @(x) linearModelPredictFcn(x);
+
+% Compute validation predictions across folds
+validationPredictors = predictors(cvp.test(fold), :);
+foldPredictions = validationPredictFcn(validationPredictors);
+
+% Store predictions in original order
+validationPredictions(cvp.test(fold), :) = foldPredictions;
+
+% Compute validation RMSE
+isNotMissing = ~isnan(validationPredictions) & ~isnan(response);
+validationRMSE = sqrt(nansum((validationPredictions - response).^2) / numel(response(isNotMissing)));
+
+-----------------------------------
+
+Manual MATLAB Code Script 
+-----------
+% Load dataset
+load('powerPlant.mat');
+
+% Fit linear regression model (Energy Output vs. Temperature)
+mdl_temp = fitlm(powerPlant, 'EnergyOutput ~ Temperature');
+
+% Display model statistics in Command Window
+disp(mdl_temp);
+
+% Plot model fit and raw data points
+figure();
+plot(mdl_temp);
+xlabel('Sıcaklık');
+ylabel('Enerji Üretimi');
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+📂 Module 4.8 Predictive Analytics for Power Generation: A Machine Learning & MATLAB Approach
+
+![Power Generation & Predictive Analytics Header](watermarked_img_16581748362672968350.png)
+
+Welcome to the **Predictive Analytics for Power Generation** repository. This project demonstrates an end-to-end machine learning framework designed to model and forecast net hourly electrical power output ($PE$) in energy generation facilities. Utilizing **MATLAB**, **Regression Learner App**, and **Multiple Linear Regression Analysis**, the study evaluates the impact of key ambient thermodynamic variables on plant performance.
+
+---
+
+## 📌 Executive Summary
+
+Accurate power output forecasting is essential for modern grid management, operational cost optimization, and efficient unit commitment. By leveraging historical multi-variable sensory data collected from a Combined Cycle Power Plant (CCPP) operating at full load, this repository establishes predictive models that quantify the mathematical relationships between environmental predictors and gross output.
+
+### Primary Objectives:
+1. **Interactive Prototyping & Cross-Validation:** Utilizing MATLAB's *Regression Learner App* to run non-parametric and parametric algorithms (*Fine Tree* vs. *Linear Regression*) under strict cross-validation constraints.
+2. **Programmatic Inference & Hypothesis Testing:** Implementing MATLAB's statistical modeling functions (`fitlm`) to evaluate parameter significance, standard errors ($SE$), $t$-statistics ($tStat$), and hypothesis testing metrics ($p$-values).
+
+---
+
+## 📊 Dataset Specifications
+
+The baseline dataset (`powerPlant.mat`) comprises **9,568 continuous observations** recorded during steady-state operations.
+
+### Target Variable (Response)
+* **`EnergyOutput` ($PE$):** Total hourly net electrical power output (measured in **MW**).
+
+### Features (Predictors)
+* **`Temperature` ($AT$):** Ambient Temperature ranging from $1.81^\circ\text{C}$ to $37.11^\circ\text{C}$.
+* **`ExhaustVacuum` ($V$):** Exhaust Steam Pressure ranging from $25.36$ to $81.56\text{ cm Hg}$.
+* **`AmbientPressure` ($AP$):** Barometric Pressure ranging from $992.89$ to $1033.30\text{ millibar}$.
+* **`RelativeHumidity` ($RH$):** Relative Humidity ranging from $25.56\%$ to $100.16\%$.
+
+---
+
+## ⚙️ Methodology & Experimental Design
+
+### Phase 1: Interactive Model Prototyping
+Data was imported into the MATLAB environment and evaluated using a **5-Fold Cross-Validation** scheme to prevent model overfitting and assess generalization performance across partitioned folds.
+
+* **Fine Decision Tree:** Achieved a Root Mean Squared Error (**RMSE**) of **4.0085**.
+* **Linear Regression:** Achieved an **RMSE** of **4.5518** and a Coefficient of Determination ($R^2$) of **0.93**.
+
+### Phase 2: Programmatic Model Estimation
+A MATLAB script was authored to execute parametric regression fitting, generate statistical summaries, and inspect model coefficients directly.
+
+---
+
+## 💻 MATLAB Source Implementation & Summary Output
+
+```matlab
+% Step 1: Load the power plant dataset into the MATLAB Workspace
+load("powerPlant.mat"); 
+
+% Step 2: Fit a Multiple Linear Regression model using 'fitlm'
+% Formula: Response ~ Predictor1 + Predictor2 + Predictor3 + Predictor4
+mdl_full = fitlm(powerPlant, 'EnergyOutput ~ Temperature + ExhaustVacuum + AmbientPressure + RelativeHumidity');
+
+% Step 3: Display comprehensive statistical output in the Command Window
+disp(mdl_full);
+
+% Step 4: Output Ordinary R-Squared metric formatted to 4 decimal places
+fprintf("\nModel R-Squared Value: %.4f\n", mdl_full.Rsquared.Ordinary);
+
+Generated Execution Output:
+
+Linear regression model:
+    EnergyOutput ~ 1 + Temperature + ExhaustVacuum + AmbientPressure + RelativeHumidity
+
+Estimated Coefficients:
+                        Estimate        SE         tStat       pValue   
+                       _________    _________    _________    __________
+
+    (Intercept)           454.61       9.7485       46.634             0
+    Temperature          -1.9775     0.015282      -129.34             0
+    ExhaustVacuum       -0.23392     0.0073823      -31.69    4.5753e-210
+    AmbientPressure     0.062083     0.0094586       6.5641   5.5071e-11
+    RelativeHumidity    -0.15805     0.0041655     -37.942    5.1846e-295
+
+Number of observations: 9568, Error degrees of freedom: 9563
+Root Mean Squared Error: 4.56
+R-squared: 0.929,  Adjusted R-Squared: 0.929
+F-statistic vs. constant model: 3.11e+04, p-value = 0
+
+Model R-Squared Value: 0.9287
+
+## 📖 Detailed Guide to Statistical Parameters
+
+### 1. `Estimate` ($\beta$ Coefficients)
+* **What it Does:** Indicates how much the target variable (`EnergyOutput`) increases or decreases (in **MW**) for every **1-unit change** in an independent predictor variable (e.g., temperature, pressure), holding all other variables constant.
+* **Project Context:**
+  * **`(Intercept)` ($454.61$):** The theoretical baseline output power generated if all environmental predictors were equal to zero.
+  * **`Temperature` ($-1.9775$):** For every $1^\circ\text{C}$ increase in ambient temperature, power output drops by $\sim 1.98\text{ MW}$ due to reduced gas turbine efficiency.
+
+---
+
+### 2. `SE` (Standard Error)
+* **What it Does:** Measures the statistical uncertainty and precision of the estimated coefficient (`Estimate`). A lower standard error signifies a highly precise and reliable parameter estimate.
+* **Project Context:** The extremely low standard error for Temperature ($SE = 0.0152$) demonstrates that the calculated coefficient has negligible variance and high stability.
+
+---
+
+### 3. `tStat` ($t$-Statistic)
+* **What it Does:** Calculated via the formula:
+  $$\text{tStat} = \frac{\text{Estimate}}{\text{SE}}$$
+  It indicates how many standard errors the coefficient is away from zero. The further it is from zero (in either positive or negative direction), the stronger and more dominant the variable's signal relative to noise.
+* **Project Context:** The $t$-statistic for Temperature stands at **$-129.34$**. This substantial negative magnitude confirms ambient temperature as the single most critical driver dampening power generation.
+
+---
+
+### 4. `pValue` ($p$-Value)
+* **What it Does:** Evaluates the null hypothesis to answer: *"Does this variable genuinely influence power generation, or was the observed relationship purely coincidental?"*
+* **Project Context:** In statistical hypothesis testing, a threshold of $p < 0.05$ indicates statistical significance. Because all $p$-values in our model approach zero ($p \ll 0.05$), it confirms that every included feature is statistically significant and indispensable to the predictive model.
+
+---
+
+### 5. `R-Squared` ($R^2 = 0.9287$)
+* **What it Does:** Measures the overall goodness-of-fit and explanatory power of the model. It represents the percentage of total variance in the response variable explained by the predictors.
+* **Project Context:** An $R^2$ value of $0.9287$ indicates that approximately **92.87%** of the variance in electrical energy output is accurately captured and explained using only these 4 ambient sensory variables.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+📂 Module 4.9 Energy Output Prediction Using Linear Regression Model
+
+## Overview
+This repository contains a MATLAB implementation for predicting energy output based on key environmental parameters. The script uses a pre-trained multivariate linear regression model (`mdl_full`) to estimate energy generation under specific atmospheric and operation conditions.
+
+---
+
+## Technical Features
+- **Data Structuring:** Input features are safely encapsulated into a MATLAB `table` structure to match model parameter definitions.
+- **Model Inference:** Employs the native `predict` function for scalable regression analysis.
+- **Formatted Output:** Displays environmental inputs and outputs clean, two-decimal formatted predictions in the console.
+
+---
+
+## MATLAB Implementation
+
+# Example Code 1:
+
+```matlab
+% Define input parameters for the prediction scenario
+T = 25;    % Temperature (25 °C)
+V = 60;    % Exhaust Vacuum (60 cm Hg)
+AP = 1015; % Ambient Pressure (1015 mBar)
+RH = 80;   % Relative Humidity (80%)
+
+% Structure input variables into a MATLAB table with clear column headers
+newConditions = table(T, V, AP, RH, ...
+    'VariableNames', {'Temperature', 'ExhaustVacuum', 'AmbientPressure', 'RelativeHumidity'});
+
+% Display input conditions in the command window
+disp('New input parameters for prediction:');
+disp(newConditions);
+
+% Perform prediction using the pre-trained linear model
+predictedEnergy = predict(mdl_full, newConditions);
+
+% Output the final prediction result formatted to two decimal places
+fprintf('Predicted Energy Output: %.2f\n', predictedEnergy);
+
+
+💻 Example Output (MATLAB Command Window):
+
+New input parameters for prediction:
+
+    Temperature    ExhaustVacuum    AmbientPressure    RelativeHumidity
+    ___________    _____________    _______________    ________________
+
+        25              60               1015                 80       
+
+Predicted Energy Output: 452.18
+
+-------------------------------------------------------------------------
+
+# Example Code 2:
+
+## Vehicle Fuel Efficiency (MPG) Prediction Using Linear Regression
+
+### Overview
+This script demonstrates the prediction of a vehicle's fuel efficiency in miles per gallon (MPG) using a trained multi-variable linear regression model (`mdl_multi`). The prediction is based on specific vehicle attributes including weight, horsepower, number of cylinders, and model year.
+
+---
+
+### MATLAB Implementation
+
+```matlab
+% Define vehicle specifications for prediction
+W = 3500;   % Weight (3500 lbs)
+H = 150;    % Horsepower (150 hp)
+C = 6;      % Number of cylinders (6)
+MY = 70;    % Model year (1970)
+
+% Create a table with categorical variables matching the model structure
+newVehicle = table(W, H, C, categorical(MY), ...
+    'VariableNames', {'weight', 'horsepower', 'cylinders', 'modelYear'});
+
+% Display input vehicle specifications in the command window
+disp('Specifications of the new vehicle:');
+disp(newVehicle);
+
+% Predict MPG using the trained linear regression model
+predictedMPG = predict(mdl_multi, newVehicle);
+
+% Display the prediction result formatted to two decimal places
+fprintf('Predicted MPG: %.2f\n', predictedMPG);
+
+💻 Example Output 2 (MATLAB Command Window):
+
+Specifications of the new vehicle:
+
+    weight    horsepower    cylinders    modelYear
+    ______    __________    _________    _________
+
+     3500        150            6           70    
+
+Predicted MPG: 19.07
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+📂 Module 4.10 Decision Tree Regression (Decision Trees Application)
+
+## Abstract
+Decision Tree Regression is a non-parametric supervised learning method used to predict continuous numerical values by partitioning data into smaller, homogeneous subsets based on explicit decision rules. Unlike linear models that assume proportional relationships, decision trees recursively split the feature space using threshold conditions (e.g., $X_j < k$), creating a hierarchical structure of nodes and leaves.
+
+---
+
+## Technical Overview & Methodology
+- **Recursive Partitioning:** The algorithm evaluates candidate features and selects split points that minimize total variance or Mean Squared Error (MSE) within the resulting child nodes.
+- **Node Hierarchy:**
+  - **Root Node:** Represents the entire dataset prior to any structural split.
+  - **Internal/Decision Nodes:** Apply logical decision criteria (e.g., `PetalLength < 2.45`) to direct data paths.
+  - **Leaf Nodes:** Represent terminal regions containing the final numerical predictions (typically the mean response of the samples within that segment).
+- **Hyperparameter Control:** Parameters such as minimum leaf size (`Minimum leaf size`) and maximum tree depth prevent model overfitting and maintain generalization capabilities on unseen test data.
+
+---
+
+## Implementation Reference (MATLAB)
+
+```matlab
+% Load Fisher's Iris dataset into the workspace
+load fisheriris;
+
+% Convert raw measurement array into a structured MATLAB table
+irisData = array2table(meas, 'VariableNames', {'SepalLength', 'SepalWidth', 'PetalLength', 'PetalWidth'});
+
+% Attach categorical species metadata for potential classification workflows
+irisData.Species = species;
+
+% Display initial observations from the structured dataset
+head(irisData);
+
+% Render the hierarchical decision tree graph of the exported regression model
+view(trainedModel.RegressionTree, 'Mode', 'graph');
+
+💻 Example Output (MATLAB Command Window):
+
+SepalLength    SepalWidth    PetalLength    PetalWidth      Species   
+    ___________    __________    ___________    __________    ____________
+
+        5.1           3.5            1.4           0.2        {'setosa'}
+        4.9             3            1.4           0.2        {'setosa'}
+        4.7           3.2            1.3           0.2        {'setosa'}
+        4.6           3.1            1.5           0.2        {'setosa'}
+          5           3.6            1.4           0.2        {'setosa'}
+        5.4           3.9            1.7           0.4        {'setosa'}
+        4.6           3.4            1.4           0.3        {'setosa'}
+          5           3.4            1.5           0.2        {'setosa'}
+
+Structure 'trainedModel' exported from Regression Learner.
+To make predictions on a new table, T:
+yfit = trainedModel.predictFcn(T)
+
+
+Example Code 2 : 
+
+# Hyperparameter Tuning and Overfitting Prevention in Decision Trees
+
+## Abstract
+This section demonstrates how hyperparameter adjustment—specifically controlling minimum leaf size—mitigates overfitting in Decision Tree Regression models using MATLAB's `fitrtree` function. While highly complex trees tend to memorize training data, simpler and properly pruned models generalize significantly better when evaluated on unseen test data.
+
+---
+
+## Technical Overview
+- **Default Tree Model (`mdl_tree_default`):** Fits an unconstrained decision tree. It grows deeply to capture subtle dataset fluctuations, which often leads to **overfitting** (high variance).
+- **Tuned Tree Model (`mdl_tree_tuned`):** Constrains tree depth by setting `'MinLeafSize', 50`. Requiring at least 50 samples per terminal leaf forces the algorithm to create broader generalizations, reducing complexity and improving performance on unseen data.
+
+---
+
+## MATLAB Implementation
+
+```matlab
+% Load concrete compressive strength dataset into workspace
+load("concreteData.mat");
+
+% Define predictor variables (features) as a formula string
+predictors = 'Cement+BlastFurnaceSlag+FlyAsh+Water+Superplasticizer+CoarseAggregate+FineAggregate+Age';
+
+% Train default regression tree (unconstrained depth)
+mdl_tree_default = fitrtree(concreteData, ['CompressiveStrength ~ ', predictors]);
+
+% Display heading for default tree rules
+fprintf("\n\nDefault Tree Model:\n");
+
+% Display decision rules for default tree in command window
+view(mdl_tree_default);
+
+% Train tuned regression tree (constrained using minimum leaf size)
+mdl_tree_tuned = fitrtree(concreteData, ['CompressiveStrength ~ ', predictors], 'MinLeafSize', 50);
+
+% Display heading for tuned tree rules
+fprintf("\n\nTuned Tree Model:\n");
+
+% Display decision rules for tuned tree in command window
+view(mdl_tree_tuned);
+
+💻 Example Output 2 (MATLAB Command Window):
+
+Default Tree Model:
+1  if Water<188.9 then node 2 elseif Water>=188.9 then node 21 else 33.0756
+...
+18 if BlastFurnaceSlag<47.65 then node 22 elseif BlastFurnaceSlag>=47.65 then node 23 else 47.354
+19 if BlastFurnaceSlag<15 then node 24 elseif BlastFurnaceSlag>=15 then node 25 else 36.4647
+20 fit = 14.0563
+21 fit = 10.0417
+...
+
+Tuned Tree Model:
+(Generates a significantly shorter, more structured set of decision rules due to 'MinLeafSize', 50 constraint)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
