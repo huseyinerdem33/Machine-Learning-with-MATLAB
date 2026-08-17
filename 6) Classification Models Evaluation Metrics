@@ -1,0 +1,60 @@
+📂 Module 4.19 : Confusion Matrix & KNN Classification in MATLAB
+
+This repository contains an implementation of the **k-Nearest Neighbors (k-NN)** classification algorithm using MATLAB, along with a detailed explanation of the **Confusion Matrix**—a core performance evaluation metric in machine learning.
+
+---
+
+## 💡 What is a Confusion Matrix?
+
+A Confusion Matrix is a tabular layout that allows visualization of the performance of a supervised learning algorithm. Each row represents the instances in an actual class, while each column represents the instances in a predicted class.
+
+
+1. **True Positive (TP) - Correct Alarm**
+   * **Scenario:** The wolf is **actually present**, and the shepherd cries *"Wolf!"*.
+   * **Outcome:** **Correct Prediction.** The shepherd successfully alerts the villagers and saves the flock.
+   * **Example Count:** $TP = 1$
+
+2. **False Positive (FP) - Type I Error (False Alarm)**
+   * **Scenario:** There is **no wolf**, but the shepherd cries *"Wolf!"*.
+   * **Outcome:** **Incorrect Prediction.** An unnecessary alarm is raised, causing distress and frustration among the villagers.
+   * **Example Count:** $FP = 1$
+
+3. **False Negative (FN) - Type II Error (Missed Threat)**
+   * **Scenario:** The wolf is **actually present**, but the shepherd stays silent and says *"No wolf"*.
+   * **Outcome:** **Incorrect Prediction (Critical Danger).** The threat is ignored, leading to severe consequences (e.g., the wolf attacks the sheep).
+   * **Example Count:** $FN = 8$
+
+4. **True Negative (TN) - Silent Accuracy**
+   * **Scenario:** There is **no wolf**, and the shepherd stays silent (*"No wolf"*).
+   * **Outcome:** **Correct Prediction.** Everything remains peaceful and operates normally.
+   * **Example Count:** $TN = 90$
+
+---
+
+Example Code : 
+% 1. Load Dataset
+data = readtable("breast_cancer_bd.csv");
+Y = categorical(data.Class);
+X = data(:, 2:end-1);
+
+% 2. Train-Test Split (70% Training, 30% Testing)
+cv = cvpartition(Y, 'HoldOut', 0.3);
+XTrain = X(training(cv), :);
+YTrain = Y(training(cv), :);
+XTest  = X(test(cv), :);
+YTest  = Y(test(cv), :);
+
+% 3. Train k-NN Classifier (k = 5)
+knnModel = fitcknn(XTrain, YTrain, 'NumNeighbors', 5);
+
+% 4. Predict Test Data
+YPred = predict(knnModel, XTest);
+
+% 5. Plot Confusion Matrix
+figure();
+cm = confusionchart(YTest, YPred);
+cm.Title = 'Confusion Matrix for k-NN Classifier';
+cm.RowSummary = "row-normalized";
+cm.ColumnSummary = "column-normalized";
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
