@@ -199,3 +199,8 @@ val_CMRR   = 98.0;   % Common Mode Rejection Ratio in dB
 val_PSRR   = 95.0;   % Power Supply Rejection Ratio in dB
 val_SR     = 15.0;   % Slew Rate in V/us
 
+1) Press F5 (or click the green Run button at the top).
+
+MATLAB will train the ensemble model, display nice visual charts, and print your new Op-Amp's exact deviation score and overall ideality percentage right inside the Command Window!
+
+Note: The complete Op-Amp datasheet dataset (opamp_dataset.xlsx) and the full MATLAB source code are uploaded and available on GitHub!
