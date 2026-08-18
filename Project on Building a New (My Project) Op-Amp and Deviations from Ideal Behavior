@@ -169,3 +169,13 @@ Overall Design Ideality Level      : 71.37%
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Project description:
+
+     Imagine you are building your own Op-Amp (Operational Amplifier) chip! You want to know one big thing: How close is my design to a perfect, ideal Op-Amp?
+
+An ideal Op-Amp has infinite gain, zero noise, and instant response. But in the real world, no Op-Amp is perfect. Every real Op-Amp strays away from perfection.
+
+In this project, we built a smart Machine Learning model using MATLAB. We gave our model a dataset filled with real Op-Amp specifications (like gain, resistance, offset voltage, and speed). The model learned the patterns between these parameters and calculated an Ideality Deviation Score.
+
+Whenever you design a new Op-Amp, you simply feed its specs into our trained model, and it instantly predicts how much your design deviates from an ideal Op-Amp!
