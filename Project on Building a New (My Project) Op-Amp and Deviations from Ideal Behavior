@@ -179,3 +179,12 @@ An ideal Op-Amp has infinite gain, zero noise, and instant response. But in the 
 In this project, we built a smart Machine Learning model using MATLAB. We gave our model a dataset filled with real Op-Amp specifications (like gain, resistance, offset voltage, and speed). The model learned the patterns between these parameters and calculated an Ideality Deviation Score.
 
 Whenever you design a new Op-Amp, you simply feed its specs into our trained model, and it instantly predicts how much your design deviates from an ideal Op-Amp!
+
+How to Enter New Op-Amp Values & Get Predictions
+Testing your own design is super easy! Just follow these quick steps in MATLAB:
+
+1) Open opamp_model.m in MATLAB.
+
+2) Scroll down to the very bottom to Section 8 (%% 8. NEW OP-AMP INFERENCE TEST).
+
+3) Find the green parameter box and replace the example numbers with your design values:
