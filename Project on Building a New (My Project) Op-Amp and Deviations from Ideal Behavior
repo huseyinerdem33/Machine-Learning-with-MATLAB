@@ -1,2 +1,144 @@
-Main Code : 
+Main Code (in MATLAB) : 
 
+%% OP-AMP IDEALITY DEVIATION PREDICTION (OPTIMIZED ENSEMBLE LEARNING)
+clear; clc; close all; % Clear workspace, command window, and close figures
+
+%% 1. DATA LOADING AND INITIALIZATION
+filename = 'opamp_dataset.xlsx'; % File path of the op-amp dataset
+opts = detectImportOptions(filename); % Detect import settings
+data = readtable(filename, opts); % Read Excel data into a table
+
+disp('Dataset loaded successfully.'); % Print loading status
+disp(['Total Samples Count: ', num2str(size(data, 1))]); % Print row count
+
+%% 2. FEATURE (X) AND TARGET (Y) SEPARATION
+% Extract predictor features matching dataset columns
+X = data(:, {'Open_Loop_Gain_dB', 'Input_Resistance_Ohm', 'Output_Resistance_Ohm', ...
+              'GBW_Hz', 'Input_Offset_Voltage_mV', 'Input_Bias_Current_nA', ...
+              'CMRR_dB', 'PSRR_dB', 'Slew_Rate_V_us'});
+
+y = data.Ideality_Deviation_Score; % Target feature (ideality deviation)
+
+%% 3. TRAIN-TEST SPLIT (80% Training, 20% Testing)
+rng(42); % Set random seed for reproducibility
+cv = cvpartition(height(data), 'HoldOut', 0.20); % Create 80-20 train-test partition
+
+X_train = X(training(cv), :); % Split training features
+y_train = y(training(cv)); % Split training target
+X_test  = X(test(cv), :); % Split testing features
+y_test  = y(test(cv)); % Split testing target
+
+%% 4. OPTIMIZED ENSEMBLE MODEL TRAINING (BAGGED TREES / RANDOM FOREST)
+disp('Training Optimized Ensemble Model (Random Forest)...'); % Print training status
+
+% Create randomized tree template to maximize accuracy and prevent overfitting
+treeTemplate = templateTree('MaxNumSplits', 20, 'NumVariablesToSample', 'all'); 
+
+% Train Random Forest ensemble model
+model = fitrensemble(X_train, y_train, ...
+    'Method', 'Bag', ... % Bootstrap Aggregation (Random Forest)
+    'NumLearningCycles', 120, ... % Number of decision trees
+    'Learners', treeTemplate); % Tree configuration
+
+%% 5. PREDICTION AND METRICS CALCULATION
+y_pred = predict(model, X_test); % Predict targets on holdout test set
+
+% Compute regression accuracy metrics
+SS_res = sum((y_test - y_pred).^2); % Residual sum of squares
+SS_tot = sum((y_test - mean(y_test)).^2); % Total sum of squares
+R2_score = 1 - (SS_res / SS_tot); % R-squared determination score
+MSE  = mean((y_test - y_pred).^2); % Mean Squared Error
+RMSE = sqrt(MSE); % Root Mean Squared Error
+MAE  = mean(abs(y_test - y_pred)); % Mean Absolute Error
+
+% Compute MAPE excluding zero division
+validIdx = y_test ~= 0; % Filter non-zero target values
+MAPE = mean(abs((y_test(validIdx) - y_pred(validIdx)) ./ y_test(validIdx))) * 100; % Percentage error
+
+%% 6. PRINT METRICS TO COMMAND WINDOW
+fprintf('\n===================================================\n'); % Header divider
+fprintf('          MODEL EVALUATION METRICS (TEST SET)      \n'); % Title
+fprintf('===================================================\n'); % Header divider
+fprintf('R^2 Score (Accuracy)                     : %.4f (%.2f%%)\n', R2_score, R2_score * 100); % Output R2 score
+fprintf('Mean Squared Error (MSE)                 : %.4f\n', MSE); % Output MSE
+fprintf('Root Mean Squared Error (RMSE)           : %.4f\n', RMSE); % Output RMSE
+fprintf('Mean Absolute Error (MAE)                : %.4f\n', MAE); % Output MAE
+fprintf('Mean Absolute Percentage Error (MAPE)    : %.2f%%\n', MAPE); % Output MAPE
+fprintf('===================================================\n\n'); % Footer divider
+
+%% 7. DATA VISUALIZATION (FIXED GRAPHIC OVERLAP & DISPLAY ISSUES)
+fig = figure('Name', 'Op-Amp Model Results', 'Position', [100, 100, 1200, 500], 'Color', 'w'); % Open formatted figure window
+
+% Plot 1: Regression Scatter Plot
+subplot(1, 2, 1); % Select left plot
+scatter(y_test, y_pred, 70, 'filled', 'MarkerFaceColor', [0.15 0.45 0.75]); % Scatter points
+hold on; % Retain plot
+plot([min(y), max(y)], [min(y), max(y)], 'r--', 'LineWidth', 2); % 1:1 reference line
+xlabel('Actual Deviation Score', 'FontSize', 11, 'FontWeight', 'bold'); % Label X axis
+ylabel('Predicted Deviation Score', 'FontSize', 11, 'FontWeight', 'bold'); % Label Y axis
+title(['Actual vs Predicted (R^2 = ' num2str(R2_score*100, '%.1f') '%)'], 'FontSize', 12); % Set title
+grid on; axis square; % Add grid
+
+% Plot 2: Feature Importance Bar Chart (Formatted Labels)
+subplot(1, 2, 2); % Select right plot
+imp = predictorImportance(model); % Compute predictor importance
+[sorted_imp, idx] = sort(imp, 'ascend'); % Sort feature importances
+
+% Define clean, formatted display labels for features to fix text overlap
+cleanLabels = { ...
+    'Open Loop Gain (dB)', ...
+    'Input Resistance (Ohm)', ...
+    'Output Resistance (Ohm)', ...
+    'GBW (Hz)', ...
+    'Input Offset Voltage (mV)', ...
+    'Input Bias Current (nA)', ...
+    'CMRR (dB)', ...
+    'PSRR (dB)', ...
+    'Slew Rate (V/us)' ...
+};
+
+sortedCleanLabels = cleanLabels(idx); % Map sorted indices to formatted labels
+
+barh(sorted_imp, 'FaceColor', [0.2 0.65 0.45], 'EdgeColor', 'none'); % Plot horizontal bars
+yticks(1:length(imp)); % Set Y tick positions
+yticklabels(sortedCleanLabels); % Set formatted feature names as tick labels
+xlabel('Importance Score', 'FontSize', 11, 'FontWeight', 'bold'); % Label X axis
+title('Feature Importance Analysis', 'FontSize', 12); % Set title
+grid on; % Add grid
+ax = gca; % Get current axes
+ax.YAxis.FontSize = 9.5; % Optimize font size for y-axis labels
+
+% Adjust subplot margins to prevent label clipping
+set(subplot(1,2,2), 'Position', [0.58, 0.15, 0.38, 0.75]); % Expand left margin for labels
+set(subplot(1,2,1), 'Position', [0.08, 0.15, 0.38, 0.75]); % Adjust left plot position
+
+%% 8. NEW OP-AMP INFERENCE TEST (CUSTOM INPUT CONFIGURATION)
+% =========================================================================
+% ENTER YOUR NEW OP-AMP PARAMETERS HERE BELOW / YENİ DEĞERLERİ BURAYA GİRİN:
+% =========================================================================
+val_Gain   = 115.0;  % Open Loop Gain in dB (e.g. 100 - 130)
+val_Rin    = 5e8;    % Input Resistance in Ohms (e.g. 1e6 - 1e12)
+val_Rout   = 35.0;   % Output Resistance in Ohms (e.g. 10 - 100)
+val_GBW    = 25e6;   % Gain Bandwidth Product in Hz (e.g. 1e6 - 100e6)
+val_Offset = 0.25;   % Input Offset Voltage in mV (e.g. 0.05 - 5.0)
+val_Bias   = 3.5;    % Input Bias Current in nA (e.g. 0.01 - 100)
+val_CMRR   = 98.0;   % Common Mode Rejection Ratio in dB (e.g. 80 - 120)
+val_PSRR   = 95.0;   % Power Supply Rejection Ratio in dB (e.g. 80 - 120)
+val_SR     = 15.0;   % Slew Rate in V/us (e.g. 0.5 - 50)
+% =========================================================================
+
+% Construct input table row for inference
+new_opamp = table(val_Gain, val_Rin, val_Rout, val_GBW, val_Offset, val_Bias, val_CMRR, val_PSRR, val_SR, ...
+    'VariableNames', X.Properties.VariableNames); % Map table column headers to match features
+
+% Perform prediction
+predicted_deviation = predict(model, new_opamp); % Predict deviation score
+ideality_percentage = max(0, 100 - predicted_deviation); % Compute percentage of ideality
+
+% Print prediction output to console
+fprintf('===================================================\n'); % Header line
+fprintf('           NEW OP-AMP PREDICTION RESULTS           \n'); % Title
+fprintf('===================================================\n'); % Header line
+fprintf('Predicted Ideality Deviation Score : %.2f / 100\n', predicted_deviation); % Output predicted score
+fprintf('Overall Design Ideality Level      : %.2f%%\n', ideality_percentage); % Output percentage
+fprintf('===================================================\n'); % Footer line
