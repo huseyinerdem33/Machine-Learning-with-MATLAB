@@ -188,3 +188,14 @@ Testing your own design is super easy! Just follow these quick steps in MATLAB:
 2) Scroll down to the very bottom to Section 8 (%% 8. NEW OP-AMP INFERENCE TEST).
 
 3) Find the green parameter box and replace the example numbers with your design values:
+
+val_Gain   = 115.0;  % Open Loop Gain in dB
+val_Rin    = 5e8;    % Input Resistance in Ohms (e.g. 5e8 = 500,000,000)
+val_Rout   = 35.0;   % Output Resistance in Ohms
+val_GBW    = 25e6;   % Gain Bandwidth Product in Hz (e.g. 25e6 = 25 MHz)
+val_Offset = 0.25;   % Input Offset Voltage in mV
+val_Bias   = 3.5;    % Input Bias Current in nA
+val_CMRR   = 98.0;   % Common Mode Rejection Ratio in dB
+val_PSRR   = 95.0;   % Power Supply Rejection Ratio in dB
+val_SR     = 15.0;   % Slew Rate in V/us
+
