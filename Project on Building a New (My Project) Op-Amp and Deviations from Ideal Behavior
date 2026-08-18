@@ -142,3 +142,28 @@ fprintf('===================================================\n'); % Header line
 fprintf('Predicted Ideality Deviation Score : %.2f / 100\n', predicted_deviation); % Output predicted score
 fprintf('Overall Design Ideality Level      : %.2f%%\n', ideality_percentage); % Output percentage
 fprintf('===================================================\n'); % Footer line
+
+Example Output Code (in Command Window) : 
+
+Dataset loaded successfully.
+Total Samples Count: 101
+Training Optimized Ensemble Model (Random Forest)...
+
+===================================================
+          MODEL EVALUATION METRICS (TEST SET)      
+===================================================
+R^2 Score (Accuracy)                     : 0.8098 (80.98%)
+Mean Squared Error (MSE)                 : 87.2356
+Root Mean Squared Error (RMSE)           : 9.3400
+Mean Absolute Error (MAE)                : 6.8670
+Mean Absolute Percentage Error (MAPE)    : 27.28%
+===================================================
+
+===================================================
+           NEW OP-AMP PREDICTION RESULTS           
+===================================================
+Predicted Ideality Deviation Score : 28.63 / 100
+Overall Design Ideality Level      : 71.37%
+===================================================
+>> 
+
